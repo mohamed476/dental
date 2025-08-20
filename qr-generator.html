@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code - Juego Dental</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .qr-container {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+        }
+        #qrcode {
+            display: inline-block;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .instructions h3 {
+            color: #495057;
+            margin-top: 0;
+        }
+        .instructions ol {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        .url-display {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .url-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .url-option {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .url-option h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+            font-size: 14px;
+        }
+        .url-option .url {
+            font-family: monospace;
+            font-size: 11px;
+            color: #6c757d;
+            word-break: break-all;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .copy-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 10px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        .pages {
+            margin-top: 15px;
+            text-align: left;
+        }
+        .pages label { font-size: 12px; color: #495057; }
+        .pages input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+        .pages .actions { margin-top: 10px; display: flex; gap: 10px; }
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .btn.secondary { background: #6c757d; }
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦷 QR Code para el Juego Dental</h1>
+        
+        <div class="status success" id="status">
+            ✅ Servidor iniciado en puerto 8000
+        </div>
+        
+        <div class="qr-container">
+            <div id="qrcode"></div>
+        </div>
+        
+        <div class="url-options">
+            <div class="url-option">
+                <h4>🌐 Opción 1: Localhost</h4>
+                <div class="url" id="localhostUrl">http://localhost:8000/index.html</div>
+                <button class="copy-btn" onclick="copyToClipboard('localhostUrl')">Copiar URL</button>
+            </div>
+            <div class="url-option">
+                <h4>📱 Opción 2: IP Local (Recomendado)</h4>
+                <div class="url" id="localIpUrl">http://172.16.10.102:8000/index.html</div>
+                <button class="copy-btn" onclick="copyToClipboard('localIpUrl')">Copiar URL</button>
+            </div>
+        </div>
+
+        <div class="url-option pages">
+            <h4>☁️ Opción 3: GitHub Pages (URL pública)</h4>
+            <label for="pagesUrl">Pega aquí tu URL de GitHub Pages (ej: https://usuario.github.io/mi-repo/)</label>
+            <input type="text" id="pagesUrl" placeholder="https://usuario.github.io/mi-repo/">
+            <div class="actions">
+                <button class="btn" onclick="generateFromPages()">Generar QR</button>
+                <button class="btn secondary" onclick="copyPagesUrl()">Copiar URL</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📱 Cómo usar el QR:</h3>
+            <ol>
+                <li>Escanea el código QR con tu teléfono</li>
+                <li><strong>IMPORTANTE:</strong> Tu teléfono y computadora deben estar en la misma red WiFi para opciones 1 y 2</li>
+                <li>Para compartir globalmente, usa la opción de GitHub Pages (3)</li>
+                <li>El juego se abrirá en tu navegador móvil</li>
+                <li>¡Disfruta curando dientes! 🦷✨</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '¡Copiado!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#007bff';
+                }, 2000);
+            });
+        }
+        function copyPagesUrl() {
+            const text = document.getElementById('pagesUrl').value.trim();
+            if (!text) return;
+            navigator.clipboard.writeText(text);
+        }
+
+        function generateFromPages() {
+            const url = document.getElementById('pagesUrl').value.trim();
+            if (!url) return;
+            QRCode.toCanvas(document.getElementById('qrcode'), url, {
+                width: 220,
+                margin: 2,
+                color: { dark: '#000000', light: '#FFFFFF' }
+            });
+        }
+
+        function generateQR() {
+            const localIpUrl = 'http://172.16.10.102:8000/index.html';
+            QRCode.toCanvas(document.getElementById('qrcode'), localIpUrl, {
+                width: 220,
+                margin: 2,
+                color: { dark: '#000000', light: '#FFFFFF' }
+            });
+        }
+        generateQR();
+    </script>
+</body>
+</html>

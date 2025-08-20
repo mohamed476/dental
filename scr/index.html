@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عيادة الابتسامة المثالية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), 0 0 30px rgba(34, 197, 94, 0.6); }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.5; transform: scale(1.2) rotate(180deg); }
+    }
+    .tool:hover {
+      transform: scale(1.1);
+      animation: float 2s ease-in-out infinite;
+    }
+    .tool.dragging {
+      transform: scale(1.2);
+      animation: glow 1s ease-in-out infinite;
+    }
+    .tooth.healthy {
+      animation: sparkle 3s ease-in-out infinite;
+    }
+    .game-area {
+      background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .stats-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    canvas { touch-action: none; border-radius: 8px; }
+    .legend-img { width: 24px; height: 24px; font-size: 24px; line-height: 24px; text-align: center; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #6b7280, #4b5563, #374151);
+      min-height: 100vh;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="max-w-4xl mx-auto">
+    <!-- Encabezado -->
+    <div class="text-center mb-8">
+      <h1 class="text-5xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent mb-4" id="title">عيادة الابتسامة المثالية 🦷</h1>
+      <select id="langSelect" class="mb-6 p-3 bg-white/20 backdrop-blur border border-white/30 rounded-lg text-white" aria-label="اختيار اللغة">
+        <option value="ar">العربية</option>
+        <option value="es">Español</option>
+        <option value="en">English</option>
+      </select>
+      <div class="flex justify-center gap-4 mb-6">
+        <div class="stats-card rounded-xl px-6 py-3">
+          <div class="text-2xl font-bold text-cyan-200" id="points">0</div>
+          <div class="text-sm text-white/80" id="pointsLabel">نقاط الصحة</div>
+        </div>
+        <div class="stats-card rounded-xl px-6 py-3">
+          <div class="text-2xl font-bold text-green-200" id="patients">0</div>
+          <div class="text-sm text-white/80" id="patientsLabel">المرضى</div>
+        </div>
+        <div class="stats-card rounded-xl px-6 py-3">
+          <div class="text-2xl font-bold text-purple-200" id="level">1</div>
+          <div class="text-sm text-white/80" id="levelLabel">المستوى</div>
+        </div>
+      </div>
+      <div class="flex justify-center gap-4">
+        <button id="startBtn" class="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-8 py-4 rounded-xl hover:from-green-500 hover:to-emerald-600 transition-all duration-300 shadow-lg transform hover:scale-105" aria-label="بدء أو إعادة اللعبة">🚀 ابدأ العلاج</button>
+        <button id="helpBtn" class="bg-white/20 backdrop-blur text-white px-8 py-4 rounded-xl hover:bg-white/30 transition-all duration-300" aria-label="عرض المساعدة">❓ مساعدة</button>
+      </div>
+    </div>
+
+    <!-- Área de Juego -->
+    <div class="game-area mb-8">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-white mb-4" id="toolsTitle">🛠️ أدوات الأسنان</h2>
+        <canvas id="canvas" width="400" height="300" class="mx-auto" aria-label="منطقة اللعب"></canvas>
+      </div>
+    </div>
+
+    <!-- Leyenda y Chat -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Leyenda -->
+      <div class="stats-card rounded-2xl p-6">
+        <h3 class="text-xl font-bold text-white mb-4" id="legendTitle">📋 دليل العيادة</h3>
+        <div class="space-y-3 text-white/90">
+          <div class="flex items-center gap-3">
+            <span class="legend-img">🛠️</span>
+            <span id="legendDrill">التوربين: لإزالة التسوس</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="legend-img">🧹</span>
+            <span id="legendCleaner">المنظف: لإزالة البقع</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="legend-img">💧</span>
+            <span id="legendFluoride">الفلورايد: لتقوية الأسنان</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="legend-img">🦷</span>
+            <span id="legendHealthy">سن سليم: لا يحتاج علاج</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="legend-img">🦷</span>
+            <span id="legendCaries">سن متسوس: استخدم التوربين</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="legend-img">🦷</span>
+            <span id="legendStained">سن ملطخ: استخدم المنظف</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat -->
+      <div class="stats-card rounded-2xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full flex items-center justify-center mr-3">
+            <span class="text-2xl">👨‍⚕️</span>
+          </div>
+          <h3 class="text-xl font-bold text-white" id="chatTitle">د. آمنة الجوادي</h3>
+        </div>
+        <div id="chatBox" class="h-32 overflow-y-auto bg-white/10 rounded-lg p-3 mb-4 backdrop-blur border border-white/20 text-white text-sm" aria-live="polite"></div>
+        <div class="flex gap-2">
+          <input id="userInput" type="text" class="flex-1 p-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300 text-white placeholder-gray-200 backdrop-blur" placeholder="اسأل الطبيب..." aria-label="إدخال رسالة للدردشة">
+          <button id="sendBtn" class="bg-gradient-to-r from-cyan-400 to-purple-500 text-white px-4 py-3 rounded-lg hover:from-cyan-500 hover:to-purple-600 transition-all duration-300" aria-label="إرسال رسالة">📨</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuración del lienzo
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const pointsEl = document.getElementById('points');
+    const patientsEl = document.getElementById('patients');
+    const levelEl = document.getElementById('level');
+    const startBtn = document.getElementById('startBtn');
+    const helpBtn = document.getElementById('helpBtn');
+    const langSelect = document.getElementById('langSelect');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    let points = 0;
+    let patients = 0;
+    let level = 1;
+    let gameActive = false;
+    let selectedTool = null;
+    let language = 'ar';
+
+    // Traducciones
+    const translations = {
+      ar: {
+        title: 'عيادة الابتسامة المثالية 🦷',
+        startBtn: '🚀 ابدأ العلاج',
+        restartBtn: '🔄 مريض جديد',
+        helpBtn: '❓ مساعدة',
+        toolsTitle: '🛠️ أدوات الأسنان',
+        patientTitle: '👤 المريض الحالي',
+        legendTitle: '📋 دليل العيادة',
+        chatTitle: 'د. آمنة الجوادي',
+        pointsLabel: 'نقاط الصحة',
+        patientsLabel: 'المرضى',
+        levelLabel: 'المستوى',
+        legendDrill: 'التوربين: لإزالة التسوس 🛠️',
+        legendCleaner: 'المنظف: لإزالة البقع 🧹',
+        legendFluoride: 'الفلورايد: لتقوية الأسنان 💧',
+        legendHealthy: 'سن سليم: لا يحتاج علاج 🦷',
+        legendCaries: 'سن متسوس: استخدم التوربين 🦷',
+        legendStained: 'سن ملطخ: استخدم المنظف 🦷',
+        welcome: 'مرحبًا! اسحب الأدوات إلى الأسنان التي تحتاج علاج. 🦷',
+        success: 'ممتاز! تم العلاج. 🎉',
+        patientComplete: 'شُفي المريض! 🎊 جاهز للتالي؟',
+        placeholder: 'اسأل الطبيب...',
+        initialMessage: 'مرحبًا! أنا د. آمنة الجوادي، طبيبتك الافتراضية. لنبدأ بتحسين الابتسامات! 😊'
+      },
+      es: {
+        title: 'Clínica de la Sonrisa Perfecta 🦷',
+        startBtn: '🚀 Iniciar Tratamiento',
+        restartBtn: '🔄 Nuevo Paciente',
+        helpBtn: '❓ Ayuda',
+        toolsTitle: '🛠️ Herramientas Dentales',
+        patientTitle: '👤 Paciente Actual',
+        legendTitle: '📋 Guía de la Clínica',
+        chatTitle: 'Dra. Amna Al-Jawadi',
+        pointsLabel: 'Puntos',
+        patientsLabel: 'Pacientes',
+        levelLabel: 'Nivel',
+        legendDrill: 'Taladro: Para eliminar caries 🛠️',
+        legendCleaner: 'Limpiador: Para quitar manchas 🧹',
+        legendFluoride: 'Flúor: Para fortalecer dientes 💧',
+        legendHealthy: 'Diente sano: No necesita tratamiento 🦷',
+        legendCaries: 'Diente con caries: Usa el taladro 🦷',
+        legendStained: 'Diente manchado: Usa el limpiador 🦷',
+        welcome: '¡Bienvenido! Arrastra las herramientas a los dientes que necesiten tratamiento. 🦷',
+        success: '¡Excelente! Tratamiento completado. 🎉',
+        patientComplete: '¡Paciente curado! 🎊 ¿Listo para el siguiente?',
+        placeholder: 'Pregunta al doctor...',
+        initialMessage: '¡Hola! Soy la Dra. Amna Al-Jawadi, tu dentista virtual. ¡Empecemos a mejorar sonrisas! 😊'
+      },
+      en: {
+        title: 'Perfect Smile Clinic 🦷',
+        startBtn: '🚀 Start Treatment',
+        restartBtn: '🔄 New Patient',
+        helpBtn: '❓ Help',
+        toolsTitle: '🛠️ Dental Tools',
+        patientTitle: '👤 Current Patient',
+        legendTitle: '📋 Clinic Guide',
+        chatTitle: 'Dr. Amna Al-Jawadi',
+        pointsLabel: 'Points',
+        patientsLabel: 'Patients',
+        levelLabel: 'Level',
+        legendDrill: 'Drill: To remove cavities 🛠️',
+        legendCleaner: 'Cleaner: To remove stains 🧹',
+        legendFluoride: 'Fluoride: To strengthen teeth 💧',
+        legendHealthy: 'Healthy tooth: No treatment needed 🦷',
+        legendCaries: 'Caries tooth: Use the drill 🦷',
+        legendStained: 'Stained tooth: Use the cleaner 🦷',
+        welcome: 'Welcome! Drag tools to teeth that need treatment. 🦷',
+        success: 'Excellent! Treatment completed. 🎉',
+        patientComplete: 'Patient cured! 🎊 Ready for the next one?',
+        placeholder: 'Ask the doctor...',
+        initialMessage: 'Hello! I\'m Dr. Amna Al-Jawadi, your virtual dentist. Let\'s start improving smiles! 😊'
+      }
+    };
+
+    // Actualizar idioma
+    function updateLanguage() {
+      const t = translations[language];
+      document.title = t.title.replace('🦷', '');
+      document.getElementById('title').textContent = t.title;
+      startBtn.textContent = gameActive ? t.restartBtn : t.startBtn;
+      helpBtn.textContent = t.helpBtn;
+      document.getElementById('toolsTitle').textContent = t.toolsTitle;
+      document.getElementById('legendTitle').textContent = t.legendTitle;
+      document.getElementById('chatTitle').textContent = t.chatTitle;
+      document.getElementById('pointsLabel').textContent = t.pointsLabel;
+      document.getElementById('patientsLabel').textContent = t.patientsLabel;
+      document.getElementById('levelLabel').textContent = t.levelLabel;
+      document.getElementById('legendDrill').textContent = t.legendDrill;
+      document.getElementById('legendCleaner').textContent = t.legendCleaner;
+      document.getElementById('legendFluoride').textContent = t.legendFluoride;
+      document.getElementById('legendHealthy').textContent = t.legendHealthy;
+      document.getElementById('legendCaries').textContent = t.legendCaries;
+      document.getElementById('legendStained').textContent = t.legendStained;
+      document.getElementById('userInput').placeholder = t.placeholder;
+      document.documentElement.lang = language;
+      document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    }
+    langSelect.addEventListener('change', () => {
+      language = langSelect.value;
+      updateLanguage();
+      addMessage(translations[language].initialMessage, 'bot');
+    });
+    updateLanguage();
+
+    // Clase para dientes
+    class Tooth {
+      constructor(x, y, state) {
+        this.x = x;
+        this.y = y;
+        this.width = 30;
+        this.height = 50;
+        this.state = state; // 'caries', 'stained', 'healthy'
+      }
+
+      draw() {
+        ctx.save();
+        ctx.font = '35px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 0.5;
+        ctx.strokeText('🦷', this.x, this.y);
+        ctx.fillText('🦷', this.x, this.y);
+        if (this.state === 'caries') {
+          ctx.fillStyle = '#8b4513';
+          ctx.beginPath();
+          ctx.arc(this.x + 5, this.y - 5, 5, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (this.state === 'stained') {
+          ctx.fillStyle = '#ffa500';
+          ctx.beginPath();
+          ctx.arc(this.x + 5, this.y - 5, 5, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (this.state === 'healthy') {
+          ctx.globalAlpha = 0.5;
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      isClicked(x, y) {
+        return (
+          x >= this.x - this.width / 2 &&
+          x <= this.x + this.width / 2 &&
+          y >= this.y - this.height / 2 &&
+          y <= this.y + this.height / 2
+        );
+      }
+    }
+
+    // Clase para herramientas
+    class Tool {
+      constructor(type, x, y) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.width = 40;
+        this.height = 40;
+        this.dragging = false;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.font = '45px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const emoji = this.type === 'drill' ? '🛠️' : this.type === 'cleaner' ? '🧹' : '💧';
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 0.5;
+        ctx.strokeText(emoji, this.x, this.y);
+        ctx.fillText(emoji, this.x, this.y);
+        if (this.dragging) {
+          ctx.shadowColor = 'rgba(34, 197, 94, 0.8)';
+          ctx.shadowBlur = 20;
+        }
+        ctx.restore();
+      }
+
+      isClicked(x, y) {
+        return (
+          x >= this.x - this.width / 2 &&
+          x <= this.x + this.width / 2 &&
+          y >= this.y - this.height / 2 &&
+          y <= this.y + this.height / 2
+        );
+      }
+    }
+
+    // Dientes y herramientas
+    const teeth = [];
+    const tools = [
+      new Tool('drill', 50, 60),
+      new Tool('cleaner', 100, 60),
+      new Tool('fluoride', 150, 60)
+    ];
+
+    // Control de arrastre
+    let dragStart = null;
+    function handleStart(e) {
+      if (!gameActive) return;
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || e.touches[0].clientX) - rect.left;
+      const y = (e.clientY || e.touches[0].clientY) - rect.top;
+      selectedTool = tools.find(tool => tool.isClicked(x, y));
+      if (selectedTool) {
+        selectedTool.dragging = true;
+        dragStart = { x, y };
+      }
+    }
+
+    function handleMove(e) {
+      if (!gameActive || !selectedTool || !selectedTool.dragging) return;
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || e.touches[0].clientX) - rect.left;
+      const y = (e.clientY || e.touches[0].clientY) - rect.top;
+      selectedTool.x += x - dragStart.x;
+      selectedTool.y += y - dragStart.y;
+      dragStart = { x, y };
+    }
+
+    function handleEnd(e) {
+      if (!gameActive || !selectedTool) return;
+      e.preventDefault();
+      selectedTool.dragging = false;
+      const targetTooth = teeth.find(tooth => tooth.isClicked(selectedTool.x, selectedTool.y));
+      if (targetTooth) {
+        if (
+          (selectedTool.type === 'drill' && targetTooth.state === 'caries') ||
+          (selectedTool.type === 'cleaner' && targetTooth.state === 'stained') ||
+          (selectedTool.type === 'fluoride' && targetTooth.state !== 'healthy')
+        ) {
+          targetTooth.state = 'healthy';
+          points += 10;
+          pointsEl.textContent = points;
+          addMessage(translations[language].success, 'bot');
+          saveProgress();
+          if (teeth.every(tooth => tooth.state === 'healthy')) {
+            patients += 1;
+            patientsEl.textContent = patients;
+            level = Math.floor(patients / 2) + 1;
+            levelEl.textContent = level;
+            setTimeout(() => {
+              addMessage(translations[language].patientComplete, 'bot');
+              resetTeeth();
+              saveProgress();
+            }, 1500);
+          }
+        }
+      }
+      selectedTool.x = tools.indexOf(selectedTool) * 50 + 50;
+      selectedTool.y = 60;
+      selectedTool = null;
+    }
+
+    canvas.addEventListener('mousedown', handleStart);
+    canvas.addEventListener('mousemove', handleMove);
+    canvas.addEventListener('mouseup', handleEnd);
+    canvas.addEventListener('touchstart', handleStart, { passive: false });
+    canvas.addEventListener('touchmove', handleMove, { passive: false });
+    canvas.addEventListener('touchend', handleEnd, { passive: false });
+
+    // Iniciar juego
+    function resetTeeth() {
+      teeth.length = 0;
+      const numTeeth = Math.min(3 + Math.floor(level / 2), 6);
+      for (let i = 0; i < numTeeth; i++) {
+        const state = Math.random() > 0.5 ? 'caries' : 'stained';
+        teeth.push(new Tooth(100 + i * 80, 200, state));
+      }
+    }
+
+    startBtn.addEventListener('click', () => {
+      gameActive = true;
+      if (patients === 0) {
+        points = 0;
+        patients = 0;
+        level = 1;
+        pointsEl.textContent = points;
+        patientsEl.textContent = patients;
+        levelEl.textContent = level;
+        saveProgress();
+      }
+      resetTeeth();
+      addMessage(translations[language].welcome, 'bot');
+      startBtn.textContent = translations[language].restartBtn;
+    });
+
+    helpBtn.addEventListener('click', () => {
+      addMessage(`${translations[language].legendDrill} ${translations[language].legendCleaner} ${translations[language].legendFluoride}`, 'bot');
+    });
+
+    // Animación
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      teeth.forEach(tooth => tooth.draw());
+      tools.forEach(tool => tool.draw());
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Sistema de chat
+    const responses = {
+      ar: [
+        'تقنية ممتازة! الأسنان تبدو أفضل بكثير. 🦷✨',
+        'تذكر: التنظيف مرتين يومياً يبعد التسوس. 🪥',
+        'عمل جيد! هذا المريض سيحصل على ابتسامة مشرقة. 😊',
+        'الفلورايد هو أفضل حليف ضد التسوس. 💪',
+        'استمر هكذا! كل سن سليم هو انتصار. 🏆'
+      ],
+      es: [
+        '¡Excelente técnica! Los dientes se ven mucho mejor. 🦷✨',
+        'Recuerda: cepillado 2 veces al día mantiene alejadas las caries. 🪥',
+        '¡Buen trabajo! Este paciente tendrá una sonrisa radiante. 😊',
+        'El flúor es tu mejor aliado contra las caries. 💪',
+        '¡Sigue así! Cada diente sano es una victoria. 🏆'
+      ],
+      en: [
+        'Excellent technique! The teeth look much better. 🦷✨',
+        'Remember: brushing twice a day keeps cavities away. 🪥',
+        'Good job! This patient will have a radiant smile. 😊',
+        'Fluoride is your best ally against cavities. 💪',
+        'Keep it up! Every healthy tooth is a victory. 🏆'
+      ]
+    };
+
+    function addMessage(message, sender) {
+      const messageEl = document.createElement('div');
+      messageEl.className = `
