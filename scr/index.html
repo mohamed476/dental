@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>عيادة الابتسامة المثالية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23ffffff' stroke='%23000000' stroke-width='2' d='M32 6c9 0 20 6 20 18 0 12-7 14-9 22-2 8-3 12-7 12-4 0-5-6-6-10-1-4-1-6-3-6s-2 2-3 6c-1 4-2 10-6 10-4 0-5-4-7-12-2-8-9-10-9-22C2 12 13 6 22 6c4 0 6 2 10 2s6-2 10-2z'/></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes float {
@@ -95,27 +99,27 @@
         <h3 class="text-xl font-bold text-white mb-4" id="legendTitle">📋 دليل العيادة</h3>
         <div class="space-y-3 text-white/90">
           <div class="flex items-center gap-3">
-            <span class="legend-img">🛠️</span>
+            <span class="legend-img" id="iconDrill"></span>
             <span id="legendDrill">التوربين: لإزالة التسوس</span>
           </div>
           <div class="flex items-center gap-3">
-            <span class="legend-img">🧹</span>
+            <span class="legend-img" id="iconCleaner"></span>
             <span id="legendCleaner">المنظف: لإزالة البقع</span>
           </div>
           <div class="flex items-center gap-3">
-            <span class="legend-img">💧</span>
+            <span class="legend-img" id="iconFluoride"></span>
             <span id="legendFluoride">الفلورايد: لتقوية الأسنان</span>
           </div>
           <div class="flex items-center gap-3">
-            <span class="legend-img">🦷</span>
+            <span class="legend-img" id="iconHealthy"></span>
             <span id="legendHealthy">سن سليم: لا يحتاج علاج</span>
           </div>
           <div class="flex items-center gap-3">
-            <span class="legend-img">🦷</span>
+            <span class="legend-img" id="iconCaries"></span>
             <span id="legendCaries">سن متسوس: استخدم التوربين</span>
           </div>
           <div class="flex items-center gap-3">
-            <span class="legend-img">🦷</span>
+            <span class="legend-img" id="iconStained"></span>
             <span id="legendStained">سن ملطخ: استخدم المنظف</span>
           </div>
         </div>
@@ -257,6 +261,24 @@
       document.getElementById('userInput').placeholder = t.placeholder;
       document.documentElement.lang = language;
       document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+
+      // Update legend icons dynamically as inline SVGs
+      const icons = {
+        drill: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect x='14' y='24' rx='6' ry='6' width='32' height='16' fill='#94a3b8' stroke='#0f172a' stroke-width='2'/><rect x='22' y='28' width='16' height='8' fill='#64748b'/><polygon points='46,28 54,32 46,36' fill='#bae6fd' stroke='#0f172a' stroke-width='2'/></svg>",
+        cleaner: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><line x1='16' y1='46' x2='48' y2='18' stroke='#60a5fa' stroke-width='3'/><rect x='26' y='18' width='16' height='10' rx='3' fill='#93c5fd' stroke='#1e3a8a' stroke-width='2'/><line x1='28' y1='28' x2='28' y2='36' stroke='#1e3a8a' stroke-width='2'/><line x1='32' y1='28' x2='32' y2='36' stroke='#1e3a8a' stroke-width='2'/><line x1='36' y1='28' x2='36' y2='36' stroke='#1e3a8a' stroke-width='2'/></svg>",
+        fluoride: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#22d3ee'/><stop offset='100%' stop-color='#0ea5e9'/></linearGradient></defs><path d='M32 8 C40 16 42 24 32 40 C22 24 24 16 32 8 Z' fill='url(#g)' stroke='#075985' stroke-width='2'/></svg>",
+        tooth: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><path d='M32 10c10 0 18 8 18 18s-6 12-8 20-3 10-6 10-4-5-5-9c-1-3-1-5-3-5s-2 2-3 5-3 9-6 9-4-2-6-10-8-10-8-20 8-18 18-18c4 0 6 2 9 2s5-2 8-2z' fill='white' stroke='#0f172a' stroke-width='2'/></svg>"
+      };
+      const setSvg = (id, svg) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = svg;
+      };
+      setSvg('iconDrill', icons.drill);
+      setSvg('iconCleaner', icons.cleaner);
+      setSvg('iconFluoride', icons.fluoride);
+      setSvg('iconHealthy', icons.tooth);
+      setSvg('iconCaries', icons.tooth);
+      setSvg('iconStained', icons.tooth);
     }
     langSelect.addEventListener('change', () => {
       language = langSelect.value;
@@ -280,27 +302,45 @@
         ctx.font = '35px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 0.5;
-        ctx.strokeText('🦷', this.x, this.y);
-        ctx.fillText('🦷', this.x, this.y);
+        // Tooth icon (vector)
+        ctx.translate(this.x, this.y);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        ctx.beginPath();
+        ctx.moveTo(0, -18);
+        ctx.bezierCurveTo(12, -18, 18, -8, 18, 2);
+        ctx.bezierCurveTo(18, 12, 12, 14, 10, 22);
+        ctx.bezierCurveTo(9, 26, 6, 28, 4, 28);
+        ctx.bezierCurveTo(2, 28, 1, 26, 0, 22);
+        ctx.bezierCurveTo(-1, 26, -2, 28, -4, 28);
+        ctx.bezierCurveTo(-6, 28, -9, 26, -10, 22);
+        ctx.bezierCurveTo(-12, 14, -18, 12, -18, 2);
+        ctx.bezierCurveTo(-18, -8, -12, -18, 0, -18);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
         if (this.state === 'caries') {
-          ctx.fillStyle = '#8b4513';
+          ctx.fillStyle = '#7c3aed';
           ctx.beginPath();
-          ctx.arc(this.x + 5, this.y - 5, 5, 0, Math.PI * 2);
+          ctx.arc(5, -6, 4, 0, Math.PI * 2);
           ctx.fill();
         } else if (this.state === 'stained') {
-          ctx.fillStyle = '#ffa500';
+          ctx.fillStyle = '#f59e0b';
           ctx.beginPath();
-          ctx.arc(this.x + 5, this.y - 5, 5, 0, Math.PI * 2);
+          ctx.arc(5, -6, 4, 0, Math.PI * 2);
           ctx.fill();
         } else if (this.state === 'healthy') {
-          ctx.globalAlpha = 0.5;
-          ctx.fillStyle = 'white';
+          ctx.globalAlpha = 1;
+          const shine = ctx.createLinearGradient(0, -18, 0, 18);
+          shine.addColorStop(0, 'rgba(255,255,255,0.9)');
+          shine.addColorStop(1, 'rgba(255,255,255,0.6)');
+          ctx.fillStyle = shine;
           ctx.beginPath();
-          ctx.arc(this.x, this.y, 10, 0, Math.PI * 2);
+          ctx.arc(-4, -10, 4, 0, Math.PI * 2);
           ctx.fill();
         }
+        ctx.translate(-this.x, -this.y);
         ctx.restore();
       }
 
@@ -327,14 +367,88 @@
 
       draw() {
         ctx.save();
-        ctx.font = '45px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const emoji = this.type === 'drill' ? '🛠️' : this.type === 'cleaner' ? '🧹' : '💧';
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 0.5;
-        ctx.strokeText(emoji, this.x, this.y);
-        ctx.fillText(emoji, this.x, this.y);
+        // Render SVG-like icons programmatically for a more professional look
+        if (this.type === 'drill') {
+          // Drill icon
+          ctx.translate(this.x, this.y);
+          ctx.fillStyle = '#94a3b8';
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 2;
+          // body
+          ctx.beginPath();
+          ctx.roundRect(-18, -10, 36, 20, 6);
+          ctx.fill();
+          ctx.stroke();
+          // grip
+          ctx.fillStyle = '#64748b';
+          ctx.fillRect(-10, -6, 20, 12);
+          // bit
+          ctx.beginPath();
+          ctx.moveTo(18, -4);
+          ctx.lineTo(28, 0);
+          ctx.lineTo(18, 4);
+          ctx.closePath();
+          ctx.fillStyle = '#bae6fd';
+          ctx.fill();
+          ctx.stroke();
+          // cable
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(56,189,248,0.6)';
+          ctx.moveTo(-18, 0);
+          ctx.bezierCurveTo(-28, -8, -34, 10, -44, 2);
+          ctx.stroke();
+          ctx.translate(-this.x, -this.y);
+        } else if (this.type === 'cleaner') {
+          // Cleaner brush icon
+          ctx.translate(this.x, this.y);
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 2;
+          // handle
+          ctx.beginPath();
+          ctx.moveTo(-16, 8);
+          ctx.lineTo(16, -8);
+          ctx.strokeStyle = '#60a5fa';
+          ctx.stroke();
+          // head
+          ctx.fillStyle = '#93c5fd';
+          ctx.strokeStyle = '#1e3a8a';
+          ctx.beginPath();
+          ctx.roundRect(-6, -12, 18, 10, 4);
+          ctx.fill();
+          ctx.stroke();
+          // bristles
+          ctx.strokeStyle = '#1e3a8a';
+          for (let i = -5; i <= 9; i += 3) {
+            ctx.beginPath();
+            ctx.moveTo(i, -2);
+            ctx.lineTo(i, 6);
+            ctx.stroke();
+          }
+          ctx.translate(-this.x, -this.y);
+        } else {
+          // Fluoride droplet icon
+          ctx.translate(this.x, this.y);
+          const gradient = ctx.createLinearGradient(0, -16, 0, 16);
+          gradient.addColorStop(0, '#22d3ee');
+          gradient.addColorStop(1, '#0ea5e9');
+          ctx.fillStyle = gradient;
+          ctx.strokeStyle = '#075985';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(0, -16);
+          ctx.bezierCurveTo(10, -6, 12, 0, 0, 16);
+          ctx.bezierCurveTo(-12, 0, -10, -6, 0, -16);
+          ctx.fill();
+          ctx.stroke();
+          // sparkle
+          ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+          ctx.beginPath();
+          ctx.moveTo(-4, -2);
+          ctx.lineTo(0, -6);
+          ctx.lineTo(4, -2);
+          ctx.stroke();
+          ctx.translate(-this.x, -this.y);
+        }
         if (this.dragging) {
           ctx.shadowColor = 'rgba(34, 197, 94, 0.8)';
           ctx.shadowBlur = 20;
@@ -462,6 +576,20 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Soft vignette background
+      const radial = ctx.createRadialGradient(
+        canvas.width / 2,
+        canvas.height / 2,
+        40,
+        canvas.width / 2,
+        canvas.height / 2,
+        240
+      );
+      radial.addColorStop(0, 'rgba(255,255,255,0.06)');
+      radial.addColorStop(1, 'rgba(0,0,0,0.08)');
+      ctx.fillStyle = radial;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       teeth.forEach(tooth => tooth.draw());
       tools.forEach(tool => tool.draw());
       requestAnimationFrame(animate);
