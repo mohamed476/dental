@@ -20,12 +20,34 @@
     </button>
   </div>
 
-  <!-- Modal -->
+  <!-- Primer Modal -->
   <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg p-8 max-w-md w-full text-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">الوصول مقيد</h2>
-      <p class="text-gray-600 mb-6">يجب عليك التحدث مع المسؤول للوصول إلى تطبيقك.</p>
+      <p class="text-gray-600 mb-6">الوصول غير متاح حاليًا.</p>
       <button id="closeModal" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300">
+        إغلاق
+      </button>
+    </div>
+  </div>
+
+  <!-- Segundo Modal -->
+  <div id="secondModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full text-center">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">حالة التطبيق</h2>
+      <p class="text-gray-600 mb-6">يبدو أن التطبيق يختبئ!</p>
+      <button id="closeSecondModal" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+        إغلاق
+      </button>
+    </div>
+  </div>
+
+  <!-- Tercer Modal (Gracioso) -->
+  <div id="thirdModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full text-center">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">رسالة مضحكة!</h2>
+      <p class="text-gray-600 mb-6">ههه، التطبيق يلعب الغميضة وأنت لست جيدًا في البحث! 😜</p>
+      <button id="closeThirdModal" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300">
         إغلاق
       </button>
     </div>
@@ -35,19 +57,49 @@
     const accessButton = document.getElementById('accessButton');
     const modal = document.getElementById('modal');
     const closeModal = document.getElementById('closeModal');
+    const secondModal = document.getElementById('secondModal');
+    const closeSecondModal = document.getElementById('closeSecondModal');
+    const thirdModal = document.getElementById('thirdModal');
+    const closeThirdModal = document.getElementById('closeThirdModal');
 
+    // Abrir primer modal al hacer clic en el botón de acceso
     accessButton.addEventListener('click', () => {
       modal.classList.remove('hidden');
     });
 
+    // Abrir segundo modal al cerrar el primero
     closeModal.addEventListener('click', () => {
       modal.classList.add('hidden');
+      secondModal.classList.remove('hidden');
     });
 
-    // Cerrar modal al hacer clic fuera del contenido
+    // Abrir tercer modal al cerrar el segundo
+    closeSecondModal.addEventListener('click', () => {
+      secondModal.classList.add('hidden');
+      thirdModal.classList.remove('hidden');
+    });
+
+    // Cerrar tercer modal
+    closeThirdModal.addEventListener('click', () => {
+      thirdModal.classList.add('hidden');
+    });
+
+    // Cerrar modales al hacer clic fuera del contenido
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.add('hidden');
+      }
+    });
+
+    secondModal.addEventListener('click', (e) => {
+      if (e.target === secondModal) {
+        secondModal.classList.add('hidden');
+      }
+    });
+
+    thirdModal.addEventListener('click', (e) => {
+      if (e.target === thirdModal) {
+        thirdModal.classList.add('hidden');
       }
     });
   </script>
