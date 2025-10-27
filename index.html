@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Aprende Español — Para mi novia 💕</title>
+  <title>💗 Curso del día — <span id='todayDate'></span></title>
   <style>
     :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
     body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;align-items:center;gap:16px}
-    header h1{margin:0;font-size:20px;color:#111}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;align-items:center;gap:16px;justify-content:space-between}
+    header h1{margin:0;font-size:22px;color:#111}
     header p{margin:0;color:var(--muted)}
+    .date{font-size:18px;color:var(--accent);font-weight:bold}
     .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
     .card{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px}
     .list{display:flex;flex-direction:column;gap:10px}
@@ -29,56 +30,42 @@
 <body>
   <div class="wrap">
     <header>
-      <div style="font-size:30px">💌</div>
       <div>
-        <h1>Mi pequeña lección — 1 página para aprender y enamorarse</h1>
-        <p>5 palabras del día • 5 verbos regulares • 5 verbos irregulares • Mensajes románticos</p>
+        <h1>💗 Curso del día</h1>
+        <p>Palabras difíciles • Verbos regulares e irregulares (todos los pronombres)</p>
       </div>
+      <div class="date" id="todayDate"></div>
     </header>
 
     <div class="grid">
       <div>
         <div class="card">
-          <h3>Palabras del día</h3>
-          <div class="list" id="words">
-            <!-- palabras serán insertadas por JS -->
-          </div>
-          <div style="margin-top:12px;display:flex;gap:8px">
-            <button onclick="prevDay()" class="mini">◀️ Anterior</button>
-            <button onclick="nextDay()" class="mini">Siguiente ▶️</button>
-            <button onclick="shuffleDay()" style="margin-left:auto">Mezclar</button>
-          </div>
+          <h3>Palabras difíciles del día</h3>
+          <div class="list" id="words"></div>
         </div>
 
         <div class="card" style="margin-top:14px">
           <h3>Verbos regulares (presente)</h3>
-          <div class="verbs" id="regulars">
-            <!-- regulares -->
-          </div>
+          <div class="verbs" id="regulars"></div>
         </div>
 
         <div class="card" style="margin-top:14px">
           <h3>Verbos irregulares (presente)</h3>
-          <div class="verbs" id="irregulars">
-            <!-- irregulares -->
-          </div>
+          <div class="verbs" id="irregulars"></div>
         </div>
       </div>
 
       <aside>
         <div class="card">
           <h3>Mensajes románticos</h3>
-          <div id="romance" style="display:flex;flex-direction:column;gap:12px">
-            <!-- mensajes -->
-          </div>
+          <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
           <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
 
         <div class="card" style="margin-top:14px;text-align:center">
           <div class="heart">💗</div>
-          <p class="small">Puedes enviar cualquiera de estos mensajes por WhatsApp — copia y pega.</p>
+          <p class="small" id="footerText"></p>
         </div>
-
       </aside>
     </div>
 
@@ -88,65 +75,47 @@
   </div>
 
   <script>
-    // Datos (5 palabras románticas)
+    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
     const days = [
-      {
-        words:[
-          {es:'corazón', en:'heart', no:'hjerte'},
-          {es:'abrazo', en:'hug', no:'klem'},
-          {es:'sonrisa', en:'smile', no:'smil'},
-          {es:'luna', en:'moon', no:'måne'},
-          {es:'beso', en:'kiss', no:'kyss'}
-        ]
-      },
-      {
-        words:[
-          {es:'amor', en:'love', no:'kjærlighet'},
-          {es:'sueño', en:'dream', no:'drøm'},
-          {es:'estrella', en:'star', no:'stjerne'},
-          {es:'piel', en:'skin', no:'hud'},
-          {es:'mirada', en:'look/gaze', no:'blikk'}
-        ]
-      }
+      {words:[
+        {es:'desarrollar', en:'to develop', no:'å utvikle'},
+        {es:'mejorar', en:'to improve', no:'å forbedre'},
+        {es:'lograr', en:'to achieve', no:'å oppnå'},
+        {es:'recordar', en:'to remember', no:'å huske'},
+        {es:'descubrir', en:'to discover', no:'å oppdage'}
+      ]}
     ];
 
-    // Verbos regulares (infinitivo, en, no) - mostrar conjugación en presente (yo, tú, él)
     const regulars = [
-      {inf:'hablar', en:'to speak', no:'å snakke', conj:{yo:'hablo',tu:'hablas',el:'habla'}},
-      {inf:'amar', en:'to love', no:'å elske', conj:{yo:'amo',tu:'amas',el:'ama'}},
-      {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come'}},
-      {inf:'vivir', en:'to live', no:'å leve', conj:{yo:'vivo',tu:'vives',el:'vive'}},
-      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja'}}
+      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
+      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}},
+      {inf:'viajar', en:'to travel', no:'å reise', conj:{yo:'viajo',tu:'viajas',el:'viaja',nos:'viajamos',vos:'viajáis',ellos:'viajan'}},
+      {inf:'necesitar', en:'to need', no:'å trenge', conj:{yo:'necesito',tu:'necesitas',el:'necesita',nos:'necesitamos',vos:'necesitáis',ellos:'necesitan'}},
+      {inf:'aprender', en:'to learn', no:'å lære', conj:{yo:'aprendo',tu:'aprendes',el:'aprende',nos:'aprendemos',vos:'aprendéis',ellos:'aprenden'}}
     ];
 
-    // Verbos irregulares
     const irregulars = [
-      {inf:'ser', en:'to be (essence)', no:'å være', conj:{yo:'soy',tu:'eres',el:'es'}},
-      {inf:'estar', en:'to be (state)', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está'}},
-      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va'}},
-      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene'}},
-      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice'}}
+      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
+      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}},
+      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}},
+      {inf:'hacer', en:'to do / make', no:'å gjøre', conj:{yo:'hago',tu:'haces',el:'hace',nos:'hacemos',vos:'hacéis',ellos:'hacen'}},
+      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice',nos:'decimos',vos:'decís',ellos:'dicen'}}
     ];
 
-    // Mensajes románticos con traducciones
     const messages = [
       {es:'Eres mi razón para sonreír cada día.', en:'You are my reason to smile every day.', no:'Du er grunnen til at jeg smiler hver dag.'},
       {es:'Contigo, cada momento es mágico.', en:'With you, every moment is magical.', no:'Med deg er hvert øyeblikk magisk.'},
       {es:'Tu risa ilumina mi mundo.', en:'Your laugh lights up my world.', no:'Latteren din lyser opp verden min.'},
-      {es:'Quiero aprender contigo y para ti.', en:'I want to learn with you and for you.', no:'Jeg vil lære sammen med deg og for deg.'},
-      {es:'Buenas noches, mi amor. Sueña conmigo.', en:'Good night, my love. Dream of me.', no:'God natt, min kjære. Drøm om meg.'}
+      {es:'Quiero aprender contigo y para ti.', en:'I want to learn with you and for you.', no:'Jeg vil lære sammen med deg og for deg.'}
     ];
 
-    // Estado
-    let current = 0;
-
-    function renderDay(i){
+    function renderDay(){
       const container = document.getElementById('words');
       container.innerHTML = '';
-      const set = days[i % days.length].words;
-      set.forEach(w=>{
+      days[0].words.forEach(w=>{
         const div = document.createElement('div'); div.className='item';
-        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div><div class="small">${capitalize(w.es)}</div>`;
+        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;
         container.appendChild(div);
       });
     }
@@ -157,7 +126,7 @@
       regulars.forEach(v=>{
         const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
         d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
-                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el}</div>`;
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nosotros ${v.conj.nos} • vosotros ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
         rcont.appendChild(d);
       });
 
@@ -166,7 +135,7 @@
       irregulars.forEach(v=>{
         const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
         d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
-                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el}</div>`;
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nosotros ${v.conj.nos} • vosotros ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
         icont.appendChild(d);
       });
     }
@@ -180,14 +149,9 @@
       });
     }
 
-    function nextDay(){ current = (current+1) % days.length; renderDay(current); }
-    function prevDay(){ current = (current-1 + days.length) % days.length; renderDay(current); }
-    function shuffleDay(){ current = Math.floor(Math.random()*days.length); renderDay(current); }
+    renderDay(); renderVerbs(); renderMessages();
 
-    function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-    // Inicializar
-    renderDay(0); renderVerbs(); renderMessages();
+    document.getElementById('footerText').innerHTML = 'Aprende cada día una palabra nueva y compártela con alguien especial.<br> Learn a new word every day and share it with someone special.<br> Lær et nytt ord hver dag og del det med noen spesielle.';
   </script>
 </body>
 </html>
