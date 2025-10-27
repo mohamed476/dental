@@ -1,107 +1,193 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الوصول إلى التطبيق</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Aprende Español — Para mi novia 💕</title>
   <style>
-    body {
-      font-family: 'Amiri', serif;
-    }
+    :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
+    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;align-items:center;gap:16px}
+    header h1{margin:0;font-size:20px;color:#111}
+    header p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
+    .card{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f2e6ef}
+    .lang{font-size:13px;color:var(--muted)}
+    .big{font-weight:700;font-size:18px}
+    .small{font-size:13px;color:var(--muted)}
+    button{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .mini{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:6px 8px}
+    .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted)}
+    .heart{font-size:26px;color:var(--accent)}
+    @media(max-width:800px){.grid{grid-template-columns:1fr;}.verbs{grid-template-columns:1fr}}
   </style>
 </head>
-<body class="bg-gray-900 flex items-center justify-center h-screen">
-  <div class="text-center">
-    <h1 class="text-4xl font-bold text-white mb-8">مرحبًا بك في التطبيق</h1>
-    <button id="accessButton" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
-      انقر للوصول
-    </button>
-  </div>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="font-size:30px">💌</div>
+      <div>
+        <h1>Mi pequeña lección — 1 página para aprender y enamorarse</h1>
+        <p>5 palabras del día • 5 verbos regulares • 5 verbos irregulares • Mensajes románticos</p>
+      </div>
+    </header>
 
-  <!-- Primer Modal -->
-  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full text-center">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">الوصول مقيد</h2>
-      <p class="text-gray-600 mb-6">الوصول غير متاح حاليًا.</p>
-      <button id="closeModal" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300">
-        إغلاق
-      </button>
-    </div>
-  </div>
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h3>Palabras del día</h3>
+          <div class="list" id="words">
+            <!-- palabras serán insertadas por JS -->
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button onclick="prevDay()" class="mini">◀️ Anterior</button>
+            <button onclick="nextDay()" class="mini">Siguiente ▶️</button>
+            <button onclick="shuffleDay()" style="margin-left:auto">Mezclar</button>
+          </div>
+        </div>
 
-  <!-- Segundo Modal -->
-  <div id="secondModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full text-center">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">حالة التطبيق</h2>
-      <p class="text-gray-600 mb-6">يبدو أن التطبيق يختبئ!</p>
-      <button id="closeSecondModal" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
-        إغلاق
-      </button>
-    </div>
-  </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Verbos regulares (presente)</h3>
+          <div class="verbs" id="regulars">
+            <!-- regulares -->
+          </div>
+        </div>
 
-  <!-- Tercer Modal (Gracioso) -->
-  <div id="thirdModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full text-center">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">رسالة مضحكة!</h2>
-      <p class="text-gray-600 mb-6">ههه، التطبيق يلعب الغميضة وأنت لست جيدًا في البحث! 😜</p>
-      <button id="closeThirdModal" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300">
-        إغلاق
-      </button>
+        <div class="card" style="margin-top:14px">
+          <h3>Verbos irregulares (presente)</h3>
+          <div class="verbs" id="irregulars">
+            <!-- irregulares -->
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h3>Mensajes románticos</h3>
+          <div id="romance" style="display:flex;flex-direction:column;gap:12px">
+            <!-- mensajes -->
+          </div>
+          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
+        </div>
+
+        <div class="card" style="margin-top:14px;text-align:center">
+          <div class="heart">💗</div>
+          <p class="small">Puedes enviar cualquiera de estos mensajes por WhatsApp — copia y pega.</p>
+        </div>
+
+      </aside>
     </div>
+
+    <footer>
+      <span>Hecho con cariño — aprende un poquito cada día. ❤️</span>
+    </footer>
   </div>
 
   <script>
-    const accessButton = document.getElementById('accessButton');
-    const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('closeModal');
-    const secondModal = document.getElementById('secondModal');
-    const closeSecondModal = document.getElementById('closeSecondModal');
-    const thirdModal = document.getElementById('thirdModal');
-    const closeThirdModal = document.getElementById('closeThirdModal');
-
-    // Abrir primer modal al hacer clic en el botón de acceso
-    accessButton.addEventListener('click', () => {
-      modal.classList.remove('hidden');
-    });
-
-    // Abrir segundo modal al cerrar el primero
-    closeModal.addEventListener('click', () => {
-      modal.classList.add('hidden');
-      secondModal.classList.remove('hidden');
-    });
-
-    // Abrir tercer modal al cerrar el segundo
-    closeSecondModal.addEventListener('click', () => {
-      secondModal.classList.add('hidden');
-      thirdModal.classList.remove('hidden');
-    });
-
-    // Cerrar tercer modal
-    closeThirdModal.addEventListener('click', () => {
-      thirdModal.classList.add('hidden');
-    });
-
-    // Cerrar modales al hacer clic fuera del contenido
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.add('hidden');
+    // Datos (5 palabras románticas)
+    const days = [
+      {
+        words:[
+          {es:'corazón', en:'heart', no:'hjerte'},
+          {es:'abrazo', en:'hug', no:'klem'},
+          {es:'sonrisa', en:'smile', no:'smil'},
+          {es:'luna', en:'moon', no:'måne'},
+          {es:'beso', en:'kiss', no:'kyss'}
+        ]
+      },
+      {
+        words:[
+          {es:'amor', en:'love', no:'kjærlighet'},
+          {es:'sueño', en:'dream', no:'drøm'},
+          {es:'estrella', en:'star', no:'stjerne'},
+          {es:'piel', en:'skin', no:'hud'},
+          {es:'mirada', en:'look/gaze', no:'blikk'}
+        ]
       }
-    });
+    ];
 
-    secondModal.addEventListener('click', (e) => {
-      if (e.target === secondModal) {
-        secondModal.classList.add('hidden');
-      }
-    });
+    // Verbos regulares (infinitivo, en, no) - mostrar conjugación en presente (yo, tú, él)
+    const regulars = [
+      {inf:'hablar', en:'to speak', no:'å snakke', conj:{yo:'hablo',tu:'hablas',el:'habla'}},
+      {inf:'amar', en:'to love', no:'å elske', conj:{yo:'amo',tu:'amas',el:'ama'}},
+      {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come'}},
+      {inf:'vivir', en:'to live', no:'å leve', conj:{yo:'vivo',tu:'vives',el:'vive'}},
+      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja'}}
+    ];
 
-    thirdModal.addEventListener('click', (e) => {
-      if (e.target === thirdModal) {
-        thirdModal.classList.add('hidden');
-      }
-    });
+    // Verbos irregulares
+    const irregulars = [
+      {inf:'ser', en:'to be (essence)', no:'å være', conj:{yo:'soy',tu:'eres',el:'es'}},
+      {inf:'estar', en:'to be (state)', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está'}},
+      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va'}},
+      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene'}},
+      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice'}}
+    ];
+
+    // Mensajes románticos con traducciones
+    const messages = [
+      {es:'Eres mi razón para sonreír cada día.', en:'You are my reason to smile every day.', no:'Du er grunnen til at jeg smiler hver dag.'},
+      {es:'Contigo, cada momento es mágico.', en:'With you, every moment is magical.', no:'Med deg er hvert øyeblikk magisk.'},
+      {es:'Tu risa ilumina mi mundo.', en:'Your laugh lights up my world.', no:'Latteren din lyser opp verden min.'},
+      {es:'Quiero aprender contigo y para ti.', en:'I want to learn with you and for you.', no:'Jeg vil lære sammen med deg og for deg.'},
+      {es:'Buenas noches, mi amor. Sueña conmigo.', en:'Good night, my love. Dream of me.', no:'God natt, min kjære. Drøm om meg.'}
+    ];
+
+    // Estado
+    let current = 0;
+
+    function renderDay(i){
+      const container = document.getElementById('words');
+      container.innerHTML = '';
+      const set = days[i % days.length].words;
+      set.forEach(w=>{
+        const div = document.createElement('div'); div.className='item';
+        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div><div class="small">${capitalize(w.es)}</div>`;
+        container.appendChild(div);
+      });
+    }
+
+    function renderVerbs(){
+      const rcont = document.getElementById('regulars');
+      rcont.innerHTML='';
+      regulars.forEach(v=>{
+        const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
+        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el}</div>`;
+        rcont.appendChild(d);
+      });
+
+      const icont = document.getElementById('irregulars');
+      icont.innerHTML='';
+      irregulars.forEach(v=>{
+        const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
+        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el}</div>`;
+        icont.appendChild(d);
+      });
+    }
+
+    function renderMessages(){
+      const box = document.getElementById('romance'); box.innerHTML='';
+      messages.forEach(m=>{
+        const el = document.createElement('div'); el.className='item';
+        el.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;
+        box.appendChild(el);
+      });
+    }
+
+    function nextDay(){ current = (current+1) % days.length; renderDay(current); }
+    function prevDay(){ current = (current-1 + days.length) % days.length; renderDay(current); }
+    function shuffleDay(){ current = Math.floor(Math.random()*days.length); renderDay(current); }
+
+    function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+    // Inicializar
+    renderDay(0); renderVerbs(); renderMessages();
   </script>
 </body>
 </html>
