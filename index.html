@@ -8,10 +8,11 @@
     :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
     body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;align-items:center;gap:16px;justify-content:space-between}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
     header p{margin:0;color:var(--muted)}
-    .date{font-size:18px;color:var(--accent);font-weight:bold}
+    .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
+    .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
     .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
     .card{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px}
     .list{display:flex;flex-direction:column;gap:10px}
@@ -30,11 +31,11 @@
 <body>
   <div class="wrap">
     <header>
-      <div>
-        <h1>💗 Curso del día</h1>
-        <p>Palabras difíciles • Verbos regulares e irregulares (todos los pronombres)</p>
-      </div>
+      <h1>💗 Curso del día</h1>
       <div class="date" id="todayDate"></div>
+      <p class="motivation">Hola Silje, eres muy inteligente y por eso hoy tienes que aprender todo esto y luego practicarlo con Amine. Así podrás ir a Barcelona y vivir feliz. 💫<br>
+      <em>Hi Silje, you are very smart and that's why today you have to learn all this and then practice it with Amine. That way you can go to Barcelona and live happily. 💫</em><br>
+      <em>Hei Silje, du er veldig smart, og derfor må du lære alt dette i dag og deretter øve med Amine. På den måten kan du dra til Barcelona og leve lykkelig. 💫</em></p>
     </header>
 
     <div class="grid">
@@ -151,7 +152,7 @@
 
     renderDay(); renderVerbs(); renderMessages();
 
-    document.getElementById('footerText').innerHTML = 'Aprende cada día una palabra nueva y compártela con alguien especial.<br> Learn a new word every day and share it with someone special.<br> Lær et nytt ord hver dag og del det med noen spesielle.';
+    document.getElementById('footerText').innerHTML = '';
   </script>
 </body>
 </html>
