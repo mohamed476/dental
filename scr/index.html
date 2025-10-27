@@ -1,626 +1,158 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl" id="html">
+<!doctype html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عيادة الابتسامة المثالية</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23ffffff' stroke='%23000000' stroke-width='2' d='M32 6c9 0 20 6 20 18 0 12-7 14-9 22-2 8-3 12-7 12-4 0-5-6-6-10-1-4-1-6-3-6s-2 2-3 6c-1 4-2 10-6 10-4 0-5-4-7-12-2-8-9-10-9-22C2 12 13 6 22 6c4 0 6 2 10 2s6-2 10-2z'/></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>💗 Curso del día — <span id='todayDate'></span></title>
   <style>
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), 0 0 30px rgba(34, 197, 94, 0.6); }
-    }
-    @keyframes sparkle {
-      0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-      50% { opacity: 0.5; transform: scale(1.2) rotate(180deg); }
-    }
-    .tool:hover {
-      transform: scale(1.1);
-      animation: float 2s ease-in-out infinite;
-    }
-    .tool.dragging {
-      transform: scale(1.2);
-      animation: glow 1s ease-in-out infinite;
-    }
-    .tooth.healthy {
-      animation: sparkle 3s ease-in-out infinite;
-    }
-    .game-area {
-      background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-    .stats-card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    canvas { touch-action: none; border-radius: 8px; }
-    .legend-img { width: 24px; height: 24px; font-size: 24px; line-height: 24px; text-align: center; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom right, #6b7280, #4b5563, #374151);
-      min-height: 100vh;
-      padding: 1rem;
-    }
+    :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
+    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    header h1{margin:0;font-size:22px;color:#111}
+    header p{margin:0;color:var(--muted)}
+    .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
+    .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
+    .card{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f2e6ef}
+    .lang{font-size:13px;color:var(--muted)}
+    .big{font-weight:700;font-size:18px}
+    .small{font-size:13px;color:var(--muted)}
+    button{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .mini{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:6px 8px}
+    .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted)}
+    .heart{font-size:26px;color:var(--accent)}
+    @media(max-width:800px){.grid{grid-template-columns:1fr;}.verbs{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="max-w-4xl mx-auto">
-    <!-- Encabezado -->
-    <div class="text-center mb-8">
-      <h1 class="text-5xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent mb-4" id="title">عيادة الابتسامة المثالية 🦷</h1>
-      <select id="langSelect" class="mb-6 p-3 bg-white/20 backdrop-blur border border-white/30 rounded-lg text-white" aria-label="اختيار اللغة">
-        <option value="ar">العربية</option>
-        <option value="es">Español</option>
-        <option value="en">English</option>
-      </select>
-      <div class="flex justify-center gap-4 mb-6">
-        <div class="stats-card rounded-xl px-6 py-3">
-          <div class="text-2xl font-bold text-cyan-200" id="points">0</div>
-          <div class="text-sm text-white/80" id="pointsLabel">نقاط الصحة</div>
-        </div>
-        <div class="stats-card rounded-xl px-6 py-3">
-          <div class="text-2xl font-bold text-green-200" id="patients">0</div>
-          <div class="text-sm text-white/80" id="patientsLabel">المرضى</div>
-        </div>
-        <div class="stats-card rounded-xl px-6 py-3">
-          <div class="text-2xl font-bold text-purple-200" id="level">1</div>
-          <div class="text-sm text-white/80" id="levelLabel">المستوى</div>
-        </div>
-      </div>
-      <div class="flex justify-center gap-4">
-        <button id="startBtn" class="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-8 py-4 rounded-xl hover:from-green-500 hover:to-emerald-600 transition-all duration-300 shadow-lg transform hover:scale-105" aria-label="بدء أو إعادة اللعبة">🚀 ابدأ العلاج</button>
-        <button id="helpBtn" class="bg-white/20 backdrop-blur text-white px-8 py-4 rounded-xl hover:bg-white/30 transition-all duration-300" aria-label="عرض المساعدة">❓ مساعدة</button>
-      </div>
-    </div>
+  <div class="wrap">
+    <header>
+      <h1>💗 Curso del día</h1>
+      <div class="date" id="todayDate"></div>
+      <p class="motivation">Hola Silje, eres muy inteligente y por eso hoy tienes que aprender todo esto y luego practicarlo con Amine. Así podrás ir a Barcelona y vivir feliz. 💫<br>
+      <em>Hi Silje, you are very smart and that's why today you have to learn all this and then practice it with Amine. That way you can go to Barcelona and live happily. 💫</em><br>
+      <em>Hei Silje, du er veldig smart, og derfor må du lære alt dette i dag og deretter øve med Amine. På den måten kan du dra til Barcelona og leve lykkelig. 💫</em></p>
+    </header>
 
-    <!-- Área de Juego -->
-    <div class="game-area mb-8">
-      <div class="text-center mb-6">
-        <h2 class="text-2xl font-bold text-white mb-4" id="toolsTitle">🛠️ أدوات الأسنان</h2>
-        <canvas id="canvas" width="400" height="300" class="mx-auto" aria-label="منطقة اللعب"></canvas>
-      </div>
-    </div>
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h3>Palabras difíciles del día</h3>
+          <div class="list" id="words"></div>
+        </div>
 
-    <!-- Leyenda y Chat -->
-    <div class="grid md:grid-cols-2 gap-6">
-      <!-- Leyenda -->
-      <div class="stats-card rounded-2xl p-6">
-        <h3 class="text-xl font-bold text-white mb-4" id="legendTitle">📋 دليل العيادة</h3>
-        <div class="space-y-3 text-white/90">
-          <div class="flex items-center gap-3">
-            <span class="legend-img" id="iconDrill"></span>
-            <span id="legendDrill">التوربين: لإزالة التسوس</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="legend-img" id="iconCleaner"></span>
-            <span id="legendCleaner">المنظف: لإزالة البقع</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="legend-img" id="iconFluoride"></span>
-            <span id="legendFluoride">الفلورايد: لتقوية الأسنان</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="legend-img" id="iconHealthy"></span>
-            <span id="legendHealthy">سن سليم: لا يحتاج علاج</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="legend-img" id="iconCaries"></span>
-            <span id="legendCaries">سن متسوس: استخدم التوربين</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="legend-img" id="iconStained"></span>
-            <span id="legendStained">سن ملطخ: استخدم المنظف</span>
-          </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Verbos regulares (presente)</h3>
+          <div class="verbs" id="regulars"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Verbos irregulares (presente)</h3>
+          <div class="verbs" id="irregulars"></div>
         </div>
       </div>
 
-      <!-- Chat -->
-      <div class="stats-card rounded-2xl p-6">
-        <div class="flex items-center mb-4">
-          <div class="w-12 h-12 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full flex items-center justify-center mr-3">
-            <span class="text-2xl">👨‍⚕️</span>
-          </div>
-          <h3 class="text-xl font-bold text-white" id="chatTitle">د. آمنة الجوادي</h3>
+      <aside>
+        <div class="card">
+          <h3>Mensajes románticos</h3>
+          <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
+          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
-        <div id="chatBox" class="h-32 overflow-y-auto bg-white/10 rounded-lg p-3 mb-4 backdrop-blur border border-white/20 text-white text-sm" aria-live="polite"></div>
-        <div class="flex gap-2">
-          <input id="userInput" type="text" class="flex-1 p-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300 text-white placeholder-gray-200 backdrop-blur" placeholder="اسأل الطبيب..." aria-label="إدخال رسالة للدردشة">
-          <button id="sendBtn" class="bg-gradient-to-r from-cyan-400 to-purple-500 text-white px-4 py-3 rounded-lg hover:from-cyan-500 hover:to-purple-600 transition-all duration-300" aria-label="إرسال رسالة">📨</button>
+
+        <div class="card" style="margin-top:14px;text-align:center">
+          <div class="heart">💗</div>
+          <p class="small" id="footerText"></p>
         </div>
-      </div>
+      </aside>
     </div>
+
+    <footer>
+      <span>Hecho con cariño — aprende un poquito cada día. ❤️</span>
+    </footer>
   </div>
 
   <script>
-    // Configuración del lienzo
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const pointsEl = document.getElementById('points');
-    const patientsEl = document.getElementById('patients');
-    const levelEl = document.getElementById('level');
-    const startBtn = document.getElementById('startBtn');
-    const helpBtn = document.getElementById('helpBtn');
-    const langSelect = document.getElementById('langSelect');
-    const chatBox = document.getElementById('chatBox');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
+    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    let points = 0;
-    let patients = 0;
-    let level = 1;
-    let gameActive = false;
-    let selectedTool = null;
-    let language = 'ar';
-
-    // Traducciones
-    const translations = {
-      ar: {
-        title: 'عيادة الابتسامة المثالية 🦷',
-        startBtn: '🚀 ابدأ العلاج',
-        restartBtn: '🔄 مريض جديد',
-        helpBtn: '❓ مساعدة',
-        toolsTitle: '🛠️ أدوات الأسنان',
-        patientTitle: '👤 المريض الحالي',
-        legendTitle: '📋 دليل العيادة',
-        chatTitle: 'د. آمنة الجوادي',
-        pointsLabel: 'نقاط الصحة',
-        patientsLabel: 'المرضى',
-        levelLabel: 'المستوى',
-        legendDrill: 'التوربين: لإزالة التسوس 🛠️',
-        legendCleaner: 'المنظف: لإزالة البقع 🧹',
-        legendFluoride: 'الفلورايد: لتقوية الأسنان 💧',
-        legendHealthy: 'سن سليم: لا يحتاج علاج 🦷',
-        legendCaries: 'سن متسوس: استخدم التوربين 🦷',
-        legendStained: 'سن ملطخ: استخدم المنظف 🦷',
-        welcome: 'مرحبًا! اسحب الأدوات إلى الأسنان التي تحتاج علاج. 🦷',
-        success: 'ممتاز! تم العلاج. 🎉',
-        patientComplete: 'شُفي المريض! 🎊 جاهز للتالي؟',
-        placeholder: 'اسأل الطبيب...',
-        initialMessage: 'مرحبًا! أنا د. آمنة الجوادي، طبيبتك الافتراضية. لنبدأ بتحسين الابتسامات! 😊'
-      },
-      es: {
-        title: 'Clínica de la Sonrisa Perfecta 🦷',
-        startBtn: '🚀 Iniciar Tratamiento',
-        restartBtn: '🔄 Nuevo Paciente',
-        helpBtn: '❓ Ayuda',
-        toolsTitle: '🛠️ Herramientas Dentales',
-        patientTitle: '👤 Paciente Actual',
-        legendTitle: '📋 Guía de la Clínica',
-        chatTitle: 'Dra. Amna Al-Jawadi',
-        pointsLabel: 'Puntos',
-        patientsLabel: 'Pacientes',
-        levelLabel: 'Nivel',
-        legendDrill: 'Taladro: Para eliminar caries 🛠️',
-        legendCleaner: 'Limpiador: Para quitar manchas 🧹',
-        legendFluoride: 'Flúor: Para fortalecer dientes 💧',
-        legendHealthy: 'Diente sano: No necesita tratamiento 🦷',
-        legendCaries: 'Diente con caries: Usa el taladro 🦷',
-        legendStained: 'Diente manchado: Usa el limpiador 🦷',
-        welcome: '¡Bienvenido! Arrastra las herramientas a los dientes que necesiten tratamiento. 🦷',
-        success: '¡Excelente! Tratamiento completado. 🎉',
-        patientComplete: '¡Paciente curado! 🎊 ¿Listo para el siguiente?',
-        placeholder: 'Pregunta al doctor...',
-        initialMessage: '¡Hola! Soy la Dra. Amna Al-Jawadi, tu dentista virtual. ¡Empecemos a mejorar sonrisas! 😊'
-      },
-      en: {
-        title: 'Perfect Smile Clinic 🦷',
-        startBtn: '🚀 Start Treatment',
-        restartBtn: '🔄 New Patient',
-        helpBtn: '❓ Help',
-        toolsTitle: '🛠️ Dental Tools',
-        patientTitle: '👤 Current Patient',
-        legendTitle: '📋 Clinic Guide',
-        chatTitle: 'Dr. Amna Al-Jawadi',
-        pointsLabel: 'Points',
-        patientsLabel: 'Patients',
-        levelLabel: 'Level',
-        legendDrill: 'Drill: To remove cavities 🛠️',
-        legendCleaner: 'Cleaner: To remove stains 🧹',
-        legendFluoride: 'Fluoride: To strengthen teeth 💧',
-        legendHealthy: 'Healthy tooth: No treatment needed 🦷',
-        legendCaries: 'Caries tooth: Use the drill 🦷',
-        legendStained: 'Stained tooth: Use the cleaner 🦷',
-        welcome: 'Welcome! Drag tools to teeth that need treatment. 🦷',
-        success: 'Excellent! Treatment completed. 🎉',
-        patientComplete: 'Patient cured! 🎊 Ready for the next one?',
-        placeholder: 'Ask the doctor...',
-        initialMessage: 'Hello! I\'m Dr. Amna Al-Jawadi, your virtual dentist. Let\'s start improving smiles! 😊'
-      }
-    };
-
-    // Actualizar idioma
-    function updateLanguage() {
-      const t = translations[language];
-      document.title = t.title.replace('🦷', '');
-      document.getElementById('title').textContent = t.title;
-      startBtn.textContent = gameActive ? t.restartBtn : t.startBtn;
-      helpBtn.textContent = t.helpBtn;
-      document.getElementById('toolsTitle').textContent = t.toolsTitle;
-      document.getElementById('legendTitle').textContent = t.legendTitle;
-      document.getElementById('chatTitle').textContent = t.chatTitle;
-      document.getElementById('pointsLabel').textContent = t.pointsLabel;
-      document.getElementById('patientsLabel').textContent = t.patientsLabel;
-      document.getElementById('levelLabel').textContent = t.levelLabel;
-      document.getElementById('legendDrill').textContent = t.legendDrill;
-      document.getElementById('legendCleaner').textContent = t.legendCleaner;
-      document.getElementById('legendFluoride').textContent = t.legendFluoride;
-      document.getElementById('legendHealthy').textContent = t.legendHealthy;
-      document.getElementById('legendCaries').textContent = t.legendCaries;
-      document.getElementById('legendStained').textContent = t.legendStained;
-      document.getElementById('userInput').placeholder = t.placeholder;
-      document.documentElement.lang = language;
-      document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-
-      // Update legend icons dynamically as inline SVGs
-      const icons = {
-        drill: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect x='14' y='24' rx='6' ry='6' width='32' height='16' fill='#94a3b8' stroke='#0f172a' stroke-width='2'/><rect x='22' y='28' width='16' height='8' fill='#64748b'/><polygon points='46,28 54,32 46,36' fill='#bae6fd' stroke='#0f172a' stroke-width='2'/></svg>",
-        cleaner: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><line x1='16' y1='46' x2='48' y2='18' stroke='#60a5fa' stroke-width='3'/><rect x='26' y='18' width='16' height='10' rx='3' fill='#93c5fd' stroke='#1e3a8a' stroke-width='2'/><line x1='28' y1='28' x2='28' y2='36' stroke='#1e3a8a' stroke-width='2'/><line x1='32' y1='28' x2='32' y2='36' stroke='#1e3a8a' stroke-width='2'/><line x1='36' y1='28' x2='36' y2='36' stroke='#1e3a8a' stroke-width='2'/></svg>",
-        fluoride: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#22d3ee'/><stop offset='100%' stop-color='#0ea5e9'/></linearGradient></defs><path d='M32 8 C40 16 42 24 32 40 C22 24 24 16 32 8 Z' fill='url(#g)' stroke='#075985' stroke-width='2'/></svg>",
-        tooth: "<svg width='24' height='24' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><path d='M32 10c10 0 18 8 18 18s-6 12-8 20-3 10-6 10-4-5-5-9c-1-3-1-5-3-5s-2 2-3 5-3 9-6 9-4-2-6-10-8-10-8-20 8-18 18-18c4 0 6 2 9 2s5-2 8-2z' fill='white' stroke='#0f172a' stroke-width='2'/></svg>"
-      };
-      const setSvg = (id, svg) => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = svg;
-      };
-      setSvg('iconDrill', icons.drill);
-      setSvg('iconCleaner', icons.cleaner);
-      setSvg('iconFluoride', icons.fluoride);
-      setSvg('iconHealthy', icons.tooth);
-      setSvg('iconCaries', icons.tooth);
-      setSvg('iconStained', icons.tooth);
-    }
-    langSelect.addEventListener('change', () => {
-      language = langSelect.value;
-      updateLanguage();
-      addMessage(translations[language].initialMessage, 'bot');
-    });
-    updateLanguage();
-
-    // Clase para dientes
-    class Tooth {
-      constructor(x, y, state) {
-        this.x = x;
-        this.y = y;
-        this.width = 30;
-        this.height = 50;
-        this.state = state; // 'caries', 'stained', 'healthy'
-      }
-
-      draw() {
-        ctx.save();
-        ctx.font = '35px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        // Tooth icon (vector)
-        ctx.translate(this.x, this.y);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-        ctx.fillStyle = 'rgba(255,255,255,0.95)';
-        ctx.beginPath();
-        ctx.moveTo(0, -18);
-        ctx.bezierCurveTo(12, -18, 18, -8, 18, 2);
-        ctx.bezierCurveTo(18, 12, 12, 14, 10, 22);
-        ctx.bezierCurveTo(9, 26, 6, 28, 4, 28);
-        ctx.bezierCurveTo(2, 28, 1, 26, 0, 22);
-        ctx.bezierCurveTo(-1, 26, -2, 28, -4, 28);
-        ctx.bezierCurveTo(-6, 28, -9, 26, -10, 22);
-        ctx.bezierCurveTo(-12, 14, -18, 12, -18, 2);
-        ctx.bezierCurveTo(-18, -8, -12, -18, 0, -18);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        if (this.state === 'caries') {
-          ctx.fillStyle = '#7c3aed';
-          ctx.beginPath();
-          ctx.arc(5, -6, 4, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (this.state === 'stained') {
-          ctx.fillStyle = '#f59e0b';
-          ctx.beginPath();
-          ctx.arc(5, -6, 4, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (this.state === 'healthy') {
-          ctx.globalAlpha = 1;
-          const shine = ctx.createLinearGradient(0, -18, 0, 18);
-          shine.addColorStop(0, 'rgba(255,255,255,0.9)');
-          shine.addColorStop(1, 'rgba(255,255,255,0.6)');
-          ctx.fillStyle = shine;
-          ctx.beginPath();
-          ctx.arc(-4, -10, 4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.translate(-this.x, -this.y);
-        ctx.restore();
-      }
-
-      isClicked(x, y) {
-        return (
-          x >= this.x - this.width / 2 &&
-          x <= this.x + this.width / 2 &&
-          y >= this.y - this.height / 2 &&
-          y <= this.y + this.height / 2
-        );
-      }
-    }
-
-    // Clase para herramientas
-    class Tool {
-      constructor(type, x, y) {
-        this.type = type;
-        this.x = x;
-        this.y = y;
-        this.width = 40;
-        this.height = 40;
-        this.dragging = false;
-      }
-
-      draw() {
-        ctx.save();
-        // Render SVG-like icons programmatically for a more professional look
-        if (this.type === 'drill') {
-          // Drill icon
-          ctx.translate(this.x, this.y);
-          ctx.fillStyle = '#94a3b8';
-          ctx.strokeStyle = '#0f172a';
-          ctx.lineWidth = 2;
-          // body
-          ctx.beginPath();
-          ctx.roundRect(-18, -10, 36, 20, 6);
-          ctx.fill();
-          ctx.stroke();
-          // grip
-          ctx.fillStyle = '#64748b';
-          ctx.fillRect(-10, -6, 20, 12);
-          // bit
-          ctx.beginPath();
-          ctx.moveTo(18, -4);
-          ctx.lineTo(28, 0);
-          ctx.lineTo(18, 4);
-          ctx.closePath();
-          ctx.fillStyle = '#bae6fd';
-          ctx.fill();
-          ctx.stroke();
-          // cable
-          ctx.beginPath();
-          ctx.strokeStyle = 'rgba(56,189,248,0.6)';
-          ctx.moveTo(-18, 0);
-          ctx.bezierCurveTo(-28, -8, -34, 10, -44, 2);
-          ctx.stroke();
-          ctx.translate(-this.x, -this.y);
-        } else if (this.type === 'cleaner') {
-          // Cleaner brush icon
-          ctx.translate(this.x, this.y);
-          ctx.strokeStyle = '#0f172a';
-          ctx.lineWidth = 2;
-          // handle
-          ctx.beginPath();
-          ctx.moveTo(-16, 8);
-          ctx.lineTo(16, -8);
-          ctx.strokeStyle = '#60a5fa';
-          ctx.stroke();
-          // head
-          ctx.fillStyle = '#93c5fd';
-          ctx.strokeStyle = '#1e3a8a';
-          ctx.beginPath();
-          ctx.roundRect(-6, -12, 18, 10, 4);
-          ctx.fill();
-          ctx.stroke();
-          // bristles
-          ctx.strokeStyle = '#1e3a8a';
-          for (let i = -5; i <= 9; i += 3) {
-            ctx.beginPath();
-            ctx.moveTo(i, -2);
-            ctx.lineTo(i, 6);
-            ctx.stroke();
-          }
-          ctx.translate(-this.x, -this.y);
-        } else {
-          // Fluoride droplet icon
-          ctx.translate(this.x, this.y);
-          const gradient = ctx.createLinearGradient(0, -16, 0, 16);
-          gradient.addColorStop(0, '#22d3ee');
-          gradient.addColorStop(1, '#0ea5e9');
-          ctx.fillStyle = gradient;
-          ctx.strokeStyle = '#075985';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(0, -16);
-          ctx.bezierCurveTo(10, -6, 12, 0, 0, 16);
-          ctx.bezierCurveTo(-12, 0, -10, -6, 0, -16);
-          ctx.fill();
-          ctx.stroke();
-          // sparkle
-          ctx.strokeStyle = 'rgba(255,255,255,0.8)';
-          ctx.beginPath();
-          ctx.moveTo(-4, -2);
-          ctx.lineTo(0, -6);
-          ctx.lineTo(4, -2);
-          ctx.stroke();
-          ctx.translate(-this.x, -this.y);
-        }
-        if (this.dragging) {
-          ctx.shadowColor = 'rgba(34, 197, 94, 0.8)';
-          ctx.shadowBlur = 20;
-        }
-        ctx.restore();
-      }
-
-      isClicked(x, y) {
-        return (
-          x >= this.x - this.width / 2 &&
-          x <= this.x + this.width / 2 &&
-          y >= this.y - this.height / 2 &&
-          y <= this.y + this.height / 2
-        );
-      }
-    }
-
-    // Dientes y herramientas
-    const teeth = [];
-    const tools = [
-      new Tool('drill', 50, 60),
-      new Tool('cleaner', 100, 60),
-      new Tool('fluoride', 150, 60)
+    const days = [
+      {words:[
+        {es:'desarrollar', en:'to develop', no:'å utvikle'},
+        {es:'mejorar', en:'to improve', no:'å forbedre'},
+        {es:'lograr', en:'to achieve', no:'å oppnå'},
+        {es:'recordar', en:'to remember', no:'å huske'},
+        {es:'descubrir', en:'to discover', no:'å oppdage'}
+      ]}
     ];
 
-    // Control de arrastre
-    let dragStart = null;
-    function handleStart(e) {
-      if (!gameActive) return;
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX || e.touches[0].clientX) - rect.left;
-      const y = (e.clientY || e.touches[0].clientY) - rect.top;
-      selectedTool = tools.find(tool => tool.isClicked(x, y));
-      if (selectedTool) {
-        selectedTool.dragging = true;
-        dragStart = { x, y };
-      }
+    const regulars = [
+      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
+      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}},
+      {inf:'viajar', en:'to travel', no:'å reise', conj:{yo:'viajo',tu:'viajas',el:'viaja',nos:'viajamos',vos:'viajáis',ellos:'viajan'}},
+      {inf:'necesitar', en:'to need', no:'å trenge', conj:{yo:'necesito',tu:'necesitas',el:'necesita',nos:'necesitamos',vos:'necesitáis',ellos:'necesitan'}},
+      {inf:'aprender', en:'to learn', no:'å lære', conj:{yo:'aprendo',tu:'aprendes',el:'aprende',nos:'aprendemos',vos:'aprendéis',ellos:'aprenden'}}
+    ];
+
+    const irregulars = [
+      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
+      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}},
+      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}},
+      {inf:'hacer', en:'to do / make', no:'å gjøre', conj:{yo:'hago',tu:'haces',el:'hace',nos:'hacemos',vos:'hacéis',ellos:'hacen'}},
+      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice',nos:'decimos',vos:'decís',ellos:'dicen'}}
+    ];
+
+    const messages = [
+      {es:'Eres mi razón para sonreír cada día.', en:'You are my reason to smile every day.', no:'Du er grunnen til at jeg smiler hver dag.'},
+      {es:'Contigo, cada momento es mágico.', en:'With you, every moment is magical.', no:'Med deg er hvert øyeblikk magisk.'},
+      {es:'Tu risa ilumina mi mundo.', en:'Your laugh lights up my world.', no:'Latteren din lyser opp verden min.'},
+      {es:'Quiero aprender contigo y para ti.', en:'I want to learn with you and for you.', no:'Jeg vil lære sammen med deg og for deg.'}
+    ];
+
+    function renderDay(){
+      const container = document.getElementById('words');
+      container.innerHTML = '';
+      days[0].words.forEach(w=>{
+        const div = document.createElement('div'); div.className='item';
+        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;
+        container.appendChild(div);
+      });
     }
 
-    function handleMove(e) {
-      if (!gameActive || !selectedTool || !selectedTool.dragging) return;
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX || e.touches[0].clientX) - rect.left;
-      const y = (e.clientY || e.touches[0].clientY) - rect.top;
-      selectedTool.x += x - dragStart.x;
-      selectedTool.y += y - dragStart.y;
-      dragStart = { x, y };
+    function renderVerbs(){
+      const rcont = document.getElementById('regulars');
+      rcont.innerHTML='';
+      regulars.forEach(v=>{
+        const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
+        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nosotros ${v.conj.nos} • vosotros ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
+        rcont.appendChild(d);
+      });
+
+      const icont = document.getElementById('irregulars');
+      icont.innerHTML='';
+      irregulars.forEach(v=>{
+        const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
+        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nosotros ${v.conj.nos} • vosotros ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
+        icont.appendChild(d);
+      });
     }
 
-    function handleEnd(e) {
-      if (!gameActive || !selectedTool) return;
-      e.preventDefault();
-      selectedTool.dragging = false;
-      const targetTooth = teeth.find(tooth => tooth.isClicked(selectedTool.x, selectedTool.y));
-      if (targetTooth) {
-        if (
-          (selectedTool.type === 'drill' && targetTooth.state === 'caries') ||
-          (selectedTool.type === 'cleaner' && targetTooth.state === 'stained') ||
-          (selectedTool.type === 'fluoride' && targetTooth.state !== 'healthy')
-        ) {
-          targetTooth.state = 'healthy';
-          points += 10;
-          pointsEl.textContent = points;
-          addMessage(translations[language].success, 'bot');
-          saveProgress();
-          if (teeth.every(tooth => tooth.state === 'healthy')) {
-            patients += 1;
-            patientsEl.textContent = patients;
-            level = Math.floor(patients / 2) + 1;
-            levelEl.textContent = level;
-            setTimeout(() => {
-              addMessage(translations[language].patientComplete, 'bot');
-              resetTeeth();
-              saveProgress();
-            }, 1500);
-          }
-        }
-      }
-      selectedTool.x = tools.indexOf(selectedTool) * 50 + 50;
-      selectedTool.y = 60;
-      selectedTool = null;
+    function renderMessages(){
+      const box = document.getElementById('romance'); box.innerHTML='';
+      messages.forEach(m=>{
+        const el = document.createElement('div'); el.className='item';
+        el.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;
+        box.appendChild(el);
+      });
     }
 
-    canvas.addEventListener('mousedown', handleStart);
-    canvas.addEventListener('mousemove', handleMove);
-    canvas.addEventListener('mouseup', handleEnd);
-    canvas.addEventListener('touchstart', handleStart, { passive: false });
-    canvas.addEventListener('touchmove', handleMove, { passive: false });
-    canvas.addEventListener('touchend', handleEnd, { passive: false });
+    renderDay(); renderVerbs(); renderMessages();
 
-    // Iniciar juego
-    function resetTeeth() {
-      teeth.length = 0;
-      const numTeeth = Math.min(3 + Math.floor(level / 2), 6);
-      for (let i = 0; i < numTeeth; i++) {
-        const state = Math.random() > 0.5 ? 'caries' : 'stained';
-        teeth.push(new Tooth(100 + i * 80, 200, state));
-      }
-    }
-
-    startBtn.addEventListener('click', () => {
-      gameActive = true;
-      if (patients === 0) {
-        points = 0;
-        patients = 0;
-        level = 1;
-        pointsEl.textContent = points;
-        patientsEl.textContent = patients;
-        levelEl.textContent = level;
-        saveProgress();
-      }
-      resetTeeth();
-      addMessage(translations[language].welcome, 'bot');
-      startBtn.textContent = translations[language].restartBtn;
-    });
-
-    helpBtn.addEventListener('click', () => {
-      addMessage(`${translations[language].legendDrill} ${translations[language].legendCleaner} ${translations[language].legendFluoride}`, 'bot');
-    });
-
-    // Animación
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      // Soft vignette background
-      const radial = ctx.createRadialGradient(
-        canvas.width / 2,
-        canvas.height / 2,
-        40,
-        canvas.width / 2,
-        canvas.height / 2,
-        240
-      );
-      radial.addColorStop(0, 'rgba(255,255,255,0.06)');
-      radial.addColorStop(1, 'rgba(0,0,0,0.08)');
-      ctx.fillStyle = radial;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      teeth.forEach(tooth => tooth.draw());
-      tools.forEach(tool => tool.draw());
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    // Sistema de chat
-    const responses = {
-      ar: [
-        'تقنية ممتازة! الأسنان تبدو أفضل بكثير. 🦷✨',
-        'تذكر: التنظيف مرتين يومياً يبعد التسوس. 🪥',
-        'عمل جيد! هذا المريض سيحصل على ابتسامة مشرقة. 😊',
-        'الفلورايد هو أفضل حليف ضد التسوس. 💪',
-        'استمر هكذا! كل سن سليم هو انتصار. 🏆'
-      ],
-      es: [
-        '¡Excelente técnica! Los dientes se ven mucho mejor. 🦷✨',
-        'Recuerda: cepillado 2 veces al día mantiene alejadas las caries. 🪥',
-        '¡Buen trabajo! Este paciente tendrá una sonrisa radiante. 😊',
-        'El flúor es tu mejor aliado contra las caries. 💪',
-        '¡Sigue así! Cada diente sano es una victoria. 🏆'
-      ],
-      en: [
-        'Excellent technique! The teeth look much better. 🦷✨',
-        'Remember: brushing twice a day keeps cavities away. 🪥',
-        'Good job! This patient will have a radiant smile. 😊',
-        'Fluoride is your best ally against cavities. 💪',
-        'Keep it up! Every healthy tooth is a victory. 🏆'
-      ]
-    };
-
-    function addMessage(message, sender) {
-      const messageEl = document.createElement('div');
-      messageEl.className = `
+    document.getElementById('footerText').innerHTML = '';
+  </script>
+</body>
+</html>
