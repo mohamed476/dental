@@ -128,6 +128,7 @@
       cursor: pointer;
       font-size: 14px;
       transition: background 0.2s ease;
+      margin-right: 10px;
     }
     button:hover {
       background: #c12c76;
@@ -152,6 +153,7 @@
       border-radius: 12px;
       border: 1px solid #f4e8f0;
       margin-bottom: 12px;
+      animation: fadeIn 0.3s ease-in;
     }
     .quiz-item label {
       display: block;
@@ -174,16 +176,37 @@
       font-size: 14px;
       background: #fff;
     }
+    .quiz-item input[type="radio"] {
+      margin-right: 8px;
+    }
     .quiz-feedback {
       margin-top: 10px;
       font-size: 14px;
       color: var(--muted);
+      opacity: 0;
+      animation: fadeIn 0.3s ease forwards;
     }
     .quiz-feedback.correct {
       color: var(--success);
     }
     .quiz-feedback.incorrect {
       color: var(--error);
+    }
+    .progress-bar {
+      height: 6px;
+      background: #f4e8f0;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     footer {
       padding: 16px 24px;
@@ -242,8 +265,13 @@
 
         <div class="card" style="margin-top:16px">
           <h3>Test del día</h3>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div id="quizProgress" style="margin-bottom:12px;font-size:14px;color:var(--muted)"></div>
           <div id="quiz"></div>
-          <button id="submitQuiz" style="margin-top:16px">Enviar respuestas</button>
+          <div style="margin-top:16px">
+            <button id="submitQuiz">Enviar respuestas</button>
+            <button id="resetQuiz" class="mini">Reiniciar test</button>
+          </div>
           <div id="quizResult" style="margin-top:12px;font-size:15px;color:var(--muted)"></div>
         </div>
       </div>
@@ -303,6 +331,14 @@
       {es:'Quiero aprender contigo y para ti.', en:'I want to learn with you and for you.', no:'Jeg vil lære sammen med deg og for deg.'}
     ];
 
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
     function renderDay(){
       const container = document.getElementById('words');
       container.innerHTML = '';
@@ -342,54 +378,84 @@
       });
     }
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
     function renderQuiz() {
       const quizContainer = document.getElementById('quiz');
       quizContainer.innerHTML = '';
+      const pronouns = ['yo', 'tu', 'el', 'nos', 'vos', 'ellos'];
 
-      // Create 3 questions: 1 word translation, 1 regular verb conjugation, 1 irregular verb conjugation
+      // Generate 10 questions
       const questions = [
-        {
-          type: 'word',
-          question: `¿Cuál es la traducción en noruego de "${days[0].words[0].es}"?`,
-          answer: days[0].words[0].no,
+        // 4 word translation questions (2 English, 2 Norwegian)
+        ...shuffle(days[0].words).slice(0, 2).map(w => ({
+          type: 'word_en',
+          question: `¿Cuál es la traducción en inglés de "${w.es}"?`,
+          answer: w.en,
+          options: shuffle([...days[0].words.map(w => w.en), 'to try']).slice(0, 4)
+        })),
+        ...shuffle(days[0].words).slice(2, 4).map(w => ({
+          type: 'word_no',
+          question: `¿Cuál es la traducción en noruego de "${w.es}"?`,
+          answer: w.no,
           options: shuffle([...days[0].words.map(w => w.no), 'å prøve']).slice(0, 4)
+        })),
+        // 4 verb conjugation questions (2 regular, 2 irregular)
+        ...shuffle(regulars).slice(0, 2).map(v => {
+          const pronoun = shuffle(pronouns)[0];
+          return {
+            type: 'regular',
+            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
+            answer: v.conj[pronoun],
+            options: null
+          };
+        }),
+        ...shuffle(irregulars).slice(0, 2).map(v => {
+          const pronoun = shuffle(pronouns)[0];
+          return {
+            type: 'irregular',
+            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
+            answer: v.conj[pronoun],
+            options: null
+          };
+        }),
+        // 2 true/false questions (verb type)
+        {
+          type: 'truefalse',
+          question: `¿Es "${regulars[0].inf}" un verbo regular?`,
+          answer: 'true',
+          options: ['Verdadero', 'Falso']
         },
         {
-          type: 'regular',
-          question: `Conjuga el verbo "${regulars[0].inf}" para "yo" en presente.`,
-          answer: regulars[0].conj.yo,
-          options: null // Text input
-        },
-        {
-          type: 'irregular',
-          question: `Conjuga el verbo "${irregulars[0].inf}" para "tú" en presente.`,
-          answer: irregulars[0].conj.tu,
-          options: null // Text input
+          type: 'truefalse',
+          question: `¿Es "${irregulars[0].inf}" un verbo regular?`,
+          answer: 'false',
+          options: ['Verdadero', 'Falso']
         }
       ];
 
-      questions.forEach((q, index) => {
+      shuffle(questions).forEach((q, index) => {
         const div = document.createElement('div');
         div.className = 'quiz-item';
-        div.innerHTML = `<label>${q.question}</label>`;
+        div.innerHTML = `<label>${index + 1}. ${q.question}</label>`;
         if (q.options) {
-          const select = document.createElement('select');
-          select.id = `answer${index}`;
-          q.options.forEach(opt => {
-            const option = document.createElement('option');
-            option.value = opt;
-            option.textContent = opt;
-            select.appendChild(option);
-          });
-          div.appendChild(select);
+          if (q.type.startsWith('word')) {
+            const select = document.createElement('select');
+            select.id = `answer${index}`;
+            q.options.forEach(opt => {
+              const option = document.createElement('option');
+              option.value = opt;
+              option.textContent = opt;
+              select.appendChild(option);
+            });
+            div.appendChild(select);
+          } else {
+            q.options.forEach(opt => {
+              const label = document.createElement('label');
+              label.style.display = 'inline-block';
+              label.style.marginRight = '16px';
+              label.innerHTML = `<input type="radio" name="answer${index}" value="${opt === 'Verdadero' ? 'true' : 'false'}">${opt}`;
+              div.appendChild(label);
+            });
+          }
         } else {
           const input = document.createElement('input');
           input.type = 'text';
@@ -404,11 +470,16 @@
         quizContainer.appendChild(div);
       });
 
+      document.getElementById('quizProgress').textContent = `Pregunta 1/${questions.length}`;
+      document.getElementById('progressFill').style.width = `${(1 / questions.length) * 100}%`;
+
       document.getElementById('submitQuiz').addEventListener('click', () => {
         let score = 0;
         questions.forEach((q, index) => {
-          const userAnswer = q.options
+          const userAnswer = q.options && !q.type.startsWith('truefalse')
             ? document.getElementById(`answer${index}`).value
+            : q.type.startsWith('truefalse')
+            ? document.querySelector(`input[name="answer${index}"]:checked`)?.value || ''
             : document.getElementById(`answer${index}`).value.trim().toLowerCase();
           const feedback = document.getElementById(`feedback${index}`);
           if (userAnswer === q.answer.toLowerCase()) {
@@ -420,7 +491,14 @@
             feedback.className = 'quiz-feedback incorrect';
           }
         });
-        document.getElementById('quizResult').textContent = `Puntuación: ${score}/${questions.length}`;
+        const percentage = Math.round((score / questions.length) * 100);
+        document.getElementById('quizResult').textContent = `Puntuación: ${score}/${questions.length} (${percentage}%)`;
+        document.getElementById('progressFill').style.width = '100%';
+      });
+
+      document.getElementById('resetQuiz').addEventListener('click', () => {
+        renderQuiz();
+        document.getElementById('quizResult').textContent = '';
       });
     }
 
