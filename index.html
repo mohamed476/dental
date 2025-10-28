@@ -12,6 +12,8 @@
       --accent: #d63384;
       --muted: #5c5c5c;
       --shadow: rgba(0, 0, 0, 0.1);
+      --success: #28a745;
+      --error: #dc3545;
       font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     }
     body {
@@ -145,6 +147,44 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
+    .quiz-item {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #f4e8f0;
+      margin-bottom: 12px;
+    }
+    .quiz-item label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      color: #333;
+    }
+    .quiz-item input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .quiz-item select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
+    }
+    .quiz-feedback {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .quiz-feedback.correct {
+      color: var(--success);
+    }
+    .quiz-feedback.incorrect {
+      color: var(--error);
+    }
     footer {
       padding: 16px 24px;
       background: var(--bg);
@@ -198,6 +238,13 @@
         <div class="card" style="margin-top:16px">
           <h3>Verbos irregulares (presente)</h3>
           <div class="verbs" id="irregulars"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>Test del día</h3>
+          <div id="quiz"></div>
+          <button id="submitQuiz" style="margin-top:16px">Enviar respuestas</button>
+          <div id="quizResult" style="margin-top:12px;font-size:15px;color:var(--muted)"></div>
         </div>
       </div>
 
@@ -295,7 +342,92 @@
       });
     }
 
-    renderDay(); renderVerbs(); renderMessages();
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function renderQuiz() {
+      const quizContainer = document.getElementById('quiz');
+      quizContainer.innerHTML = '';
+
+      // Create 3 questions: 1 word translation, 1 regular verb conjugation, 1 irregular verb conjugation
+      const questions = [
+        {
+          type: 'word',
+          question: `¿Cuál es la traducción en noruego de "${days[0].words[0].es}"?`,
+          answer: days[0].words[0].no,
+          options: shuffle([...days[0].words.map(w => w.no), 'å prøve']).slice(0, 4)
+        },
+        {
+          type: 'regular',
+          question: `Conjuga el verbo "${regulars[0].inf}" para "yo" en presente.`,
+          answer: regulars[0].conj.yo,
+          options: null // Text input
+        },
+        {
+          type: 'irregular',
+          question: `Conjuga el verbo "${irregulars[0].inf}" para "tú" en presente.`,
+          answer: irregulars[0].conj.tu,
+          options: null // Text input
+        }
+      ];
+
+      questions.forEach((q, index) => {
+        const div = document.createElement('div');
+        div.className = 'quiz-item';
+        div.innerHTML = `<label>${q.question}</label>`;
+        if (q.options) {
+          const select = document.createElement('select');
+          select.id = `answer${index}`;
+          q.options.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            select.appendChild(option);
+          });
+          div.appendChild(select);
+        } else {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.id = `answer${index}`;
+          input.placeholder = 'Escribe tu respuesta';
+          div.appendChild(input);
+        }
+        const feedback = document.createElement('div');
+        feedback.id = `feedback${index}`;
+        feedback.className = 'quiz-feedback';
+        div.appendChild(feedback);
+        quizContainer.appendChild(div);
+      });
+
+      document.getElementById('submitQuiz').addEventListener('click', () => {
+        let score = 0;
+        questions.forEach((q, index) => {
+          const userAnswer = q.options
+            ? document.getElementById(`answer${index}`).value
+            : document.getElementById(`answer${index}`).value.trim().toLowerCase();
+          const feedback = document.getElementById(`feedback${index}`);
+          if (userAnswer === q.answer.toLowerCase()) {
+            score++;
+            feedback.textContent = '¡Correcto!';
+            feedback.className = 'quiz-feedback correct';
+          } else {
+            feedback.textContent = `Incorrecto. La respuesta correcta es: ${q.answer}`;
+            feedback.className = 'quiz-feedback incorrect';
+          }
+        });
+        document.getElementById('quizResult').textContent = `Puntuación: ${score}/${questions.length}`;
+      });
+    }
+
+    renderDay();
+    renderVerbs();
+    renderMessages();
+    renderQuiz();
 
     document.getElementById('footerText').innerHTML = '';
   </script>
