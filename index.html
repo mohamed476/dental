@@ -4,28 +4,173 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>💗 Curso del día — <span id='todayDate'></span></title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
-    body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
-    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-    header h1{margin:0;font-size:22px;color:#111}
-    header p{margin:0;color:var(--muted)}
-    .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
-    .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
-    .card{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px}
-    .list{display:flex;flex-direction:column;gap:10px}
-    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f2e6ef}
-    .lang{font-size:13px;color:var(--muted)}
-    .big{font-weight:700;font-size:18px}
-    .small{font-size:13px;color:var(--muted)}
-    button{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
-    .mini{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:6px 8px}
-    .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted)}
-    .heart{font-size:26px;color:var(--accent)}
-    @media(max-width:800px){.grid{grid-template-columns:1fr;}.verbs{grid-template-columns:1fr}}
+    :root {
+      --bg: #fef6f8;
+      --card: #ffffff;
+      --accent: #d63384;
+      --muted: #5c5c5c;
+      --shadow: rgba(0, 0, 0, 0.1);
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fef6f8, #fff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #1a1a1a;
+    }
+    .wrap {
+      width: 1000px;
+      max-width: 96%;
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .wrap:hover {
+      transform: translateY(-5px);
+    }
+    header {
+      padding: 28px 32px;
+      background: linear-gradient(90deg, rgba(214, 51, 132, 0.1), rgba(214, 51, 132, 0.02));
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .date {
+      font-size: 20px;
+      color: var(--accent);
+      font-weight: 600;
+      align-self: flex-end;
+    }
+    .motivation {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 20px;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px var(--shadow);
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #222;
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #f4e8f0;
+      transition: background 0.2s ease;
+    }
+    .item:hover {
+      background: #f9f1f5;
+    }
+    .lang {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .big {
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #c12c76;
+    }
+    .mini {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+    .mini:hover {
+      background: rgba(214, 51, 132, 0.1);
+    }
+    .verbs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    footer {
+      padding: 16px 24px;
+      background: var(--bg);
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .heart {
+      font-size: 28px;
+      color: var(--accent);
+    }
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .verbs {
+        grid-template-columns: 1fr;
+      }
+      .wrap {
+        margin: 16px;
+      }
+      .date {
+        align-self: flex-start;
+        margin-top: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -45,12 +190,12 @@
           <div class="list" id="words"></div>
         </div>
 
-        <div class="card" style="margin-top:14px">
+        <div class="card" style="margin-top:16px">
           <h3>Verbos regulares (presente)</h3>
           <div class="verbs" id="regulars"></div>
         </div>
 
-        <div class="card" style="margin-top:14px">
+        <div class="card" style="margin-top:16px">
           <h3>Verbos irregulares (presente)</h3>
           <div class="verbs" id="irregulars"></div>
         </div>
@@ -59,11 +204,11 @@
       <aside>
         <div class="card">
           <h3>Mensajes románticos</h3>
-          <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
-          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
+          <div id="romance" style="display:flex;flex-direction:column;gap:14px"></div>
+          <div style="margin-top:12px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
 
-        <div class="card" style="margin-top:14px;text-align:center">
+        <div class="card" style="margin-top:16px;text-align:center">
           <div class="heart">💗</div>
           <p class="small" id="footerText"></p>
         </div>
@@ -80,28 +225,28 @@
 
     const days = [
       {words:[
-        {es:'desarrollar', en:'to develop', no:'å utvikle'},
-        {es:'mejorar', en:'to improve', no:'å forbedre'},
-        {es:'lograr', en:'to achieve', no:'å oppnå'},
-        {es:'recordar', en:'to remember', no:'å huske'},
-        {es:'descubrir', en:'to discover', no:'å oppdage'}
+        {es:'inspirar', en:'to inspire', no:'å inspirere'},
+        {es:'avanzar', en:'to advance', no:'å avansere'},
+        {es:'comprender', en:'to understand', no:'å forstå'},
+        {es:'explorar', en:'to explore', no:'å utforske'},
+        {es:'superar', en:'to overcome', no:'å overvinne'}
       ]}
     ];
 
     const regulars = [
-      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
-      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}},
-      {inf:'viajar', en:'to travel', no:'å reise', conj:{yo:'viajo',tu:'viajas',el:'viaja',nos:'viajamos',vos:'viajáis',ellos:'viajan'}},
-      {inf:'necesitar', en:'to need', no:'å trenge', conj:{yo:'necesito',tu:'necesitas',el:'necesita',nos:'necesitamos',vos:'necesitáis',ellos:'necesitan'}},
-      {inf:'aprender', en:'to learn', no:'å lære', conj:{yo:'aprendo',tu:'aprendes',el:'aprende',nos:'aprendemos',vos:'aprendéis',ellos:'aprenden'}}
+      {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
+      {inf:'vivir', en:'to live', no:'å leve', conj:{yo:'vivo',tu:'vives',el:'vive',nos:'vivimos',vos:'vivís',ellos:'viven'}},
+      {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come',nos:'comemos',vos:'coméis',ellos:'comen'}},
+      {inf:'ayudar', en:'to help', no:'å hjelpe', conj:{yo:'ayudo',tu:'ayudas',el:'ayuda',nos:'ayudamos',vos:'ayudáis',ellos:'ayudan'}},
+      {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}}
     ];
 
     const irregulars = [
-      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
-      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}},
-      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}},
-      {inf:'hacer', en:'to do / make', no:'å gjøre', conj:{yo:'hago',tu:'haces',el:'hace',nos:'hacemos',vos:'hacéis',ellos:'hacen'}},
-      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice',nos:'decimos',vos:'decís',ellos:'dicen'}}
+      {inf:'ser', en:'to be', no:'å være', conj:{yo:'soy',tu:'eres',el:'es',nos:'somos',vos:'sois',ellos:'son'}},
+      {inf:'estar', en:'to be', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
+      {inf:'saber', en:'to know', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
+      {inf:'querer', en:'to want', no:'å ville', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}},
+      {inf:'poder', en:'to be able', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}}
     ];
 
     const messages = [
