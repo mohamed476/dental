@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>💖 Una semana contigo</title>
+  <title>💖 Una semana contigo, Silje</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -193,46 +193,46 @@
 </head>
 <body>
   <div class="intro">
-    <button id="revealButton">💖 Una sorpresa para ti 💖</button>
+    <button id="revealButton">💖 Una sorpresa para ti, Silje 💖</button>
   </div>
   <div class="wrap" id="content">
     <header>
-      <h1>💖 Una semana contigo</h1>
+      <h1>💖 Una semana contigo, Silje</h1>
       <div class="date" id="todayDate"></div>
-      <p>Mi amor, hace una semana que nuestras vidas se cruzaron, y cada día contigo ha sido como un sueño del que no quiero despertar. <br>
-      <em>My love, it’s been a week since our lives crossed, and every day with you has been like a dream I don’t want to wake up from.</em><br>
-      <em>Min kjære, det har gått en uke siden livene våre krysset hverandre, og hver dag med deg har vært som en drøm jeg ikke vil våkne fra.</em></p>
+      <p>Silje, hace una semana que llegaste a mi vida, y no puedo dejar de admirar tu sonrisa que ilumina todo, tu pelo que me encanta, tus ojos que me hacen perder el rumbo, y ese vestido rojo que te queda perfecto. <br>
+      <em>Silje, it’s been a week since you came into my life, and I can’t stop admiring your smile that lights up everything, your hair that I love, your eyes that make me lose my way, and that red dress that looks perfect on you.</em><br>
+      <em>Silje, det har gått en uke siden du kom inn i livet mitt, og jeg kan ikke slutte å beundre smilet ditt som lyser opp alt, håret ditt som jeg elsker, øynene dine som får meg til å miste retningen, og den røde kjolen som passer deg perfekt.</em></p>
     </header>
 
     <div class="grid">
       <div>
         <div class="card">
-          <h3>Momentos que guardo en mi corazón</h3>
+          <h3>Momentos que atesoro contigo</h3>
           <div class="list" id="moments"></div>
         </div>
 
         <div class="card" style="margin-top:16px">
-          <h3>Palabras que te dedico</h3>
+          <h3>Palabras que me recuerdan a ti</h3>
           <div class="list" id="words"></div>
         </div>
       </div>
 
       <aside>
         <div class="card">
-          <h3>Promesas de amor</h3>
+          <h3>Promesas para nuestro futuro</h3>
           <div id="promises" style="display:flex;flex-direction:column;gap:14px"></div>
           <div style="margin-top:12px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Español — Noruego</div>
         </div>
 
         <div class="card" style="margin-top:16px;text-align:center">
           <div class="heart">💖</div>
-          <p class="small">Para mi persona favorita, hoy y siempre.</p>
+          <p class="small">Para Silje, mi alegría cada día.</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con todo mi amor para ti. 💖</span>
+      <span>Hecho con todo mi corazón para ti, Silje. 💖</span>
     </footer>
   </div>
 
@@ -240,25 +240,25 @@
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
     const moments = [
-      {es:'La primera vez que vi tu sonrisa.', no:'Første gang jeg så smilet ditt.'},
-      {es:'Nuestra primera conversación que duró horas.', no:'Vår første samtale som varte i timer.'},
-      {es:'El momento en que supe que eras especial.', no:'Øyeblikket jeg visste at du var spesiell.'},
-      {es:'Cuando reíste con mi broma tonta.', no:'Da du lo av min dumme vits.'}
+      {es:'Tu sonrisa cuando nos conocimos.', no:'Smilet ditt da vi møttes.'},
+      {es:'El brillo de tus ojos al hablar.', no:'Glansen i øynene dine når du snakker.'},
+      {es:'Cómo luce tu pelo bajo el sol.', no:'Hvordan håret ditt skinner i solen.'},
+      {es:'Verte en tu vestido rojo favorito.', no:'Å se deg i din favoritt røde kjole.'}
     ];
 
     const words = [
-      {es:'Amor', en:'Love', no:'Kjærlighet'},
-      {es:'Felicidad', en:'Happiness', no:'Lykke'},
-      {es:'Eternidad', en:'Eternity', no:'Evighet'},
-      {es:'Pasión', en:'Passion', no:'Lidenskap'},
-      {es:'Destino', en:'Destiny', no:'Skjebne'}
+      {es:'Sonrisa', no:'Smil'},
+      {es:'Belleza', no:'Skjønnhet'},
+      {es:'Encanto', no:'Sjarm'},
+      {es:'Amor', no:'Kjærlighet'},
+      {es:'Magia', no:'Magi'}
     ];
 
     const promises = [
-      {es:'Prometo hacerte sonreír cada día.', no:'Jeg lover å få deg til å smile hver dag.'},
-      {es:'Estaré a tu lado en cada aventura.', no:'Jeg vil være ved din side i hvert eventyr.'},
-      {es:'Te cuidaré con todo mi corazón.', no:'Jeg vil ta vare på deg med hele mitt hjerte.'},
-      {es:'Nuestro amor crecerá siempre.', no:'Vår kjærlighet vil alltid vokse.'}
+      {es:'Siempre admiraré tu sonrisa.', no:'Jeg vil alltid beundre smilet ditt.'},
+      {es:'Cuidaré de ti con todo mi amor.', no:'Jeg vil ta vare på deg med all min kjærlighet.'},
+      {es:'Cada día será una nueva aventura juntos.', no:'Hver dag vil være et nytt eventyr sammen.'},
+      {es:'Tu vestido rojo siempre será mi favorito.', no:'Din røde kjole vil alltid være min favoritt.'}
     ];
 
     function renderMoments() {
@@ -278,7 +278,7 @@
       words.forEach(w => {
         const div = document.createElement('div'); 
         div.className = 'item';
-        div.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.no}</div></div>`;
+        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.no}</div></div>`;
         container.appendChild(div);
       });
     }
