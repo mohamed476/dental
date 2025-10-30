@@ -248,7 +248,20 @@
 
     <div class="grid">
       <div>
+        <!-- Nuevo test resumen del curso pasado -->
         <div class="card">
+          <h3>Resumen del curso pasado</h3>
+          <div class="progress-bar"><div class="progress-fill" id="pastProgressFill"></div></div>
+          <div id="pastQuizProgress" style="margin-bottom:12px;font-size:14px;color:var(--muted)"></div>
+          <div id="pastQuiz"></div>
+          <div style="margin-top:16px">
+            <button id="submitPastQuiz">Enviar respuestas</button>
+            <button id="resetPastQuiz" class="mini">Reiniciar test</button>
+          </div>
+          <div id="pastQuizResult" style="margin-top:12px;font-size:15px;color:var(--muted)"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
           <h3>Palabras difíciles del día</h3>
           <div class="list" id="words"></div>
         </div>
@@ -298,7 +311,8 @@
   <script>
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    const days = [
+    // Datos del curso pasado (basado en el curso original)
+    const pastDays = [
       {words:[
         {es:'inspirar', en:'to inspire', no:'å inspirere'},
         {es:'avanzar', en:'to advance', no:'å avansere'},
@@ -308,7 +322,7 @@
       ]}
     ];
 
-    const regulars = [
+    const pastRegulars = [
       {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
       {inf:'vivir', en:'to live', no:'å leve', conj:{yo:'vivo',tu:'vives',el:'vive',nos:'vivimos',vos:'vivís',ellos:'viven'}},
       {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come',nos:'comemos',vos:'coméis',ellos:'comen'}},
@@ -316,7 +330,7 @@
       {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}}
     ];
 
-    const irregulars = [
+    const pastIrregulars = [
       {inf:'ser', en:'to be', no:'å være', conj:{yo:'soy',tu:'eres',el:'es',nos:'somos',vos:'sois',ellos:'son'}},
       {inf:'estar', en:'to be', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
       {inf:'saber', en:'to know', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
@@ -324,11 +338,38 @@
       {inf:'poder', en:'to be able', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}}
     ];
 
+    // Nuevo curso equilibrado
+    const days = [
+      {words:[
+        {es:'lograr', en:'to achieve', no:'å oppnå'},
+        {es:'descubrir', en:'to discover', no:'å oppdage'},
+        {es:'aprender', en:'to learn', no:'å lære'},
+        {es:'compartir', en:'to share', no:'å dele'},
+        {es:'imaginar', en:'to imagine', no:'å forestille seg'}
+      ]}
+    ];
+
+    const regulars = [
+      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}},
+      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
+      {inf:'caminar', en:'to walk', no:'å gå', conj:{yo:'camino',tu:'caminas',el:'camina',nos:'caminamos',vos:'camináis',ellos:'caminan'}},
+      {inf:'escuchar', en:'to listen', no:'å lytte', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
+      {inf:'jugar', en:'to play', no:'å spille', conj:{yo:'juego',tu:'juegas',el:'juega',nos:'jugamos',vos:'jugáis',ellos:'juegan'}}
+    ];
+
+    const irregulars = [
+      {inf:'hacer', en:'to do/make', no:'å gjøre', conj:{yo:'hago',tu:'haces',el:'hace',nos:'hacemos',vos:'hacéis',ellos:'hacen'}},
+      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}},
+      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
+      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice',nos:'decimos',vos:'decís',ellos:'dicen'}},
+      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}}
+    ];
+
     const messages = [
-      {es:'Eres mi razón para sonreír cada día.', en:'You are my reason to smile every day.', no:'Du er grunnen til at jeg smiler hver dag.'},
-      {es:'Contigo, cada momento es mágico.', en:'With you, every moment is magical.', no:'Med deg er hvert øyeblikk magisk.'},
-      {es:'Tu risa ilumina mi mundo.', en:'Your laugh lights up my world.', no:'Latteren din lyser opp verden min.'},
-      {es:'Quiero aprender contigo y para ti.', en:'I want to learn with you and for you.', no:'Jeg vil lære sammen med deg og for deg.'}
+      {es:'Tú haces que cada día sea especial.', en:'You make every day special.', no:'Du gjør hver dag spesiell.'},
+      {es:'Eres mi aventura favorita.', en:'You are my favorite adventure.', no:'Du er mitt favoritt eventyr.'},
+      {es:'Contigo, el mundo es más bonito.', en:'With you, the world is more beautiful.', no:'Med deg er verden vakrere.'},
+      {es:'Te quiero más allá de las palabras.', en:'I love you beyond words.', no:'Jeg elsker deg utover ord.'}
     ];
 
     function shuffle(array) {
@@ -337,6 +378,125 @@
         [array[i], array[j]] = [array[j], array[i]];
       }
       return array;
+    }
+
+    // Renderizar test resumen del curso pasado
+    function renderPastQuiz() {
+      const quizContainer = document.getElementById('pastQuiz');
+      quizContainer.innerHTML = '';
+      const pronouns = ['yo', 'tu', 'el', 'nos', 'vos', 'ellos'];
+
+      const questions = [
+        // 2 preguntas de palabras (inglés y noruego)
+        ...shuffle(pastDays[0].words).slice(0, 1).map(w => ({
+          type: 'word_en',
+          question: `¿Cuál es la traducción en inglés de "${w.es}"?`,
+          answer: w.en,
+          options: shuffle([...pastDays[0].words.map(w => w.en), 'to try']).slice(0, 4)
+        })),
+        ...shuffle(pastDays[0].words).slice(1, 2).map(w => ({
+          type: 'word_no',
+          question: `¿Cuál es la traducción en noruego de "${w.es}"?`,
+          answer: w.no,
+          options: shuffle([...pastDays[0].words.map(w => w.no), 'å prøve']).slice(0, 4)
+        })),
+        // 2 preguntas de verbos regulares
+        ...shuffle(pastRegulars).slice(0, 1).map(v => {
+          const pronoun = shuffle(pronouns)[0];
+          return {
+            type: 'regular',
+            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
+            answer: v.conj[pronoun],
+            options: null
+          };
+        }),
+        // 2 preguntas de verbos irregulares
+        ...shuffle(pastIrregulars).slice(0, 1).map(v => {
+          const pronoun = shuffle(pronouns)[0];
+          return {
+            type: 'irregular',
+            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
+            answer: v.conj[pronoun],
+            options: null
+          };
+        }),
+        // 1 pregunta verdadero/falso
+        {
+          type: 'truefalse',
+          question: `¿Es "${pastRegulars[0].inf}" un verbo regular?`,
+          answer: 'true',
+          options: ['Verdadero', 'Falso']
+        }
+      ];
+
+      shuffle(questions).forEach((q, index) => {
+        const div = document.createElement('div');
+        div.className = 'quiz-item';
+        div.innerHTML = `<label>${index + 1}. ${q.question}</label>`;
+        if (q.options) {
+          if (q.type.startsWith('word')) {
+            const select = document.createElement('select');
+            select.id = `pastAnswer${index}`;
+            q.options.forEach(opt => {
+              const option = document.createElement('option');
+              option.value = opt;
+              option.textContent = opt;
+              select.appendChild(option);
+            });
+            div.appendChild(select);
+          } else {
+            q.options.forEach(opt => {
+              const label = document.createElement('label');
+              label.style.display = 'inline-block';
+              label.style.marginRight = '16px';
+              label.innerHTML = `<input type="radio" name="pastAnswer${index}" value="${opt === 'Verdadero' ? 'true' : 'false'}">${opt}`;
+              div.appendChild(label);
+            });
+          }
+        } else {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.id = `pastAnswer${index}`;
+          input.placeholder = 'Escribe tu respuesta';
+          div.appendChild(input);
+        }
+        const feedback = document.createElement('div');
+        feedback.id = `pastFeedback${index}`;
+        feedback.className = 'quiz-feedback';
+        div.appendChild(feedback);
+        quizContainer.appendChild(div);
+      });
+
+      document.getElementById('pastQuizProgress').textContent = `Pregunta 1/${questions.length}`;
+      document.getElementById('pastProgressFill').style.width = `${(1 / questions.length) * 100}%`;
+
+      document.getElementById('submitPastQuiz').addEventListener('click', () => {
+        let score = 0;
+        questions.forEach((q, index) => {
+          const userAnswer = q.options && !q.type.startsWith('truefalse')
+            ? document.getElementById(`pastAnswer${index}`).value
+            : q.type.startsWith('truefalse')
+            ? document.querySelector(`input[name="pastAnswer${index}"]:checked`)?.value || ''
+            : document.getElementById(`pastAnswer${index}`).value.trim().toLowerCase();
+          const feedback = document.getElementById(`pastFeedback${index}`);
+          if (userAnswer === q.answer.toLowerCase()) {
+            score++;
+            feedback.textContent = '¡Correcto!';
+            feedback.className = 'quiz-feedback correct';
+          } else {
+            feedback.textContent = `Incorrecto. La respuesta correcta es: ${q.answer}`;
+            feedback.className = 'quiz-feedback incorrect';
+          }
+        });
+        const percentage = Math.round((score / questions.length) * 100);
+        document.getElementById('pastQuizResult').textContent = `Puntuación: ${score}/${questions.length} (${percentage}%)`;
+        document.getElementById('pastProgressFill').style.width = '100%';
+      });
+
+      document.getElementById('resetPastQuiz').addEventListener('click', () => {
+        renderPastQuiz();
+        document.getElementById('pastQuizResult').textContent = '';
+      });
     }
 
     function renderDay(){
@@ -383,9 +543,8 @@
       quizContainer.innerHTML = '';
       const pronouns = ['yo', 'tu', 'el', 'nos', 'vos', 'ellos'];
 
-      // Generate 10 questions
       const questions = [
-        // 4 word translation questions (2 English, 2 Norwegian)
+        // 4 preguntas de palabras (2 inglés, 2 noruego)
         ...shuffle(days[0].words).slice(0, 2).map(w => ({
           type: 'word_en',
           question: `¿Cuál es la traducción en inglés de "${w.es}"?`,
@@ -398,7 +557,7 @@
           answer: w.no,
           options: shuffle([...days[0].words.map(w => w.no), 'å prøve']).slice(0, 4)
         })),
-        // 4 verb conjugation questions (2 regular, 2 irregular)
+        // 4 preguntas de verbos (2 regulares, 2 irregulares)
         ...shuffle(regulars).slice(0, 2).map(v => {
           const pronoun = shuffle(pronouns)[0];
           return {
@@ -417,7 +576,7 @@
             options: null
           };
         }),
-        // 2 true/false questions (verb type)
+        // 2 preguntas verdadero/falso
         {
           type: 'truefalse',
           question: `¿Es "${regulars[0].inf}" un verbo regular?`,
@@ -502,6 +661,7 @@
       });
     }
 
+    renderPastQuiz();
     renderDay();
     renderVerbs();
     renderMessages();
