@@ -3,27 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>💗 Curso del día — <span id='todayDate'></span></title>
+  <title>💖 Una semana contigo, Sili💖</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fef6f8;
+      --bg: #fff5f7;
       --card: #ffffff;
-      --accent: #d63384;
-      --muted: #5c5c5c;
+      --accent: #ff4d88;
+      --muted: #666666;
       --shadow: rgba(0, 0, 0, 0.1);
-      --success: #28a745;
-      --error: #dc3545;
+      --success: #ff8ab5;
       font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     }
     body {
       margin: 0;
-      background: linear-gradient(180deg, #fef6f8, #fff);
+      background: linear-gradient(180deg, #fff5f7, #ffeef2);
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       color: #1a1a1a;
+      overflow: hidden;
+    }
+    .intro {
+      text-align: center;
+      padding: 40px;
+    }
+    .intro button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+    .intro button:hover {
+      background: #e0457b;
+      transform: scale(1.05);
     }
     .wrap {
       width: 1000px;
@@ -32,26 +52,44 @@
       border-radius: 20px;
       box-shadow: 0 12px 40px var(--shadow);
       overflow: hidden;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.5s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      display: none;
     }
-    .wrap:hover {
-      transform: translateY(-5px);
+    .wrap.visible {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
     }
     header {
       padding: 28px 32px;
-      background: linear-gradient(90deg, rgba(214, 51, 132, 0.1), rgba(214, 51, 132, 0.02));
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      background: linear-gradient(90deg, rgba(255, 77, 136, 0.1), rgba(255, 77, 136, 0.02));
+      text-align: center;
+      position: relative;
+    }
+    header::before, header::after {
+      content: '💖';
+      position: absolute;
+      font-size: 40px;
+      opacity: 0.2;
+    }
+    header::before {
+      top: 20px;
+      left: 20px;
+    }
+    header::after {
+      bottom: 20px;
+      right: 20px;
     }
     header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 700;
-      color: #111;
+      color: var(--accent);
     }
     header p {
-      margin: 0;
+      margin: 10px 0 0;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.5;
@@ -60,12 +98,7 @@
       font-size: 20px;
       color: var(--accent);
       font-weight: 600;
-      align-self: flex-end;
-    }
-    .motivation {
-      font-size: 14px;
-      color: #333;
-      line-height: 1.6;
+      margin-top: 10px;
     }
     .grid {
       display: grid;
@@ -79,6 +112,17 @@
       border-radius: 16px;
       box-shadow: 0 4px 20px var(--shadow);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '💞';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 60px;
+      opacity: 0.1;
+      transform: rotate(20deg);
     }
     .card:hover {
       transform: translateY(-3px);
@@ -88,7 +132,7 @@
       margin: 0 0 12px;
       font-size: 18px;
       font-weight: 600;
-      color: #222;
+      color: var(--accent);
     }
     .list {
       display: flex;
@@ -96,16 +140,14 @@
       gap: 12px;
     }
     .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 14px;
       border-radius: 12px;
-      border: 1px solid #f4e8f0;
+      border: 1px solid #ffe6ed;
       transition: background 0.2s ease;
+      position: relative;
     }
     .item:hover {
-      background: #f9f1f5;
+      background: #fff0f4;
     }
     .lang {
       font-size: 13px;
@@ -119,94 +161,15 @@
       font-size: 13px;
       color: var(--muted);
     }
-    button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s ease;
-      margin-right: 10px;
-    }
-    button:hover {
-      background: #c12c76;
-    }
-    .mini {
-      background: transparent;
+    .heart {
+      font-size: 28px;
       color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 6px 10px;
-      font-size: 13px;
+      animation: pulse 2s infinite;
     }
-    .mini:hover {
-      background: rgba(214, 51, 132, 0.1);
-    }
-    .verbs {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .quiz-item {
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #f4e8f0;
-      margin-bottom: 12px;
-      animation: fadeIn 0.3s ease-in;
-    }
-    .quiz-item label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 15px;
-      color: #333;
-    }
-    .quiz-item input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    .quiz-item select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      background: #fff;
-    }
-    .quiz-item input[type="radio"] {
-      margin-right: 8px;
-    }
-    .quiz-feedback {
-      margin-top: 10px;
-      font-size: 14px;
-      color: var(--muted);
-      opacity: 0;
-      animation: fadeIn 0.3s ease forwards;
-    }
-    .quiz-feedback.correct {
-      color: var(--success);
-    }
-    .quiz-feedback.incorrect {
-      color: var(--error);
-    }
-    .progress-bar {
-      height: 6px;
-      background: #f4e8f0;
-      border-radius: 3px;
-      margin-bottom: 16px;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 3px;
-      transition: width 0.3s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
     footer {
       padding: 16px 24px;
@@ -215,459 +178,132 @@
       color: var(--muted);
       font-size: 14px;
     }
-    .heart {
-      font-size: 28px;
-      color: var(--accent);
-    }
     @media (max-width: 800px) {
       .grid {
-        grid-template-columns: 1fr;
-      }
-      .verbs {
         grid-template-columns: 1fr;
       }
       .wrap {
         margin: 16px;
       }
       .date {
-        align-self: flex-start;
         margin-top: 8px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="intro">
+    <button id="revealButton">💖 Una sorpresa para ti, Silje 💖</button>
+  </div>
+  <div class="wrap" id="content">
     <header>
-      <h1>💗 Curso del día</h1>
+      <h1>💖 Una semana contigo, Silje</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">Hola Silje, eres muy inteligente y por eso hoy tienes que aprender todo esto y luego practicarlo con Amine. Así podrás ir a Barcelona y vivir feliz. 💫<br>
-      <em>Hi Silje, you are very smart and that's why today you have to learn all this and then practice it with Amine. That way you can go to Barcelona and live happily. 💫</em><br>
-      <em>Hei Silje, du er veldig smart, og derfor må du lære alt dette i dag og deretter øve med Amine. På den måten kan du dra til Barcelona og leve lykkelig. 💫</em></p>
+      <p>Silje, hace una semana que llegaste a mi vida, y no puedo dejar de admirar tu sonrisa que ilumina todo, tu pelo que me encanta, tus ojos que me hacen perder el rumbo, y ese vestido rojo que te queda perfecto. <br>
+      <em>Silje, it’s been a week since you came into my life, and I can’t stop admiring your smile that lights up everything, your hair that I love, your eyes that make me lose my way, and that red dress that looks perfect on you.</em><br>
+      <em>Silje, det har gått en uke siden du kom inn i livet mitt, og jeg kan ikke slutte å beundre smilet ditt som lyser opp alt, håret ditt som jeg elsker, øynene dine som får meg til å miste retningen, og den røde kjolen som passer deg perfekt.</em></p>
     </header>
 
     <div class="grid">
       <div>
-        <!-- Nuevo test resumen del curso pasado -->
         <div class="card">
-          <h3>Resumen del curso pasado</h3>
-          <div class="progress-bar"><div class="progress-fill" id="pastProgressFill"></div></div>
-          <div id="pastQuizProgress" style="margin-bottom:12px;font-size:14px;color:var(--muted)"></div>
-          <div id="pastQuiz"></div>
-          <div style="margin-top:16px">
-            <button id="submitPastQuiz">Enviar respuestas</button>
-            <button id="resetPastQuiz" class="mini">Reiniciar test</button>
-          </div>
-          <div id="pastQuizResult" style="margin-top:12px;font-size:15px;color:var(--muted)"></div>
+          <h3>Momentos que atesoro contigo</h3>
+          <div class="list" id="moments"></div>
         </div>
 
         <div class="card" style="margin-top:16px">
-          <h3>Palabras difíciles del día</h3>
+          <h3>Palabras que me recuerdan a ti</h3>
           <div class="list" id="words"></div>
-        </div>
-
-        <div class="card" style="margin-top:16px">
-          <h3>Verbos regulares (presente)</h3>
-          <div class="verbs" id="regulars"></div>
-        </div>
-
-        <div class="card" style="margin-top:16px">
-          <h3>Verbos irregulares (presente)</h3>
-          <div class="verbs" id="irregulars"></div>
-        </div>
-
-        <div class="card" style="margin-top:16px">
-          <h3>Test del día</h3>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-          <div id="quizProgress" style="margin-bottom:12px;font-size:14px;color:var(--muted)"></div>
-          <div id="quiz"></div>
-          <div style="margin-top:16px">
-            <button id="submitQuiz">Enviar respuestas</button>
-            <button id="resetQuiz" class="mini">Reiniciar test</button>
-          </div>
-          <div id="quizResult" style="margin-top:12px;font-size:15px;color:var(--muted)"></div>
         </div>
       </div>
 
       <aside>
         <div class="card">
-          <h3>Mensajes románticos</h3>
-          <div id="romance" style="display:flex;flex-direction:column;gap:14px"></div>
-          <div style="margin-top:12px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
+          <h3>Promesas para nuestro futuro</h3>
+          <div id="promises" style="display:flex;flex-direction:column;gap:14px"></div>
+          <div style="margin-top:12px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Español — Noruego</div>
         </div>
 
         <div class="card" style="margin-top:16px;text-align:center">
-          <div class="heart">💗</div>
-          <p class="small" id="footerText"></p>
+          <div class="heart">💖</div>
+          <p class="small">Para Silje, mi alegría cada día.</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con cariño — aprende un poquito cada día. ❤️</span>
+      <span>Hecho con todo mi corazón para ti, Silje. 💖</span>
     </footer>
   </div>
 
   <script>
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // Datos del curso pasado (basado en el curso original)
-    const pastDays = [
-      {words:[
-        {es:'inspirar', en:'to inspire', no:'å inspirere'},
-        {es:'avanzar', en:'to advance', no:'å avansere'},
-        {es:'comprender', en:'to understand', no:'å forstå'},
-        {es:'explorar', en:'to explore', no:'å utforske'},
-        {es:'superar', en:'to overcome', no:'å overvinne'}
-      ]}
+    const moments = [
+      {es:'Tu sonrisa cuando nos conocimos.', no:'Smilet ditt da vi møttes.'},
+      {es:'El brillo de tus ojos al hablar.', no:'Glansen i øynene dine når du snakker.'},
+      {es:'Cómo luce tu pelo bajo el sol.', no:'Hvordan håret ditt skinner i solen.'},
+      {es:'Verte en tu vestido rojo favorito.', no:'Å se deg i din favoritt røde kjole.'}
     ];
 
-    const pastRegulars = [
-      {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
-      {inf:'vivir', en:'to live', no:'å leve', conj:{yo:'vivo',tu:'vives',el:'vive',nos:'vivimos',vos:'vivís',ellos:'viven'}},
-      {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come',nos:'comemos',vos:'coméis',ellos:'comen'}},
-      {inf:'ayudar', en:'to help', no:'å hjelpe', conj:{yo:'ayudo',tu:'ayudas',el:'ayuda',nos:'ayudamos',vos:'ayudáis',ellos:'ayudan'}},
-      {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}}
+    const words = [
+      {es:'Sonrisa', no:'Smil'},
+      {es:'Belleza', no:'Skjønnhet'},
+      {es:'Encanto', no:'Sjarm'},
+      {es:'Amor', no:'Kjærlighet'},
+      {es:'Magia', no:'Magi'}
     ];
 
-    const pastIrregulars = [
-      {inf:'ser', en:'to be', no:'å være', conj:{yo:'soy',tu:'eres',el:'es',nos:'somos',vos:'sois',ellos:'son'}},
-      {inf:'estar', en:'to be', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
-      {inf:'saber', en:'to know', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
-      {inf:'querer', en:'to want', no:'å ville', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}},
-      {inf:'poder', en:'to be able', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}}
+    const promises = [
+      {es:'Siempre admiraré tu sonrisa.', no:'Jeg vil alltid beundre smilet ditt.'},
+      {es:'Cuidaré de ti con todo mi amor.', no:'Jeg vil ta vare på deg med all min kjærlighet.'},
+      {es:'Cada día será una nueva aventura juntos.', no:'Hver dag vil være et nytt eventyr sammen.'},
+      {es:'Tu vestido rojo siempre será mi favorito.', no:'Din røde kjole vil alltid være min favoritt.'}
     ];
 
-    // Nuevo curso equilibrado
-    const days = [
-      {words:[
-        {es:'lograr', en:'to achieve', no:'å oppnå'},
-        {es:'descubrir', en:'to discover', no:'å oppdage'},
-        {es:'aprender', en:'to learn', no:'å lære'},
-        {es:'compartir', en:'to share', no:'å dele'},
-        {es:'imaginar', en:'to imagine', no:'å forestille seg'}
-      ]}
-    ];
-
-    const regulars = [
-      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}},
-      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
-      {inf:'caminar', en:'to walk', no:'å gå', conj:{yo:'camino',tu:'caminas',el:'camina',nos:'caminamos',vos:'camináis',ellos:'caminan'}},
-      {inf:'escuchar', en:'to listen', no:'å lytte', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
-      {inf:'jugar', en:'to play', no:'å spille', conj:{yo:'juego',tu:'juegas',el:'juega',nos:'jugamos',vos:'jugáis',ellos:'juegan'}}
-    ];
-
-    const irregulars = [
-      {inf:'hacer', en:'to do/make', no:'å gjøre', conj:{yo:'hago',tu:'haces',el:'hace',nos:'hacemos',vos:'hacéis',ellos:'hacen'}},
-      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}},
-      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
-      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice',nos:'decimos',vos:'decís',ellos:'dicen'}},
-      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}}
-    ];
-
-    const messages = [
-      {es:'Tú haces que cada día sea especial.', en:'You make every day special.', no:'Du gjør hver dag spesiell.'},
-      {es:'Eres mi aventura favorita.', en:'You are my favorite adventure.', no:'Du er mitt favoritt eventyr.'},
-      {es:'Contigo, el mundo es más bonito.', en:'With you, the world is more beautiful.', no:'Med deg er verden vakrere.'},
-      {es:'Te quiero más allá de las palabras.', en:'I love you beyond words.', no:'Jeg elsker deg utover ord.'}
-    ];
-
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // Renderizar test resumen del curso pasado
-    function renderPastQuiz() {
-      const quizContainer = document.getElementById('pastQuiz');
-      quizContainer.innerHTML = '';
-      const pronouns = ['yo', 'tu', 'el', 'nos', 'vos', 'ellos'];
-
-      const questions = [
-        // 2 preguntas de palabras (inglés y noruego)
-        ...shuffle(pastDays[0].words).slice(0, 1).map(w => ({
-          type: 'word_en',
-          question: `¿Cuál es la traducción en inglés de "${w.es}"?`,
-          answer: w.en,
-          options: shuffle([...pastDays[0].words.map(w => w.en), 'to try']).slice(0, 4)
-        })),
-        ...shuffle(pastDays[0].words).slice(1, 2).map(w => ({
-          type: 'word_no',
-          question: `¿Cuál es la traducción en noruego de "${w.es}"?`,
-          answer: w.no,
-          options: shuffle([...pastDays[0].words.map(w => w.no), 'å prøve']).slice(0, 4)
-        })),
-        // 2 preguntas de verbos regulares
-        ...shuffle(pastRegulars).slice(0, 1).map(v => {
-          const pronoun = shuffle(pronouns)[0];
-          return {
-            type: 'regular',
-            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
-            answer: v.conj[pronoun],
-            options: null
-          };
-        }),
-        // 2 preguntas de verbos irregulares
-        ...shuffle(pastIrregulars).slice(0, 1).map(v => {
-          const pronoun = shuffle(pronouns)[0];
-          return {
-            type: 'irregular',
-            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
-            answer: v.conj[pronoun],
-            options: null
-          };
-        }),
-        // 1 pregunta verdadero/falso
-        {
-          type: 'truefalse',
-          question: `¿Es "${pastRegulars[0].inf}" un verbo regular?`,
-          answer: 'true',
-          options: ['Verdadero', 'Falso']
-        }
-      ];
-
-      shuffle(questions).forEach((q, index) => {
-        const div = document.createElement('div');
-        div.className = 'quiz-item';
-        div.innerHTML = `<label>${index + 1}. ${q.question}</label>`;
-        if (q.options) {
-          if (q.type.startsWith('word')) {
-            const select = document.createElement('select');
-            select.id = `pastAnswer${index}`;
-            q.options.forEach(opt => {
-              const option = document.createElement('option');
-              option.value = opt;
-              option.textContent = opt;
-              select.appendChild(option);
-            });
-            div.appendChild(select);
-          } else {
-            q.options.forEach(opt => {
-              const label = document.createElement('label');
-              label.style.display = 'inline-block';
-              label.style.marginRight = '16px';
-              label.innerHTML = `<input type="radio" name="pastAnswer${index}" value="${opt === 'Verdadero' ? 'true' : 'false'}">${opt}`;
-              div.appendChild(label);
-            });
-          }
-        } else {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.id = `pastAnswer${index}`;
-          input.placeholder = 'Escribe tu respuesta';
-          div.appendChild(input);
-        }
-        const feedback = document.createElement('div');
-        feedback.id = `pastFeedback${index}`;
-        feedback.className = 'quiz-feedback';
-        div.appendChild(feedback);
-        quizContainer.appendChild(div);
-      });
-
-      document.getElementById('pastQuizProgress').textContent = `Pregunta 1/${questions.length}`;
-      document.getElementById('pastProgressFill').style.width = `${(1 / questions.length) * 100}%`;
-
-      document.getElementById('submitPastQuiz').addEventListener('click', () => {
-        let score = 0;
-        questions.forEach((q, index) => {
-          const userAnswer = q.options && !q.type.startsWith('truefalse')
-            ? document.getElementById(`pastAnswer${index}`).value
-            : q.type.startsWith('truefalse')
-            ? document.querySelector(`input[name="pastAnswer${index}"]:checked`)?.value || ''
-            : document.getElementById(`pastAnswer${index}`).value.trim().toLowerCase();
-          const feedback = document.getElementById(`pastFeedback${index}`);
-          if (userAnswer === q.answer.toLowerCase()) {
-            score++;
-            feedback.textContent = '¡Correcto!';
-            feedback.className = 'quiz-feedback correct';
-          } else {
-            feedback.textContent = `Incorrecto. La respuesta correcta es: ${q.answer}`;
-            feedback.className = 'quiz-feedback incorrect';
-          }
-        });
-        const percentage = Math.round((score / questions.length) * 100);
-        document.getElementById('pastQuizResult').textContent = `Puntuación: ${score}/${questions.length} (${percentage}%)`;
-        document.getElementById('pastProgressFill').style.width = '100%';
-      });
-
-      document.getElementById('resetPastQuiz').addEventListener('click', () => {
-        renderPastQuiz();
-        document.getElementById('pastQuizResult').textContent = '';
-      });
-    }
-
-    function renderDay(){
-      const container = document.getElementById('words');
+    function renderMoments() {
+      const container = document.getElementById('moments');
       container.innerHTML = '';
-      days[0].words.forEach(w=>{
-        const div = document.createElement('div'); div.className='item';
-        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;
+      moments.forEach(m => {
+        const div = document.createElement('div'); 
+        div.className = 'item';
+        div.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.no}</div></div>`;
         container.appendChild(div);
       });
     }
 
-    function renderVerbs(){
-      const rcont = document.getElementById('regulars');
-      rcont.innerHTML='';
-      regulars.forEach(v=>{
-        const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
-        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
-                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nosotros ${v.conj.nos} • vosotros ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
-        rcont.appendChild(d);
-      });
-
-      const icont = document.getElementById('irregulars');
-      icont.innerHTML='';
-      irregulars.forEach(v=>{
-        const d = document.createElement('div'); d.className='item'; d.style.flexDirection='column';
-        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
-                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nosotros ${v.conj.nos} • vosotros ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
-        icont.appendChild(d);
+    function renderWords() {
+      const container = document.getElementById('words');
+      container.innerHTML = '';
+      words.forEach(w => {
+        const div = document.createElement('div'); 
+        div.className = 'item';
+        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.no}</div></div>`;
+        container.appendChild(div);
       });
     }
 
-    function renderMessages(){
-      const box = document.getElementById('romance'); box.innerHTML='';
-      messages.forEach(m=>{
-        const el = document.createElement('div'); el.className='item';
-        el.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;
-        box.appendChild(el);
+    function renderPromises() {
+      const container = document.getElementById('promises');
+      container.innerHTML = '';
+      promises.forEach(p => {
+        const div = document.createElement('div'); 
+        div.className = 'item';
+        div.innerHTML = `<div><div class="big">${p.es}</div><div class="lang">${p.no}</div></div>`;
+        container.appendChild(div);
       });
     }
 
-    function renderQuiz() {
-      const quizContainer = document.getElementById('quiz');
-      quizContainer.innerHTML = '';
-      const pronouns = ['yo', 'tu', 'el', 'nos', 'vos', 'ellos'];
+    document.getElementById('revealButton').addEventListener('click', () => {
+      document.querySelector('.intro').style.display = 'none';
+      const content = document.getElementById('content');
+      content.style.display = 'block';
+      setTimeout(() => content.classList.add('visible'), 100);
+    });
 
-      const questions = [
-        // 4 preguntas de palabras (2 inglés, 2 noruego)
-        ...shuffle(days[0].words).slice(0, 2).map(w => ({
-          type: 'word_en',
-          question: `¿Cuál es la traducción en inglés de "${w.es}"?`,
-          answer: w.en,
-          options: shuffle([...days[0].words.map(w => w.en), 'to try']).slice(0, 4)
-        })),
-        ...shuffle(days[0].words).slice(2, 4).map(w => ({
-          type: 'word_no',
-          question: `¿Cuál es la traducción en noruego de "${w.es}"?`,
-          answer: w.no,
-          options: shuffle([...days[0].words.map(w => w.no), 'å prøve']).slice(0, 4)
-        })),
-        // 4 preguntas de verbos (2 regulares, 2 irregulares)
-        ...shuffle(regulars).slice(0, 2).map(v => {
-          const pronoun = shuffle(pronouns)[0];
-          return {
-            type: 'regular',
-            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
-            answer: v.conj[pronoun],
-            options: null
-          };
-        }),
-        ...shuffle(irregulars).slice(0, 2).map(v => {
-          const pronoun = shuffle(pronouns)[0];
-          return {
-            type: 'irregular',
-            question: `Conjuga el verbo "${v.inf}" para "${pronoun}" en presente.`,
-            answer: v.conj[pronoun],
-            options: null
-          };
-        }),
-        // 2 preguntas verdadero/falso
-        {
-          type: 'truefalse',
-          question: `¿Es "${regulars[0].inf}" un verbo regular?`,
-          answer: 'true',
-          options: ['Verdadero', 'Falso']
-        },
-        {
-          type: 'truefalse',
-          question: `¿Es "${irregulars[0].inf}" un verbo regular?`,
-          answer: 'false',
-          options: ['Verdadero', 'Falso']
-        }
-      ];
-
-      shuffle(questions).forEach((q, index) => {
-        const div = document.createElement('div');
-        div.className = 'quiz-item';
-        div.innerHTML = `<label>${index + 1}. ${q.question}</label>`;
-        if (q.options) {
-          if (q.type.startsWith('word')) {
-            const select = document.createElement('select');
-            select.id = `answer${index}`;
-            q.options.forEach(opt => {
-              const option = document.createElement('option');
-              option.value = opt;
-              option.textContent = opt;
-              select.appendChild(option);
-            });
-            div.appendChild(select);
-          } else {
-            q.options.forEach(opt => {
-              const label = document.createElement('label');
-              label.style.display = 'inline-block';
-              label.style.marginRight = '16px';
-              label.innerHTML = `<input type="radio" name="answer${index}" value="${opt === 'Verdadero' ? 'true' : 'false'}">${opt}`;
-              div.appendChild(label);
-            });
-          }
-        } else {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.id = `answer${index}`;
-          input.placeholder = 'Escribe tu respuesta';
-          div.appendChild(input);
-        }
-        const feedback = document.createElement('div');
-        feedback.id = `feedback${index}`;
-        feedback.className = 'quiz-feedback';
-        div.appendChild(feedback);
-        quizContainer.appendChild(div);
-      });
-
-      document.getElementById('quizProgress').textContent = `Pregunta 1/${questions.length}`;
-      document.getElementById('progressFill').style.width = `${(1 / questions.length) * 100}%`;
-
-      document.getElementById('submitQuiz').addEventListener('click', () => {
-        let score = 0;
-        questions.forEach((q, index) => {
-          const userAnswer = q.options && !q.type.startsWith('truefalse')
-            ? document.getElementById(`answer${index}`).value
-            : q.type.startsWith('truefalse')
-            ? document.querySelector(`input[name="answer${index}"]:checked`)?.value || ''
-            : document.getElementById(`answer${index}`).value.trim().toLowerCase();
-          const feedback = document.getElementById(`feedback${index}`);
-          if (userAnswer === q.answer.toLowerCase()) {
-            score++;
-            feedback.textContent = '¡Correcto!';
-            feedback.className = 'quiz-feedback correct';
-          } else {
-            feedback.textContent = `Incorrecto. La respuesta correcta es: ${q.answer}`;
-            feedback.className = 'quiz-feedback incorrect';
-          }
-        });
-        const percentage = Math.round((score / questions.length) * 100);
-        document.getElementById('quizResult').textContent = `Puntuación: ${score}/${questions.length} (${percentage}%)`;
-        document.getElementById('progressFill').style.width = '100%';
-      });
-
-      document.getElementById('resetQuiz').addEventListener('click', () => {
-        renderQuiz();
-        document.getElementById('quizResult').textContent = '';
-      });
-    }
-
-    renderPastQuiz();
-    renderDay();
-    renderVerbs();
-    renderMessages();
-    renderQuiz();
-
-    document.getElementById('footerText').innerHTML = '';
+    renderMoments();
+    renderWords();
+    renderPromises();
   </script>
 </body>
 </html>
