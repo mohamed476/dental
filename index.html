@@ -3,307 +3,287 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>💖 Una semana contigo, Sili💖</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Curso del día — <span id='todayDate'></span></title>
   <style>
-    :root {
-      --bg: #fff5f7;
-      --card: #ffffff;
-      --accent: #ff4d88;
-      --muted: #666666;
-      --shadow: rgba(0, 0, 0, 0.1);
-      --success: #ff8ab5;
-      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    }
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #fff5f7, #ffeef2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      color: #1a1a1a;
-      overflow: hidden;
-    }
-    .intro {
-      text-align: center;
-      padding: 40px;
-    }
-    .intro button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 16px 32px;
-      border-radius: 20px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 8px 20px var(--shadow);
-    }
-    .intro button:hover {
-      background: #e0457b;
-      transform: scale(1.05);
-    }
-    .wrap {
-      width: 1000px;
-      max-width: 96%;
-      background: var(--card);
-      border-radius: 20px;
-      box-shadow: 0 12px 40px var(--shadow);
-      overflow: hidden;
-      transition: transform 0.3s ease, opacity 0.5s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      display: none;
-    }
-    .wrap.visible {
-      opacity: 1;
-      transform: translateY(0);
-      display: block;
-    }
-    header {
-      padding: 28px 32px;
-      background: linear-gradient(90deg, rgba(255, 77, 136, 0.1), rgba(255, 77, 136, 0.02));
-      text-align: center;
-      position: relative;
-    }
-    header::before, header::after {
-      content: '💖';
-      position: absolute;
-      font-size: 40px;
-      opacity: 0.2;
-    }
-    header::before {
-      top: 20px;
-      left: 20px;
-    }
-    header::after {
-      bottom: 20px;
-      right: 20px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    header p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    .date {
-      font-size: 20px;
-      color: var(--accent);
-      font-weight: 600;
-      margin-top: 10px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 20px;
-      padding: 24px;
-    }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '💞';
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      font-size: 60px;
-      opacity: 0.1;
-      transform: rotate(20deg);
-    }
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 25px var(--shadow);
-    }
-    .card h3 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-    .list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .item {
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #ffe6ed;
-      transition: background 0.2s ease;
-      position: relative;
-    }
-    .item:hover {
-      background: #fff0f4;
-    }
-    .lang {
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .big {
-      font-weight: 600;
-      font-size: 18px;
-    }
-    .small {
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .heart {
-      font-size: 28px;
-      color: var(--accent);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-    footer {
-      padding: 16px 24px;
-      background: var(--bg);
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    @media (max-width: 800px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .wrap {
-        margin: 16px;
-      }
-      .date {
-        margin-top: 8px;
-      }
-    }
+    :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;
+          font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
+    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    header h1{margin:0;font-size:22px;color:#111}
+    header p{margin:0;color:var(--muted)}
+    .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
+    .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
+    .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
+    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent);display:flex;align-items:center;gap:8px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f2e6ef}
+    .big{font-weight:700;font-size:18px}
+    .small{font-size:13px;color:var(--muted)}
+    .lang{font-size:13px;color:var(--muted)}
+    button{background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+    .btn-sm{font-size:12px;padding:5px 8px}
+    .btn-success{background:var(--success)}
+    .btn-warning{background:var(--warning);color:#212529}
+    .btn-danger{background:var(--danger)}
+    .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .verb-card{padding:14px;border:1px solid #f0e0eb;border-radius:10px;background:#fdf8fb}
+    footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted);font-size:13px}
+    .heart{font-size:26px;color:var(--accent)}
+    .game-area{background:#fdf2f8;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #e95da6}
+    .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
+    .word-chip.dragging{opacity:0.5;transform:scale(0.95)}
+    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+    .drop-zone.drag-over{border-color:var(--accent);background:#fff5fb}
+    .result{margin-top:12px;font-weight:600}
+    .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .progress{margin-top:10px;height:8px;background:#f0e0eb;border-radius:4px;overflow:hidden}
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
+    .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}.verbs{grid-template-columns:1fr}.sentence-builder{justify-content:center}}
   </style>
 </head>
 <body>
-  <div class="intro">
-    <button id="revealButton">💖 Una sorpresa para ti, Silje 💖</button>
-  </div>
-  <div class="wrap" id="content">
+  <div class="wrap">
     <header>
-      <h1>💖 Una semana contigo, Silje</h1>
+      <h1>Curso del día — ¡Construye y Gana!</h1>
       <div class="date" id="todayDate"></div>
-      <p>Silje, hace una semana que llegaste a mi vida, y no puedo dejar de admirar tu sonrisa que ilumina todo, tu pelo que me encanta, tus ojos que me hacen perder el rumbo, y ese vestido rojo que te queda perfecto. <br>
-      <em>Silje, it’s been a week since you came into my life, and I can’t stop admiring your smile that lights up everything, your hair that I love, your eyes that make me lose my way, and that red dress that looks perfect on you.</em><br>
-      <em>Silje, det har gått en uke siden du kom inn i livet mitt, og jeg kan ikke slutte å beundre smilet ditt som lyser opp alt, håret ditt som jeg elsker, øynene dine som får meg til å miste retningen, og den røde kjolen som passer deg perfekt.</em></p>
+      <p class="motivation">¡Hola Silje! Hoy vas a <strong>construir frases</strong> con voz, jugar y aprender de forma ordenada y divertida. ¡Practica con Amine y a por Barcelona! <br>
+      <em>Hi Silje! Today you’ll <strong>build sentences</strong> with voice, play and learn in a fun, organized way. Practice with Amine and off to Barcelona!</em><br>
+      <em>Hei Silje! I dag skal du <strong>bygge setninger</strong> med stemme, leke og lære på en morsom og ryddig måte. Øv med Amine og dra til Barcelona!</em></p>
     </header>
 
     <div class="grid">
       <div>
+        <!-- PALABRAS -->
         <div class="card">
-          <h3>Momentos que atesoro contigo</h3>
-          <div class="list" id="moments"></div>
+          <h3 class="section-title">Palabras del día</h3>
+          <div class="list" id="words"></div>
         </div>
 
-        <div class="card" style="margin-top:16px">
-          <h3>Palabras que me recuerdan a ti</h3>
-          <div class="list" id="words"></div>
+        <!-- VERBOS REGULARES -->
+        <div class="card">
+          <h3 class="section-title">Verbos regulares (presente)</h3>
+          <div class="verbs" id="regulars"></div>
+        </div>
+
+        <!-- VERBOS IRREGULARES (sin 'ser') -->
+        <div class="card">
+          <h3 class="section-title">Verbos irregulares (presente)</h3>
+          <div class="verbs" id="irregulars"></div>
+        </div>
+
+        <!-- JUEGO: CONSTRUYE LA FRASE -->
+        <div class="card">
+          <h3 class="section-title">Juego: ¡Forma la frase!</h3>
+          <div class="game-area">
+            <p><strong>Arrastra las palabras en orden para formar la frase correcta.</strong></p>
+            <div class="sentence-builder" id="wordPool"></div>
+            <div class="drop-zone" id="dropZone"></div>
+            <div class="result" id="result"></div>
+            <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+              <button id="checkBtn" class="btn-sm">Comprobar</button>
+              <button id="resetBtn" class="btn-sm btn-warning">Reiniciar</button>
+              <button id="voiceBtn" class="voice-btn"></button>
+            </div>
+            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          </div>
         </div>
       </div>
 
       <aside>
         <div class="card">
-          <h3>Promesas para nuestro futuro</h3>
-          <div id="promises" style="display:flex;flex-direction:column;gap:14px"></div>
-          <div style="margin-top:12px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Español — Noruego</div>
+          <h3>Mensajes románticos</h3>
+          <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
+          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
 
-        <div class="card" style="margin-top:16px;text-align:center">
-          <div class="heart">💖</div>
-          <p class="small">Para Silje, mi alegría cada día.</p>
+        <div class="card" style="text-align:center">
+          <div class="heart"></div>
+          <p class="small">¡Cada frase bien hecha = 1 punto! <span id="points">0</span> pts</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con todo mi corazón para ti, Silje. 💖</span>
+      <span>Hecho con cariño — aprende jugando, paso a paso. </span>
     </footer>
   </div>
 
+  <canvas class="confetti" id="confetti"></canvas>
+
   <script>
+    // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    const moments = [
-      {es:'Tu sonrisa cuando nos conocimos.', no:'Smilet ditt da vi møttes.'},
-      {es:'El brillo de tus ojos al hablar.', no:'Glansen i øynene dine når du snakker.'},
-      {es:'Cómo luce tu pelo bajo el sol.', no:'Hvordan håret ditt skinner i solen.'},
-      {es:'Verte en tu vestido rojo favorito.', no:'Å se deg i din favoritt røde kjole.'}
-    ];
-
+    // === DATOS DEL DÍA (temática: amor, música, baile) ===
     const words = [
-      {es:'Sonrisa', no:'Smil'},
-      {es:'Belleza', no:'Skjønnhet'},
-      {es:'Encanto', no:'Sjarm'},
-      {es:'Amor', no:'Kjærlighet'},
-      {es:'Magia', no:'Magi'}
+      {es:'tú', en:'you', no:'du'},
+      {es:'yo', en:'I', no:'jeg'},
+      {es:'siempre', en:'always', no:'alltid'},
+      {es:'contigo', en:'with you', no:'med deg'},
+      {es:'feliz', en:'happy', no:'lykkelig'}
     ];
 
-    const promises = [
-      {es:'Siempre admiraré tu sonrisa.', no:'Jeg vil alltid beundre smilet ditt.'},
-      {es:'Cuidaré de ti con todo mi amor.', no:'Jeg vil ta vare på deg med all min kjærlighet.'},
-      {es:'Cada día será una nueva aventura juntos.', no:'Hver dag vil være et nytt eventyr sammen.'},
-      {es:'Tu vestido rojo siempre será mi favorito.', no:'Din røde kjole vil alltid være min favoritt.'}
+    const regulars = [
+      {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}},
+      {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
+      {inf:'querer', en:'to want/love', no:'å ville/elske', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}},
+      {inf:'escuchar', en:'to listen', no:'å lytte', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
+      {inf:'abrazar', en:'to hug', no:'å klemme', conj:{yo:'abrazo',tu:'abrazas',el:'abraza',nos:'abrazamos',vos:'abrazáis',ellos:'abrazan'}}
     ];
 
-    function renderMoments() {
-      const container = document.getElementById('moments');
-      container.innerHTML = '';
-      moments.forEach(m => {
-        const div = document.createElement('div'); 
-        div.className = 'item';
-        div.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.no}</div></div>`;
-        container.appendChild(div);
-      });
-    }
+    const irregulars = [
+      {inf:'estar', en:'to be (state)', no:'å være (tilstand)', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
+      {inf:'poder', en:'to be able', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
+      {inf:'saber', en:'to know', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
+      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
+      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}}
+    ];
 
-    function renderWords() {
-      const container = document.getElementById('words');
-      container.innerHTML = '';
-      words.forEach(w => {
-        const div = document.createElement('div'); 
-        div.className = 'item';
-        div.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.no}</div></div>`;
-        container.appendChild(div);
-      });
-    }
+    const messages = [
+      {es:'Yo siempre quiero bailar contigo.', en:'I always want to dance with you.', no:'Jeg vil alltid danse med deg.'},
+      {es:'Tú eres mi canción favorita.', en:'You are my favorite song.', no:'Du er min favorittsang.'},
+      {es:'Contigo estoy muy feliz.', en:'With you I am very happy.', no:'Med deg er jeg veldig lykkelig.'},
+      {es:'Puedo cantar toda la noche si estás aquí.', en:'I can sing all night if you are here.', no:'Jeg kan synge hele natten hvis du er her.'}
+    ];
 
-    function renderPromises() {
-      const container = document.getElementById('promises');
-      container.innerHTML = '';
-      promises.forEach(p => {
-        const div = document.createElement('div'); 
-        div.className = 'item';
-        div.innerHTML = `<div><div class="big">${p.es}</div><div class="lang">${p.no}</div></div>`;
-        container.appendChild(div);
-      });
-    }
+    // === RENDER ===
+    function renderWords(){/* mismo que antes */ const c = document.getElementById('words'); c.innerHTML=''; words.forEach(w=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;c.appendChild(d);});}
+    function renderVerbs(containerId, verbs){const c=document.getElementById(containerId);c.innerHTML='';verbs.forEach(v=>{const d=document.createElement('div');d.className='verb-card';d.innerHTML=`<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div><div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;c.appendChild(d);});}
+    function renderMessages(){const b=document.getElementById('romance');b.innerHTML='';messages.forEach(m=>{const e=document.createElement('div');e.className='item';e.innerHTML=`<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;b.appendChild(e);});}
 
-    document.getElementById('revealButton').addEventListener('click', () => {
-      document.querySelector('.intro').style.display = 'none';
-      const content = document.getElementById('content');
-      content.style.display = 'block';
-      setTimeout(() => content.classList.add('visible'), 100);
-    });
-
-    renderMoments();
     renderWords();
-    renderPromises();
+    renderVerbs('regulars', regulars);
+    renderVerbs('irregulars', irregulars);
+    renderMessages();
+
+    // === JUEGO: CONSTRUCCIÓN DE FRASE ===
+    let currentPhrase = null;
+    let score = 0;
+    let totalPhrases = messages.length;
+    let completed = 0;
+
+    const wordPool = document.getElementById('wordPool');
+    const dropZone = document.getElementById('dropZone');
+    const result = document.getElementById('result');
+    const checkBtn = document.getElementById('checkBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const pointsEl = document.getElementById('points');
+    const progressBar = document.getElementById('progressBar');
+
+    function loadNewPhrase(){
+      currentPhrase = messages[completed % totalPhrases];
+      const words = currentPhrase.es.split(' ');
+      const shuffled = [...words].sort(()=>Math.random()-0.5);
+
+      wordPool.innerHTML = '';
+      dropZone.innerHTML = '';
+      result.textContent = '';
+      result.className = 'result';
+
+      shuffled.forEach(word=>{
+        const chip = document.createElement('div');
+        chip.className = 'word-chip';
+        chip.textContent = word;
+        chip.draggable = true;
+        chip.ondragstart = e => e.dataTransfer.setData('text', word);
+        wordPool.appendChild(chip);
+      });
+
+      // Drag & Drop
+      dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('drag-over'); };
+      dropZone.ondragleave = () => dropZone.classList.remove('drag-over');
+      dropZone.ondrop = e => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        const word = e.dataTransfer.getData('text');
+        if(word && !dropZone.querySelector(`[data-word="${word}"]`)){
+          const chip = document.createElement('div');
+          chip.className = 'word-chip';
+          chip.textContent = word;
+          chip.dataset.word = word;
+          chip.onclick = () => chip.remove();
+          dropZone.appendChild(chip);
+        }
+      };
+
+      updateProgress();
+    }
+
+    checkBtn.onclick = () => {
+      const built = Array.from(dropZone.children).map(c=>c.textContent).join(' ').trim();
+      const correct = currentPhrase.es;
+      if(built === correct){
+        result.textContent = '¡Perfecto! ';
+        result.style.color = 'var(--success)';
+        score++;
+        completed++;
+        pointsEl.textContent = score;
+        confettiBurst();
+        setTimeout(loadNewPhrase, 1500);
+      } else {
+        result.textContent = 'Inténtalo de nuevo...';
+        result.style.color = 'var(--danger)';
+      }
+    };
+
+    resetBtn.onclick = loadNewPhrase;
+
+    voiceBtn.onclick = () => {
+      if('speechSynthesis' in window){
+        const utter = new SpeechSynthesisUtterance(currentPhrase.es);
+        utter.lang = 'es-ES';
+        utter.rate = 0.9;
+        speechSynthesis.speak(utter);
+      }
+    };
+
+    function updateProgress(){
+      const percent = (completed / totalPhrases) * 100;
+      progressBar.style.width = percent + '%';
+    }
+
+    // === CONFETTI ===
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = innerWidth; canvas.height = innerHeight;
+    let particles = [];
+
+    function confettiBurst(){
+      for(let i=0;i<80;i++){
+        particles.push({
+          x: innerWidth/2 + (Math.random()-0.5)*200,
+          y: innerHeight/2 + (Math.random()-0.5)*100,
+          vx: (Math.random()-0.5)*8,
+          vy: Math.random()* -10 - 5,
+          color: `hsl(${Math.random()*360},100%,65%)`,
+          size: Math.random()*4+3,
+          life: 70
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach((p,i)=>{
+        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life--;
+        if(p.life<=0) particles.splice(i,1);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // === INICIO ===
+    loadNewPhrase();
+    voiceBtn.innerHTML = ''; // Icono de altavoz
   </script>
 </body>
 </html>
