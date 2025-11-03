@@ -64,7 +64,9 @@
     .pair-es,.pair-en{background:#fdf8fb;padding:12px;border-radius:10px;border:1px solid #f0e0eb;text-align:center;cursor:pointer;transition:all .2s;font-weight:600}
     .pair-es:hover,.pair-en:hover{transform:scale(1.03);border-color:var(--accent)}
     .pair-es.selected,.pair-en.selected{outline:3px solid var(--accent);background:#fff5fb}
-    .pair-match{opacity:0.5;pointer-events:none}
+    .pair-match{opacity:0.3;pointer-events:none;transition:opacity 0.5s}
+    .pair-correct{animation:fadeOut 0.8s forwards}
+    @keyframes fadeOut{to{opacity:0;transform:scale(0.8)}}
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
     @keyframes pop{0%{transform:scale(0.8)}100%{transform:scale(1)}}
     @media(max-width:800px){
@@ -83,8 +85,8 @@
       <div class="date" id="todayDate"></div>
       <p class="motivation">¡Hola Silje! Hoy tienes <strong>3 juegos</strong> para aprender español jugando: <br>
       1. Construye la frase (¡más de una forma!)<br>
-      2. Rellena el hueco con voz<br>
-      3. Empareja amor y música<br>
+      2. Rellena el hueco con voz (¡8 frases!)<br>
+      3. Empareja y desaparecen<br>
       ¡Practica con Amine y a por Barcelona!</p>
     </header>
 
@@ -146,7 +148,7 @@
           <!-- JUEGO 3: EMPAREJA -->
           <div class="game-content" id="game-match">
             <div class="game-area">
-              <p><strong>Empareja español con inglés</strong></p>
+              <p><strong>Empareja español con inglés — ¡desaparecen!</strong></p>
               <div class="match-pair" id="matchPairs"></div>
               <div class="result" id="result3"></div>
               <button id="resetMatch" class="btn-sm btn-warning" style="margin-top:10px">Reiniciar</button>
@@ -163,7 +165,7 @@
         <div class="card" style="text-align:center">
           <div class="heart">Corazón</div>
           <p class="small">Puntos totales: <strong id="totalPoints">0</strong> pts</p>
-          <p class="small">¡Sigue así, Silje!</p>
+          <p class="small">¡Eres una campeona, Silje!</p>
         </div>
       </aside>
     </div>
@@ -203,11 +205,20 @@
       {inf:'querer', en:'to want/love', no:'å ville/elske', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}}
     ];
 
-    const phrases = [
-      {es:'Yo siempre bailo contigo', alternatives:['Yo bailo siempre contigo', 'Contigo bailo siempre yo']},
-      {es:'Tú eres mi música favorita', alternatives:['Mi música favorita eres tú', 'Eres tú mi música favorita']},
-      {es:'Estoy feliz cuando canto', alternatives:['Canto cuando estoy feliz', 'Feliz estoy al cantar']},
-      {es:'Quiero abrazarte ahora', alternatives:['Ahora te quiero abrazar', 'Abrazarte quiero ahora']}
+    // === 12 FRASES PARA RELLENAR (¡MÁS!) ===
+    const fillPhrases = [
+      'Yo siempre bailo contigo',
+      'Tú eres mi música favorita',
+      'Estoy feliz cuando canto',
+      'Quiero abrazarte ahora',
+      'Contigo todo es amor',
+      'Puedo escuchar tu voz todo el día',
+      'Bailamos juntos en la playa',
+      'Cantas como un ángel',
+      'Eres mi felicidad diaria',
+      'Siempre pienso en ti',
+      'Amor es bailar bajo la luna',
+      'Te quiero más cada día'
     ];
 
     const messages = [
@@ -223,11 +234,11 @@
 
     renderWords(); renderVerbs('regulars', regulars); renderVerbs('irregulars', irregulars); renderMessages();
 
-    // === PUNTOS GLOBALES ===
+    // === PUNTOS ===
     let totalPoints = 0;
     const pointsEl = document.getElementById('totalPoints');
 
-    // === PESTAÑAS (AHORA FUNCIONAN) ===
+    // === PESTAÑAS ===
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -239,6 +250,13 @@
 
     // === JUEGO 1: CONSTRUYE FRASE ===
     let currentPhrase1 = 0;
+    const phrases = [
+      {es:'Yo siempre bailo contigo', alternatives:['Yo bailo siempre contigo', 'Contigo bailo siempre yo']},
+      {es:'Tú eres mi música favorita', alternatives:['Mi música favorita eres tú', 'Eres tú mi música favorita']},
+      {es:'Estoy feliz cuando canto', alternatives:['Canto cuando estoy feliz', 'Feliz estoy al cantar']},
+      {es:'Quiero abrazarte ahora', alternatives:['Ahora te quiero abrazar', 'Abrazarte quiero ahora']}
+    ];
+
     const pool1 = document.getElementById('wordPool1');
     const drop1 = document.getElementById('dropZone1');
     const result1 = document.getElementById('result1');
@@ -255,20 +273,12 @@
 
       shuffled.forEach(w => {
         const chip = document.createElement('div');
-        chip.className = 'word-chip';
-        chip.textContent = w;
-        chip.draggable = true;
-        chip.dataset.word = w;
-
-        // Drag
+        chip.className = 'word-chip'; chip.textContent = w; chip.draggable = true; chip.dataset.word = w;
         chip.ondragstart = e => e.dataTransfer.setData('text', w);
-        // Tocar en móvil
         chip.onclick = () => moveToDrop(chip);
-
         pool1.appendChild(chip);
       });
 
-      // Drop zone
       drop1.ondragover = e => { e.preventDefault(); drop1.classList.add('drag-over'); };
       drop1.ondragleave = () => drop1.classList.remove('drag-over');
       drop1.ondrop = e => {
@@ -280,19 +290,17 @@
       progress1.style.width = ((currentPhrase1 / phrases.length) * 100) + '%';
     }
 
-    function moveToDrop(originalChip) {
-      const w = originalChip.textContent;
+    function moveToDrop(chip) {
+      const w = chip.textContent;
       if (!drop1.querySelector(`[data-word="${w}"]`)) {
         addToDrop(w);
-        originalChip.remove();
+        chip.remove();
       }
     }
 
     function addToDrop(w) {
       const chip = document.createElement('div');
-      chip.className = 'word-chip';
-      chip.textContent = w;
-      chip.dataset.word = w;
+      chip.className = 'word-chip'; chip.textContent = w; chip.dataset.word = w;
       chip.onclick = () => chip.remove();
       drop1.appendChild(chip);
     }
@@ -302,10 +310,8 @@
       const p = phrases[currentPhrase1];
       const isMain = p.es === built;
       const isAlt = p.alternatives.some(a => a === built);
-      const correct = isMain || isAlt;
-
-      if (correct) {
-        const msg = isAlt ? '¡EXCELENTE! ¡Frase creativa y perfecta!' : '¡Perfecto! ¡Muy bien!';
+      if (isMain || isAlt) {
+        const msg = isAlt ? '¡EXCELENTE! ¡Creatividad!' : '¡Perfecto!';
         result1.innerHTML = `${msg} <span style="color:var(--energy)">+2 pts</span>`;
         result1.style.color = 'var(--success)';
         totalPoints += 2; pointsEl.textContent = totalPoints;
@@ -320,7 +326,7 @@
     reset1.onclick = loadPhrase1;
     voice1.onclick = () => speak(phrases[currentPhrase1].es);
 
-    // === JUEGO 2: RELLENA ===
+    // === JUEGO 2: RELLENA HUECO (¡8 FRASES + SIN BLOQUEO!) ===
     let currentFill = 0;
     const fillSent = document.getElementById('fillSentence');
     const fillOpts = document.getElementById('fillOptions');
@@ -329,8 +335,8 @@
     const nextFill = document.getElementById('nextFill');
 
     function loadFill() {
-      const p = phrases[currentFill];
-      const words = p.es.split(' ');
+      const sentence = fillPhrases[currentFill];
+      const words = sentence.split(' ');
       const idx = Math.floor(Math.random() * words.length);
       const correct = words[idx];
       words[idx] = '_____';
@@ -338,8 +344,8 @@
 
       const opts = [correct];
       const others = words.filter(w => w !== '_____');
-      while (opts.length < 4) {
-        const rand = others[Math.floor(Math.random() * others.length)];
+      while (opts.length < 4 && others.length > 0) {
+        const rand = others.splice(Math.floor(Math.random() * others.length), 1)[0];
         if (!opts.includes(rand)) opts.push(rand);
       }
       opts.sort(() => Math.random() - 0.5);
@@ -353,13 +359,16 @@
           fillOpts.querySelectorAll('.opt-chip').forEach(c => c.classList.remove('selected'));
           chip.classList.add('selected');
           if (o === correct) {
-            result2.textContent = '¡Correcto!';
+            result2.textContent = '¡Genial!';
             result2.style.color = 'var(--success)';
             totalPoints++; pointsEl.textContent = totalPoints;
             confettiBurst();
-            setTimeout(() => { currentFill = (currentFill + 1) % phrases.length; loadFill(); }, 1500);
+            setTimeout(() => {
+              currentFill = (currentFill + 1) % fillPhrases.length;
+              loadFill();
+            }, 1200);
           } else {
-            result2.textContent = 'No, inténtalo otra vez';
+            result2.textContent = 'No, otra vez...';
             result2.style.color = 'var(--danger)';
           }
         };
@@ -367,10 +376,10 @@
       });
     }
 
-    voice2.onclick = () => speak(phrases[currentFill].es);
-    nextFill.onclick = () => { currentFill = (currentFill + 1) % phrases.length; loadFill(); };
+    voice2.onclick = () => speak(fillPhrases[currentFill]);
+    nextFill.onclick = () => { currentFill = (currentFill + 1) % fillPhrases.length; loadFill(); };
 
-    // === JUEGO 3: EMPAREJA ===
+    // === JUEGO 3: EMPAREJA (¡DESAPARECEN!) ===
     const matchPairs = document.getElementById('matchPairs');
     const result3 = document.getElementById('result3');
     const resetMatch = document.getElementById('resetMatch');
@@ -388,36 +397,47 @@
         const div = document.createElement('div');
         div.className = 'pair-es';
         div.textContent = p.es;
-        div.onclick = () => {
-          document.querySelectorAll('.pair-es').forEach(d => d.classList.remove('selected'));
-          div.classList.add('selected');
-          selectedEs = p;
-          checkMatch();
-        };
+        div.dataset.en = p.en;
+        div.onclick = () => selectPair(div, 'es');
         matchPairs.appendChild(div);
       });
       enList.forEach(p => {
         const div = document.createElement('div');
         div.className = 'pair-en';
         div.textContent = p.en;
-        div.onclick = () => {
-          document.querySelectorAll('.pair-en').forEach(d => d.classList.remove('selected'));
-          div.classList.add('selected');
-          selectedEn = p;
-          checkMatch();
-        };
+        div.dataset.es = p.es;
+        div.onclick = () => selectPair(div, 'en');
         matchPairs.appendChild(div);
       });
     }
 
+    function selectPair(el, type) {
+      document.querySelectorAll(`.pair-${type}`).forEach(d => d.classList.remove('selected'));
+      el.classList.add('selected');
+      if (type === 'es') selectedEs = el;
+      else selectedEn = el;
+      checkMatch();
+    }
+
     function checkMatch() {
       if (selectedEs && selectedEn) {
-        if (selectedEs.en === selectedEn.en) {
-          result3.textContent = '¡Emparejado!';
+        if (selectedEs.dataset.en === selectedEn.textContent) {
+          result3.textContent = '¡Correcto!';
           result3.style.color = 'var(--success)';
           totalPoints++; pointsEl.textContent = totalPoints;
           confettiBurst();
-          setTimeout(loadMatch, 1500);
+
+          // Desvanecer pareja
+          selectedEs.classList.add('pair-correct');
+          selectedEn.classList.add('pair-correct');
+          setTimeout(() => {
+            selectedEs.remove();
+            selectedEn.remove();
+            selectedEs = selectedEn = null;
+            if (matchPairs.children.length === 0) {
+              setTimeout(loadMatch, 800);
+            }
+          }, 800);
         } else {
           result3.textContent = 'No coincide';
           result3.style.color = 'var(--danger)';
