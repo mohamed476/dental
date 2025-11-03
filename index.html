@@ -23,7 +23,8 @@
     .big{font-weight:700;font-size:18px}
     .small{font-size:13px;color:var(--muted)}
     .lang{font-size:13px;color:var(--muted)}
-    button{background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+    button{background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;transition:all .2s}
+    button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(233,93,166,0.3)}
     .btn-sm{font-size:12px;padding:5px 8px}
     .btn-success{background:var(--success)}
     .btn-warning{background:var(--warning);color:#212529}
@@ -35,38 +36,43 @@
     .heart{font-size:26px;color:var(--accent)}
     .game-area{background:#fdf2f8;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #e95da6}
     .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:transform .1s}
-    .word-chip:hover{transform:scale(1.05)}
+    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:all .2s}
+    .word-chip:hover{transform:scale(1.05);border-color:var(--accent)}
     .word-chip.dragging{opacity:0.5;transform:scale(0.95)}
     .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
     .drop-zone.drag-over{border-color:var(--accent);background:#fff5fb}
     .result{margin-top:12px;font-weight:600;font-size:15px}
-    .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+    .voice-btn:hover{transform:scale(1.1);background:#d44a8f}
     .progress{margin-top:10px;height:8px;background:#f0e0eb;border-radius:4px;overflow:hidden}
     .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
     .energy-msg{background:linear-gradient(90deg,#ff6b9d,#e95da6);color:white;padding:10px;border-radius:10px;margin:10px 0;text-align:center;font-weight:bold;animation:pop 0.5s}
-    .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #f0e0eb}
-    .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f8f0f5;color:var(--muted);cursor:pointer;font-size:14px}
+    .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #f0e0eb;flex-wrap:wrap}
+    .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f8f0f5;color:var(--muted);cursor:pointer;font-size:14px;transition:all .2s}
+    .tab-btn:hover{background:#f0d8ea}
     .tab-btn.active{background:var(--accent);color:white}
-    .game-content{display:none}
+    .game-content{display:none;padding:8px}
     .game-content.active{display:block}
-    .fill-blank{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
-    .blank{border-bottom:2px solid var(--accent);min-width:80px;padding:2px 4px;text-align:center}
+    .fill-blank{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0;font-size:16px}
+    .blank{border-bottom:3px solid var(--accent);min-width:100px;padding:2px 4px;text-align:center;font-weight:bold}
     .options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .opt-chip{background:#fff;padding:6px 10px;border-radius:20px;border:1px solid #e0c0d8;cursor:pointer;font-size:13px}
-    .opt-chip.selected{background:var(--accent);color:white}
+    .opt-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #e0c0d8;cursor:pointer;font-size:14px;transition:all .2s}
+    .opt-chip:hover{transform:scale(1.05);border-color:var(--accent)}
+    .opt-chip.selected{background:var(--accent);color:white;border-color:var(--accent)}
     .match-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
-    .pair-es,.pair-en{background:#fdf8fb;padding:12px;border-radius:10px;border:1px solid #f0e0eb;text-align:center;cursor:pointer}
-    .pair-es.selected,.pair-en.selected{outline:3px solid var(--accent)}
-    .pair-match{opacity:0.5}
+    .pair-es,.pair-en{background:#fdf8fb;padding:12px;border-radius:10px;border:1px solid #f0e0eb;text-align:center;cursor:pointer;transition:all .2s;font-weight:600}
+    .pair-es:hover,.pair-en:hover{transform:scale(1.03);border-color:var(--accent)}
+    .pair-es.selected,.pair-en.selected{outline:3px solid var(--accent);background:#fff5fb}
+    .pair-match{opacity:0.5;pointer-events:none}
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
     @keyframes pop{0%{transform:scale(0.8)}100%{transform:scale(1)}}
     @media(max-width:800px){
       .grid{grid-template-columns:1fr}
       .verbs{grid-template-columns:1fr}
       .match-pair{grid-template-columns:1fr}
-      .fill-blank{justify-content:center}
+      .fill-blank{justify-content:center;font-size:15px}
+      .game-tabs{justify-content:center}
     }
   </style>
 </head>
@@ -76,7 +82,7 @@
       <h1>Curso del día — ¡3 Juegos Épicos!</h1>
       <div class="date" id="todayDate"></div>
       <p class="motivation">¡Hola Silje! Hoy tienes <strong>3 juegos</strong> para aprender español jugando: <br>
-      1. Construye la frase (¡más de una forma correcta!)<br>
+      1. Construye la frase (¡más de una forma!)<br>
       2. Rellena el hueco con voz<br>
       3. Empareja amor y música<br>
       ¡Practica con Amine y a por Barcelona!</p>
@@ -102,22 +108,22 @@
         <div class="card">
           <h3 class="section-title">JUEGOS DIVERTIDOS</h3>
           <div class="game-tabs">
-            <button class="tab-btn active" data-game="build">Construye Frase</button>
-            <button class="tab-btn" data-game="fill">Rellena Hueco</button>
+            <button class="tab-btn active" data-game="build">Construye</button>
+            <button class="tab-btn" data-game="fill">Rellena</button>
             <button class="tab-btn" data-game="match">Empareja</button>
           </div>
 
           <!-- JUEGO 1: CONSTRUYE FRASE -->
           <div class="game-content active" id="game-build">
             <div class="game-area">
-              <p><strong>Arrastra y forma una frase correcta. ¡Hay más de una forma!</strong></p>
+              <p><strong>Arrastra o toca para formar una frase. ¡Hay más de una forma!</strong></p>
               <div class="sentence-builder" id="wordPool1"></div>
               <div class="drop-zone" id="dropZone1"></div>
               <div class="result" id="result1"></div>
-              <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+              <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
                 <button id="checkBtn1" class="btn-sm">Comprobar</button>
                 <button id="resetBtn1" class="btn-sm btn-warning">Reiniciar</button>
-                <button id="voiceBtn1" class="voice-btn"></button>
+                <button id="voiceBtn1" class="voice-btn">Altavoz</button>
               </div>
               <div class="progress"><div class="progress-bar" id="progressBar1"></div></div>
             </div>
@@ -130,8 +136,8 @@
               <div class="fill-blank" id="fillSentence"></div>
               <div class="options" id="fillOptions"></div>
               <div class="result" id="result2"></div>
-              <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-                <button id="voiceBtn2" class="voice-btn"></button>
+              <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <button id="voiceBtn2" class="voice-btn">Altavoz</button>
                 <button id="nextFill" class="btn-sm btn-success">Siguiente</button>
               </div>
             </div>
@@ -155,7 +161,7 @@
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <div class="card" style="text-align:center">
-          <div class="heart"></div>
+          <div class="heart">Corazón</div>
           <p class="small">Puntos totales: <strong id="totalPoints">0</strong> pts</p>
           <p class="small">¡Sigue así, Silje!</p>
         </div>
@@ -221,17 +227,17 @@
     let totalPoints = 0;
     const pointsEl = document.getElementById('totalPoints');
 
-    // === TABS ===
+    // === PESTAÑAS (AHORA FUNCIONAN) ===
     document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-        document.querySelectorAll('.game-content').forEach(g=>g.classList.remove('active'));
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.game-content').forEach(g => g.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('game-'+btn.dataset.game).classList.add('active');
-      };
+        document.getElementById('game-' + btn.dataset.game).classList.add('active');
+      });
     });
 
-    // === JUEGO 1: CONSTRUYE FRASE (MÚLTIPLES RESPUESTAS) ===
+    // === JUEGO 1: CONSTRUYE FRASE ===
     let currentPhrase1 = 0;
     const pool1 = document.getElementById('wordPool1');
     const drop1 = document.getElementById('dropZone1');
@@ -244,55 +250,77 @@
     function loadPhrase1(){
       const p = phrases[currentPhrase1];
       const words = p.es.split(' ');
-      const shuffled = [...words].sort(()=>Math.random()-0.5);
-      pool1.innerHTML=''; drop1.innerHTML=''; result1.textContent='';
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
+      pool1.innerHTML = ''; drop1.innerHTML = ''; result1.textContent = '';
 
-      shuffled.forEach(w=>{
+      shuffled.forEach(w => {
         const chip = document.createElement('div');
-        chip.className='word-chip'; chip.textContent=w; chip.draggable=true;
-        chip.ondragstart=e=>e.dataTransfer.setData('text',w);
+        chip.className = 'word-chip';
+        chip.textContent = w;
+        chip.draggable = true;
+        chip.dataset.word = w;
+
+        // Drag
+        chip.ondragstart = e => e.dataTransfer.setData('text', w);
+        // Tocar en móvil
+        chip.onclick = () => moveToDrop(chip);
+
         pool1.appendChild(chip);
       });
 
-      drop1.ondragover=e=>{e.preventDefault();drop1.classList.add('drag-over');};
-      drop1.ondragleave=()=>drop1.classList.remove('drag-over');
-      drop1.ondrop=e=>{
+      // Drop zone
+      drop1.ondragover = e => { e.preventDefault(); drop1.classList.add('drag-over'); };
+      drop1.ondragleave = () => drop1.classList.remove('drag-over');
+      drop1.ondrop = e => {
         e.preventDefault(); drop1.classList.remove('drag-over');
         const w = e.dataTransfer.getData('text');
-        if(w && !drop1.querySelector(`[data-w="${w}"]`)){
-          const chip = document.createElement('div');
-          chip.className='word-chip'; chip.textContent=w; chip.dataset.w=w;
-          chip.onclick=()=>chip.remove();
-          drop1.appendChild(chip);
-        }
+        if (w) addToDrop(w);
       };
-      progress1.style.width = ((currentPhrase1 / phrases.length)*100)+'%';
+
+      progress1.style.width = ((currentPhrase1 / phrases.length) * 100) + '%';
     }
 
-    check1.onclick=()=>{
-      const built = Array.from(drop1.children).map(c=>c.textContent).join(' ').trim();
+    function moveToDrop(originalChip) {
+      const w = originalChip.textContent;
+      if (!drop1.querySelector(`[data-word="${w}"]`)) {
+        addToDrop(w);
+        originalChip.remove();
+      }
+    }
+
+    function addToDrop(w) {
+      const chip = document.createElement('div');
+      chip.className = 'word-chip';
+      chip.textContent = w;
+      chip.dataset.word = w;
+      chip.onclick = () => chip.remove();
+      drop1.appendChild(chip);
+    }
+
+    check1.onclick = () => {
+      const built = Array.from(drop1.children).map(c => c.textContent).join(' ').trim();
       const p = phrases[currentPhrase1];
-      const correct = p.es === built || p.alternatives.some(a=>a===built);
-      if(correct){
-        const msg = p.alternatives.some(a=>a===built) && built !== p.es 
-          ? '¡EXCELENTE! ¡Frase creativa y correcta!' 
-          : '¡Perfecto! ¡Bien hecho!';
+      const isMain = p.es === built;
+      const isAlt = p.alternatives.some(a => a === built);
+      const correct = isMain || isAlt;
+
+      if (correct) {
+        const msg = isAlt ? '¡EXCELENTE! ¡Frase creativa y perfecta!' : '¡Perfecto! ¡Muy bien!';
         result1.innerHTML = `${msg} <span style="color:var(--energy)">+2 pts</span>`;
         result1.style.color = 'var(--success)';
         totalPoints += 2; pointsEl.textContent = totalPoints;
         confettiBurst();
-        setTimeout(()=>{currentPhrase1=(currentPhrase1+1)%phrases.length; loadPhrase1();},1800);
+        setTimeout(() => { currentPhrase1 = (currentPhrase1 + 1) % phrases.length; loadPhrase1(); }, 1800);
       } else {
         result1.textContent = 'Inténtalo de nuevo...';
         result1.style.color = 'var(--danger)';
       }
     };
 
-    reset1.onclick=loadPhrase1;
-    voice1.onclick=()=>{speak(phrases[currentPhrase1].es);};
-    voice1.innerHTML='';
+    reset1.onclick = loadPhrase1;
+    voice1.onclick = () => speak(phrases[currentPhrase1].es);
 
-    // === JUEGO 2: RELLENA HUECO ===
+    // === JUEGO 2: RELLENA ===
     let currentFill = 0;
     const fillSent = document.getElementById('fillSentence');
     const fillOpts = document.getElementById('fillOptions');
@@ -300,46 +328,47 @@
     const voice2 = document.getElementById('voiceBtn2');
     const nextFill = document.getElementById('nextFill');
 
-    function loadFill(){
+    function loadFill() {
       const p = phrases[currentFill];
       const words = p.es.split(' ');
-      const blankIdx = Math.floor(Math.random()*words.length);
-      const blankWord = words[blankIdx];
-      words[blankIdx] = '_____';
-      fillSent.innerHTML = words.map((w,i)=> i===blankIdx ? `<span class="blank"></span>` : w).join(' ');
+      const idx = Math.floor(Math.random() * words.length);
+      const correct = words[idx];
+      words[idx] = '_____';
+      fillSent.innerHTML = words.map((w, i) => i === idx ? '<span class="blank">?</span>' : w).join(' ');
 
-      const opts = [blankWord];
-      const others = words.filter((_,i)=>i!==blankIdx);
-      while(opts.length<4 && others.length>0){
-        const idx = Math.floor(Math.random()*others.length);
-        const o = others.splice(idx,1)[0];
-        if(!opts.includes(o)) opts.push(o);
+      const opts = [correct];
+      const others = words.filter(w => w !== '_____');
+      while (opts.length < 4) {
+        const rand = others[Math.floor(Math.random() * others.length)];
+        if (!opts.includes(rand)) opts.push(rand);
       }
-      opts.sort(()=>Math.random()-0.5);
+      opts.sort(() => Math.random() - 0.5);
 
-      fillOpts.innerHTML='';
-      opts.forEach(o=>{
+      fillOpts.innerHTML = '';
+      opts.forEach(o => {
         const chip = document.createElement('div');
-        chip.className='opt-chip'; chip.textContent=o;
-        chip.onclick=()=>{
-          document.querySelectorAll('#fillOptions .opt-chip').forEach(c=>c.classList.remove('selected'));
+        chip.className = 'opt-chip';
+        chip.textContent = o;
+        chip.onclick = () => {
+          fillOpts.querySelectorAll('.opt-chip').forEach(c => c.classList.remove('selected'));
           chip.classList.add('selected');
-          if(o===blankWord){
-            result2.textContent='¡Correcto!'; result2.style.color='var(--success)';
-            totalPoints++; pointsEl.textContent=totalPoints;
+          if (o === correct) {
+            result2.textContent = '¡Correcto!';
+            result2.style.color = 'var(--success)';
+            totalPoints++; pointsEl.textContent = totalPoints;
             confettiBurst();
-            setTimeout(()=>{currentFill=(currentFill+1)%phrases.length; loadFill();},1500);
+            setTimeout(() => { currentFill = (currentFill + 1) % phrases.length; loadFill(); }, 1500);
           } else {
-            result2.textContent='No, inténtalo otra vez'; result2.style.color='var(--danger)';
+            result2.textContent = 'No, inténtalo otra vez';
+            result2.style.color = 'var(--danger)';
           }
         };
         fillOpts.appendChild(chip);
       });
     }
 
-    voice2.onclick=()=>{speak(phrases[currentFill].es.replace('_____', phrases[currentFill].es.split(' ')[phrases[currentFill].es.split(' ').indexOf('_____')]);};
-    voice2.innerHTML='';
-    nextFill.onclick=()=>{currentFill=(currentFill+1)%phrases.length; loadFill();};
+    voice2.onclick = () => speak(phrases[currentFill].es);
+    nextFill.onclick = () => { currentFill = (currentFill + 1) % phrases.length; loadFill(); };
 
     // === JUEGO 3: EMPAREJA ===
     const matchPairs = document.getElementById('matchPairs');
@@ -347,47 +376,60 @@
     const resetMatch = document.getElementById('resetMatch');
     let selectedEs = null, selectedEn = null;
 
-    function loadMatch(){
-      const pairs = words.slice(0,5).map(w=>({es:w.es, en:w.en}));
-      const esList = [...pairs].sort(()=>Math.random()-0.5);
-      const enList = [...pairs].sort(()=>Math.random()-0.5);
-      matchPairs.innerHTML='';
-      selectedEs=selectedEn=null;
+    function loadMatch() {
+      const pairs = words.slice(0, 5);
+      const esList = [...pairs].sort(() => Math.random() - 0.5);
+      const enList = [...pairs].sort(() => Math.random() - 0.5);
+      matchPairs.innerHTML = '';
+      selectedEs = selectedEn = null;
+      result3.textContent = '';
 
-      esList.forEach(p=>{
+      esList.forEach(p => {
         const div = document.createElement('div');
-        div.className='pair-es'; div.textContent=p.es;
-        div.onclick=()=>{document.querySelectorAll('.pair-es').forEach(d=>d.classList.remove('selected')); div.classList.add('selected'); selectedEs=p; checkMatch();};
+        div.className = 'pair-es';
+        div.textContent = p.es;
+        div.onclick = () => {
+          document.querySelectorAll('.pair-es').forEach(d => d.classList.remove('selected'));
+          div.classList.add('selected');
+          selectedEs = p;
+          checkMatch();
+        };
         matchPairs.appendChild(div);
       });
-      enList.forEach(p=>{
+      enList.forEach(p => {
         const div = document.createElement('div');
-        div.className='pair-en'; div.textContent=p.en;
-        div.onclick=()=>{document.querySelectorAll('.pair-en').forEach(d=>d.classList.remove('selected')); div.classList.add('selected'); selectedEn=p; checkMatch();};
+        div.className = 'pair-en';
+        div.textContent = p.en;
+        div.onclick = () => {
+          document.querySelectorAll('.pair-en').forEach(d => d.classList.remove('selected'));
+          div.classList.add('selected');
+          selectedEn = p;
+          checkMatch();
+        };
         matchPairs.appendChild(div);
       });
-      result3.textContent='';
     }
 
-    function checkMatch(){
-      if(selectedEs && selectedEn){
-        if(selectedEs.en === selectedEn.en){
-          document.querySelectorAll(`.pair-es, .pair-en`).forEach(d=>d.classList.add('pair-match'));
-          result3.textContent='¡Emparejado!'; result3.style.color='var(--success)';
-          totalPoints++; pointsEl.textContent=totalPoints;
+    function checkMatch() {
+      if (selectedEs && selectedEn) {
+        if (selectedEs.en === selectedEn.en) {
+          result3.textContent = '¡Emparejado!';
+          result3.style.color = 'var(--success)';
+          totalPoints++; pointsEl.textContent = totalPoints;
           confettiBurst();
-          setTimeout(loadMatch,1500);
+          setTimeout(loadMatch, 1500);
         } else {
-          result3.textContent='No coincide'; result3.style.color='var(--danger)';
+          result3.textContent = 'No coincide';
+          result3.style.color = 'var(--danger)';
         }
       }
     }
 
-    resetMatch.onclick=loadMatch;
+    resetMatch.onclick = loadMatch;
 
     // === VOZ ===
-    function speak(text){
-      if('speechSynthesis' in window){
+    function speak(text) {
+      if ('speechSynthesis' in window) {
         const utter = new SpeechSynthesisUtterance(text);
         utter.lang = 'es-ES';
         utter.rate = 0.9;
@@ -401,28 +443,28 @@
     canvas.width = innerWidth; canvas.height = innerHeight;
     let particles = [];
 
-    function confettiBurst(){
-      for(let i=0;i<100;i++){
+    function confettiBurst() {
+      for (let i = 0; i < 100; i++) {
         particles.push({
-          x: innerWidth/2 + (Math.random()-0.5)*300,
-          y: innerHeight/2 + (Math.random()-0.5)*200,
-          vx: (Math.random()-0.5)*10,
-          vy: Math.random()* -12 - 5,
-          color: `hsl(${Math.random()*360},100%,65%)`,
-          size: Math.random()*5+3,
+          x: innerWidth / 2 + (Math.random() - 0.5) * 300,
+          y: innerHeight / 2 + (Math.random() - 0.5) * 200,
+          vx: (Math.random() - 0.5) * 10,
+          vy: Math.random() * -12 - 5,
+          color: `hsl(${Math.random() * 360},100%,65%)`,
+          size: Math.random() * 5 + 3,
           life: 80
         });
       }
     }
 
-    function animate(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach((p,i)=>{
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
         p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life--;
-        if(p.life<=0) particles.splice(i,1);
+        if (p.life <= 0) particles.splice(i, 1);
         ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
       });
       requestAnimationFrame(animate);
