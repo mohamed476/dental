@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Curso del día — <span id='todayDate'></span></title>
+  <title>Curso del día — ¡Juega, Crea y Gana!</title>
   <style>
-    :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;
-          font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    :root{
+      --bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;--energy:#ff6b9d;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
     body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
     header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
-    header p{margin:0;color:var(--muted)}
     .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
     .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
     .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
@@ -27,68 +28,123 @@
     .btn-success{background:var(--success)}
     .btn-warning{background:var(--warning);color:#212529}
     .btn-danger{background:var(--danger)}
+    .btn-energy{background:var(--energy);animation:pulse 1.5s infinite}
     .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     .verb-card{padding:14px;border:1px solid #f0e0eb;border-radius:10px;background:#fdf8fb}
     footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted);font-size:13px}
     .heart{font-size:26px;color:var(--accent)}
     .game-area{background:#fdf2f8;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #e95da6}
     .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
+    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:transform .1s}
+    .word-chip:hover{transform:scale(1.05)}
     .word-chip.dragging{opacity:0.5;transform:scale(0.95)}
     .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
     .drop-zone.drag-over{border-color:var(--accent);background:#fff5fb}
-    .result{margin-top:12px;font-weight:600}
+    .result{margin-top:12px;font-weight:600;font-size:15px}
     .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer}
     .progress{margin-top:10px;height:8px;background:#f0e0eb;border-radius:4px;overflow:hidden}
     .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-    @media(max-width:800px){.grid{grid-template-columns:1fr}.verbs{grid-template-columns:1fr}.sentence-builder{justify-content:center}}
+    .energy-msg{background:linear-gradient(90deg,#ff6b9d,#e95da6);color:white;padding:10px;border-radius:10px;margin:10px 0;text-align:center;font-weight:bold;animation:pop 0.5s}
+    .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #f0e0eb}
+    .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f8f0f5;color:var(--muted);cursor:pointer;font-size:14px}
+    .tab-btn.active{background:var(--accent);color:white}
+    .game-content{display:none}
+    .game-content.active{display:block}
+    .fill-blank{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+    .blank{border-bottom:2px solid var(--accent);min-width:80px;padding:2px 4px;text-align:center}
+    .options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .opt-chip{background:#fff;padding:6px 10px;border-radius:20px;border:1px solid #e0c0d8;cursor:pointer;font-size:13px}
+    .opt-chip.selected{background:var(--accent);color:white}
+    .match-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+    .pair-es,.pair-en{background:#fdf8fb;padding:12px;border-radius:10px;border:1px solid #f0e0eb;text-align:center;cursor:pointer}
+    .pair-es.selected,.pair-en.selected{outline:3px solid var(--accent)}
+    .pair-match{opacity:0.5}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+    @keyframes pop{0%{transform:scale(0.8)}100%{transform:scale(1)}}
+    @media(max-width:800px){
+      .grid{grid-template-columns:1fr}
+      .verbs{grid-template-columns:1fr}
+      .match-pair{grid-template-columns:1fr}
+      .fill-blank{justify-content:center}
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡Construye y Gana!</h1>
+      <h1>Curso del día — ¡3 Juegos Épicos!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Hola Silje! Hoy vas a <strong>construir frases</strong> con voz, jugar y aprender de forma ordenada y divertida. ¡Practica con Amine y a por Barcelona! <br>
-      <em>Hi Silje! Today you’ll <strong>build sentences</strong> with voice, play and learn in a fun, organized way. Practice with Amine and off to Barcelona!</em><br>
-      <em>Hei Silje! I dag skal du <strong>bygge setninger</strong> med stemme, leke og lære på en morsom og ryddig måte. Øv med Amine og dra til Barcelona!</em></p>
+      <p class="motivation">¡Hola Silje! Hoy tienes <strong>3 juegos</strong> para aprender español jugando: <br>
+      1. Construye la frase (¡más de una forma correcta!)<br>
+      2. Rellena el hueco con voz<br>
+      3. Empareja amor y música<br>
+      ¡Practica con Amine y a por Barcelona!</p>
     </header>
 
     <div class="grid">
       <div>
-        <!-- PALABRAS -->
+        <!-- PALABRAS Y VERBOS -->
         <div class="card">
           <h3 class="section-title">Palabras del día</h3>
           <div class="list" id="words"></div>
         </div>
-
-        <!-- VERBOS REGULARES -->
         <div class="card">
-          <h3 class="section-title">Verbos regulares (presente)</h3>
+          <h3 class="section-title">Verbos regulares</h3>
           <div class="verbs" id="regulars"></div>
         </div>
-
-        <!-- VERBOS IRREGULARES (sin 'ser') -->
         <div class="card">
-          <h3 class="section-title">Verbos irregulares (presente)</h3>
+          <h3 class="section-title">Verbos irregulares</h3>
           <div class="verbs" id="irregulars"></div>
         </div>
 
-        <!-- JUEGO: CONSTRUYE LA FRASE -->
+        <!-- 3 JUEGOS -->
         <div class="card">
-          <h3 class="section-title">Juego: ¡Forma la frase!</h3>
-          <div class="game-area">
-            <p><strong>Arrastra las palabras en orden para formar la frase correcta.</strong></p>
-            <div class="sentence-builder" id="wordPool"></div>
-            <div class="drop-zone" id="dropZone"></div>
-            <div class="result" id="result"></div>
-            <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-              <button id="checkBtn" class="btn-sm">Comprobar</button>
-              <button id="resetBtn" class="btn-sm btn-warning">Reiniciar</button>
-              <button id="voiceBtn" class="voice-btn"></button>
+          <h3 class="section-title">JUEGOS DIVERTIDOS</h3>
+          <div class="game-tabs">
+            <button class="tab-btn active" data-game="build">Construye Frase</button>
+            <button class="tab-btn" data-game="fill">Rellena Hueco</button>
+            <button class="tab-btn" data-game="match">Empareja</button>
+          </div>
+
+          <!-- JUEGO 1: CONSTRUYE FRASE -->
+          <div class="game-content active" id="game-build">
+            <div class="game-area">
+              <p><strong>Arrastra y forma una frase correcta. ¡Hay más de una forma!</strong></p>
+              <div class="sentence-builder" id="wordPool1"></div>
+              <div class="drop-zone" id="dropZone1"></div>
+              <div class="result" id="result1"></div>
+              <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+                <button id="checkBtn1" class="btn-sm">Comprobar</button>
+                <button id="resetBtn1" class="btn-sm btn-warning">Reiniciar</button>
+                <button id="voiceBtn1" class="voice-btn"></button>
+              </div>
+              <div class="progress"><div class="progress-bar" id="progressBar1"></div></div>
             </div>
-            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          </div>
+
+          <!-- JUEGO 2: RELLENA HUECO -->
+          <div class="game-content" id="game-fill">
+            <div class="game-area">
+              <p><strong>Escucha y elige la palabra que falta</strong></p>
+              <div class="fill-blank" id="fillSentence"></div>
+              <div class="options" id="fillOptions"></div>
+              <div class="result" id="result2"></div>
+              <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+                <button id="voiceBtn2" class="voice-btn"></button>
+                <button id="nextFill" class="btn-sm btn-success">Siguiente</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- JUEGO 3: EMPAREJA -->
+          <div class="game-content" id="game-match">
+            <div class="game-area">
+              <p><strong>Empareja español con inglés</strong></p>
+              <div class="match-pair" id="matchPairs"></div>
+              <div class="result" id="result3"></div>
+              <button id="resetMatch" class="btn-sm btn-warning" style="margin-top:10px">Reiniciar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -97,18 +153,17 @@
         <div class="card">
           <h3>Mensajes románticos</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
-          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
-
         <div class="card" style="text-align:center">
           <div class="heart"></div>
-          <p class="small">¡Cada frase bien hecha = 1 punto! <span id="points">0</span> pts</p>
+          <p class="small">Puntos totales: <strong id="totalPoints">0</strong> pts</p>
+          <p class="small">¡Sigue así, Silje!</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con cariño — aprende jugando, paso a paso. </span>
+      <span>Hecho con cariño — juega, crea, ama el español.</span>
     </footer>
   </div>
 
@@ -118,133 +173,226 @@
     // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === DATOS DEL DÍA (temática: amor, música, baile) ===
+    // === DATOS ===
     const words = [
       {es:'tú', en:'you', no:'du'},
       {es:'yo', en:'I', no:'jeg'},
       {es:'siempre', en:'always', no:'alltid'},
       {es:'contigo', en:'with you', no:'med deg'},
-      {es:'feliz', en:'happy', no:'lykkelig'}
+      {es:'feliz', en:'happy', no:'lykkelig'},
+      {es:'música', en:'music', no:'musikk'},
+      {es:'amor', en:'love', no:'kjærlighet'}
     ];
 
     const regulars = [
       {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}},
       {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
-      {inf:'querer', en:'to want/love', no:'å ville/elske', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}},
       {inf:'escuchar', en:'to listen', no:'å lytte', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
       {inf:'abrazar', en:'to hug', no:'å klemme', conj:{yo:'abrazo',tu:'abrazas',el:'abraza',nos:'abrazamos',vos:'abrazáis',ellos:'abrazan'}}
     ];
 
     const irregulars = [
-      {inf:'estar', en:'to be (state)', no:'å være (tilstand)', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
-      {inf:'poder', en:'to be able', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
-      {inf:'saber', en:'to know', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
-      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
-      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}}
+      {inf:'estar', en:'to be', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
+      {inf:'poder', en:'to can', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
+      {inf:'querer', en:'to want/love', no:'å ville/elske', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}}
+    ];
+
+    const phrases = [
+      {es:'Yo siempre bailo contigo', alternatives:['Yo bailo siempre contigo', 'Contigo bailo siempre yo']},
+      {es:'Tú eres mi música favorita', alternatives:['Mi música favorita eres tú', 'Eres tú mi música favorita']},
+      {es:'Estoy feliz cuando canto', alternatives:['Canto cuando estoy feliz', 'Feliz estoy al cantar']},
+      {es:'Quiero abrazarte ahora', alternatives:['Ahora te quiero abrazar', 'Abrazarte quiero ahora']}
     ];
 
     const messages = [
-      {es:'Yo siempre quiero bailar contigo.', en:'I always want to dance with you.', no:'Jeg vil alltid danse med deg.'},
-      {es:'Tú eres mi canción favorita.', en:'You are my favorite song.', no:'Du er min favorittsang.'},
-      {es:'Contigo estoy muy feliz.', en:'With you I am very happy.', no:'Med deg er jeg veldig lykkelig.'},
-      {es:'Puedo cantar toda la noche si estás aquí.', en:'I can sing all night if you are here.', no:'Jeg kan synge hele natten hvis du er her.'}
+      {es:'Bailo porque tú me haces feliz.', en:'I dance because you make me happy.', no:'Jeg danser fordi du gjør meg glad.'},
+      {es:'Tu voz es mi canción favorita.', en:'Your voice is my favorite song.', no:'Stemmen din er min favorittsang.'},
+      {es:'Contigo, cada día es música.', en:'With you, every day is music.', no:'Med deg er hver dag musikk.'}
     ];
 
     // === RENDER ===
-    function renderWords(){/* mismo que antes */ const c = document.getElementById('words'); c.innerHTML=''; words.forEach(w=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;c.appendChild(d);});}
-    function renderVerbs(containerId, verbs){const c=document.getElementById(containerId);c.innerHTML='';verbs.forEach(v=>{const d=document.createElement('div');d.className='verb-card';d.innerHTML=`<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div><div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;c.appendChild(d);});}
+    function renderWords(){const c=document.getElementById('words');c.innerHTML='';words.forEach(w=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;c.appendChild(d);});}
+    function renderVerbs(id, verbs){const c=document.getElementById(id);c.innerHTML='';verbs.forEach(v=>{const d=document.createElement('div');d.className='verb-card';d.innerHTML=`<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div><div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;c.appendChild(d);});}
     function renderMessages(){const b=document.getElementById('romance');b.innerHTML='';messages.forEach(m=>{const e=document.createElement('div');e.className='item';e.innerHTML=`<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;b.appendChild(e);});}
 
-    renderWords();
-    renderVerbs('regulars', regulars);
-    renderVerbs('irregulars', irregulars);
-    renderMessages();
+    renderWords(); renderVerbs('regulars', regulars); renderVerbs('irregulars', irregulars); renderMessages();
 
-    // === JUEGO: CONSTRUCCIÓN DE FRASE ===
-    let currentPhrase = null;
-    let score = 0;
-    let totalPhrases = messages.length;
-    let completed = 0;
+    // === PUNTOS GLOBALES ===
+    let totalPoints = 0;
+    const pointsEl = document.getElementById('totalPoints');
 
-    const wordPool = document.getElementById('wordPool');
-    const dropZone = document.getElementById('dropZone');
-    const result = document.getElementById('result');
-    const checkBtn = document.getElementById('checkBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const voiceBtn = document.getElementById('voiceBtn');
-    const pointsEl = document.getElementById('points');
-    const progressBar = document.getElementById('progressBar');
+    // === TABS ===
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.game-content').forEach(g=>g.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('game-'+btn.dataset.game).classList.add('active');
+      };
+    });
 
-    function loadNewPhrase(){
-      currentPhrase = messages[completed % totalPhrases];
-      const words = currentPhrase.es.split(' ');
+    // === JUEGO 1: CONSTRUYE FRASE (MÚLTIPLES RESPUESTAS) ===
+    let currentPhrase1 = 0;
+    const pool1 = document.getElementById('wordPool1');
+    const drop1 = document.getElementById('dropZone1');
+    const result1 = document.getElementById('result1');
+    const check1 = document.getElementById('checkBtn1');
+    const reset1 = document.getElementById('resetBtn1');
+    const voice1 = document.getElementById('voiceBtn1');
+    const progress1 = document.getElementById('progressBar1');
+
+    function loadPhrase1(){
+      const p = phrases[currentPhrase1];
+      const words = p.es.split(' ');
       const shuffled = [...words].sort(()=>Math.random()-0.5);
+      pool1.innerHTML=''; drop1.innerHTML=''; result1.textContent='';
 
-      wordPool.innerHTML = '';
-      dropZone.innerHTML = '';
-      result.textContent = '';
-      result.className = 'result';
-
-      shuffled.forEach(word=>{
+      shuffled.forEach(w=>{
         const chip = document.createElement('div');
-        chip.className = 'word-chip';
-        chip.textContent = word;
-        chip.draggable = true;
-        chip.ondragstart = e => e.dataTransfer.setData('text', word);
-        wordPool.appendChild(chip);
+        chip.className='word-chip'; chip.textContent=w; chip.draggable=true;
+        chip.ondragstart=e=>e.dataTransfer.setData('text',w);
+        pool1.appendChild(chip);
       });
 
-      // Drag & Drop
-      dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('drag-over'); };
-      dropZone.ondragleave = () => dropZone.classList.remove('drag-over');
-      dropZone.ondrop = e => {
-        e.preventDefault();
-        dropZone.classList.remove('drag-over');
-        const word = e.dataTransfer.getData('text');
-        if(word && !dropZone.querySelector(`[data-word="${word}"]`)){
+      drop1.ondragover=e=>{e.preventDefault();drop1.classList.add('drag-over');};
+      drop1.ondragleave=()=>drop1.classList.remove('drag-over');
+      drop1.ondrop=e=>{
+        e.preventDefault(); drop1.classList.remove('drag-over');
+        const w = e.dataTransfer.getData('text');
+        if(w && !drop1.querySelector(`[data-w="${w}"]`)){
           const chip = document.createElement('div');
-          chip.className = 'word-chip';
-          chip.textContent = word;
-          chip.dataset.word = word;
-          chip.onclick = () => chip.remove();
-          dropZone.appendChild(chip);
+          chip.className='word-chip'; chip.textContent=w; chip.dataset.w=w;
+          chip.onclick=()=>chip.remove();
+          drop1.appendChild(chip);
         }
       };
-
-      updateProgress();
+      progress1.style.width = ((currentPhrase1 / phrases.length)*100)+'%';
     }
 
-    checkBtn.onclick = () => {
-      const built = Array.from(dropZone.children).map(c=>c.textContent).join(' ').trim();
-      const correct = currentPhrase.es;
-      if(built === correct){
-        result.textContent = '¡Perfecto! ';
-        result.style.color = 'var(--success)';
-        score++;
-        completed++;
-        pointsEl.textContent = score;
+    check1.onclick=()=>{
+      const built = Array.from(drop1.children).map(c=>c.textContent).join(' ').trim();
+      const p = phrases[currentPhrase1];
+      const correct = p.es === built || p.alternatives.some(a=>a===built);
+      if(correct){
+        const msg = p.alternatives.some(a=>a===built) && built !== p.es 
+          ? '¡EXCELENTE! ¡Frase creativa y correcta!' 
+          : '¡Perfecto! ¡Bien hecho!';
+        result1.innerHTML = `${msg} <span style="color:var(--energy)">+2 pts</span>`;
+        result1.style.color = 'var(--success)';
+        totalPoints += 2; pointsEl.textContent = totalPoints;
         confettiBurst();
-        setTimeout(loadNewPhrase, 1500);
+        setTimeout(()=>{currentPhrase1=(currentPhrase1+1)%phrases.length; loadPhrase1();},1800);
       } else {
-        result.textContent = 'Inténtalo de nuevo...';
-        result.style.color = 'var(--danger)';
+        result1.textContent = 'Inténtalo de nuevo...';
+        result1.style.color = 'var(--danger)';
       }
     };
 
-    resetBtn.onclick = loadNewPhrase;
+    reset1.onclick=loadPhrase1;
+    voice1.onclick=()=>{speak(phrases[currentPhrase1].es);};
+    voice1.innerHTML='';
 
-    voiceBtn.onclick = () => {
+    // === JUEGO 2: RELLENA HUECO ===
+    let currentFill = 0;
+    const fillSent = document.getElementById('fillSentence');
+    const fillOpts = document.getElementById('fillOptions');
+    const result2 = document.getElementById('result2');
+    const voice2 = document.getElementById('voiceBtn2');
+    const nextFill = document.getElementById('nextFill');
+
+    function loadFill(){
+      const p = phrases[currentFill];
+      const words = p.es.split(' ');
+      const blankIdx = Math.floor(Math.random()*words.length);
+      const blankWord = words[blankIdx];
+      words[blankIdx] = '_____';
+      fillSent.innerHTML = words.map((w,i)=> i===blankIdx ? `<span class="blank"></span>` : w).join(' ');
+
+      const opts = [blankWord];
+      const others = words.filter((_,i)=>i!==blankIdx);
+      while(opts.length<4 && others.length>0){
+        const idx = Math.floor(Math.random()*others.length);
+        const o = others.splice(idx,1)[0];
+        if(!opts.includes(o)) opts.push(o);
+      }
+      opts.sort(()=>Math.random()-0.5);
+
+      fillOpts.innerHTML='';
+      opts.forEach(o=>{
+        const chip = document.createElement('div');
+        chip.className='opt-chip'; chip.textContent=o;
+        chip.onclick=()=>{
+          document.querySelectorAll('#fillOptions .opt-chip').forEach(c=>c.classList.remove('selected'));
+          chip.classList.add('selected');
+          if(o===blankWord){
+            result2.textContent='¡Correcto!'; result2.style.color='var(--success)';
+            totalPoints++; pointsEl.textContent=totalPoints;
+            confettiBurst();
+            setTimeout(()=>{currentFill=(currentFill+1)%phrases.length; loadFill();},1500);
+          } else {
+            result2.textContent='No, inténtalo otra vez'; result2.style.color='var(--danger)';
+          }
+        };
+        fillOpts.appendChild(chip);
+      });
+    }
+
+    voice2.onclick=()=>{speak(phrases[currentFill].es.replace('_____', phrases[currentFill].es.split(' ')[phrases[currentFill].es.split(' ').indexOf('_____')]);};
+    voice2.innerHTML='';
+    nextFill.onclick=()=>{currentFill=(currentFill+1)%phrases.length; loadFill();};
+
+    // === JUEGO 3: EMPAREJA ===
+    const matchPairs = document.getElementById('matchPairs');
+    const result3 = document.getElementById('result3');
+    const resetMatch = document.getElementById('resetMatch');
+    let selectedEs = null, selectedEn = null;
+
+    function loadMatch(){
+      const pairs = words.slice(0,5).map(w=>({es:w.es, en:w.en}));
+      const esList = [...pairs].sort(()=>Math.random()-0.5);
+      const enList = [...pairs].sort(()=>Math.random()-0.5);
+      matchPairs.innerHTML='';
+      selectedEs=selectedEn=null;
+
+      esList.forEach(p=>{
+        const div = document.createElement('div');
+        div.className='pair-es'; div.textContent=p.es;
+        div.onclick=()=>{document.querySelectorAll('.pair-es').forEach(d=>d.classList.remove('selected')); div.classList.add('selected'); selectedEs=p; checkMatch();};
+        matchPairs.appendChild(div);
+      });
+      enList.forEach(p=>{
+        const div = document.createElement('div');
+        div.className='pair-en'; div.textContent=p.en;
+        div.onclick=()=>{document.querySelectorAll('.pair-en').forEach(d=>d.classList.remove('selected')); div.classList.add('selected'); selectedEn=p; checkMatch();};
+        matchPairs.appendChild(div);
+      });
+      result3.textContent='';
+    }
+
+    function checkMatch(){
+      if(selectedEs && selectedEn){
+        if(selectedEs.en === selectedEn.en){
+          document.querySelectorAll(`.pair-es, .pair-en`).forEach(d=>d.classList.add('pair-match'));
+          result3.textContent='¡Emparejado!'; result3.style.color='var(--success)';
+          totalPoints++; pointsEl.textContent=totalPoints;
+          confettiBurst();
+          setTimeout(loadMatch,1500);
+        } else {
+          result3.textContent='No coincide'; result3.style.color='var(--danger)';
+        }
+      }
+    }
+
+    resetMatch.onclick=loadMatch;
+
+    // === VOZ ===
+    function speak(text){
       if('speechSynthesis' in window){
-        const utter = new SpeechSynthesisUtterance(currentPhrase.es);
+        const utter = new SpeechSynthesisUtterance(text);
         utter.lang = 'es-ES';
         utter.rate = 0.9;
         speechSynthesis.speak(utter);
       }
-    };
-
-    function updateProgress(){
-      const percent = (completed / totalPhrases) * 100;
-      progressBar.style.width = percent + '%';
     }
 
     // === CONFETTI ===
@@ -254,15 +402,15 @@
     let particles = [];
 
     function confettiBurst(){
-      for(let i=0;i<80;i++){
+      for(let i=0;i<100;i++){
         particles.push({
-          x: innerWidth/2 + (Math.random()-0.5)*200,
-          y: innerHeight/2 + (Math.random()-0.5)*100,
-          vx: (Math.random()-0.5)*8,
-          vy: Math.random()* -10 - 5,
+          x: innerWidth/2 + (Math.random()-0.5)*300,
+          y: innerHeight/2 + (Math.random()-0.5)*200,
+          vx: (Math.random()-0.5)*10,
+          vy: Math.random()* -12 - 5,
           color: `hsl(${Math.random()*360},100%,65%)`,
-          size: Math.random()*4+3,
-          life: 70
+          size: Math.random()*5+3,
+          life: 80
         });
       }
     }
@@ -282,8 +430,9 @@
     animate();
 
     // === INICIO ===
-    loadNewPhrase();
-    voiceBtn.innerHTML = ''; // Icono de altavoz
+    loadPhrase1();
+    loadFill();
+    loadMatch();
   </script>
 </body>
 </html>
