@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Curso del día — ¡Juega, Crea y Gana!</title>
+  <title>Curso del día — ¡Nuevo Nivel!</title>
   <style>
     :root{
       --bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;--energy:#ff6b9d;
@@ -81,34 +81,39 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡3 Juegos Épicos!</h1>
+      <h1>Curso del día — ¡Nuevo Nivel!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Hola Silje! Hoy tienes <strong>3 juegos</strong> para aprender español jugando: <br>
-      1. Construye la frase (¡más de una forma!)<br>
-      2. Rellena el hueco con voz (¡8 frases!)<br>
-      3. Empareja y desaparecen<br>
+      <p class="motivation">¡Hola Silje! ¡Has terminado el nivel anterior! <br>
+      <strong>Nuevo tema: Viajes y comida en España</strong> <br>
+      1. Construye frases de viaje <br>
+      2. Rellena recetas deliciosas <br>
+      3. Empareja sabores <br>
       ¡Practica con Amine y a por Barcelona!</p>
     </header>
 
     <div class="grid">
       <div>
-        <!-- PALABRAS Y VERBOS -->
+        <!-- NUEVAS PALABRAS -->
         <div class="card">
           <h3 class="section-title">Palabras del día</h3>
           <div class="list" id="words"></div>
         </div>
+
+        <!-- NUEVOS VERBOS REGULARES -->
         <div class="card">
-          <h3 class="section-title">Verbos regulares</h3>
+          <h3 class="section-title">Verbos regulares (presente)</h3>
           <div class="verbs" id="regulars"></div>
         </div>
+
+        <!-- NUEVOS VERBOS IRREGULARES -->
         <div class="card">
-          <h3 class="section-title">Verbos irregulares</h3>
+          <h3 class="section-title">Verbos irregulares (presente)</h3>
           <div class="verbs" id="irregulars"></div>
         </div>
 
         <!-- 3 JUEGOS -->
         <div class="card">
-          <h3 class="section-title">JUEGOS DIVERTIDOS</h3>
+          <h3 class="section-title">JUEGOS DEL DÍA</h3>
           <div class="game-tabs">
             <button class="tab-btn active" data-game="build">Construye</button>
             <button class="tab-btn" data-game="fill">Rellena</button>
@@ -118,7 +123,7 @@
           <!-- JUEGO 1: CONSTRUYE FRASE -->
           <div class="game-content active" id="game-build">
             <div class="game-area">
-              <p><strong>Arrastra o toca para formar una frase. ¡Hay más de una forma!</strong></p>
+              <p><strong>Arrastra o toca para formar una frase de viaje</strong></p>
               <div class="sentence-builder" id="wordPool1"></div>
               <div class="drop-zone" id="dropZone1"></div>
               <div class="result" id="result1"></div>
@@ -134,7 +139,7 @@
           <!-- JUEGO 2: RELLENA HUECO -->
           <div class="game-content" id="game-fill">
             <div class="game-area">
-              <p><strong>Escucha y elige la palabra que falta</strong></p>
+              <p><strong>Escucha y elige la palabra de comida</strong></p>
               <div class="fill-blank" id="fillSentence"></div>
               <div class="options" id="fillOptions"></div>
               <div class="result" id="result2"></div>
@@ -148,7 +153,7 @@
           <!-- JUEGO 3: EMPAREJA -->
           <div class="game-content" id="game-match">
             <div class="game-area">
-              <p><strong>Empareja español con inglés — ¡desaparecen!</strong></p>
+              <p><strong>Empareja comida española con inglés</strong></p>
               <div class="match-pair" id="matchPairs"></div>
               <div class="result" id="result3"></div>
               <button id="resetMatch" class="btn-sm btn-warning" style="margin-top:10px">Reiniciar</button>
@@ -159,19 +164,19 @@
 
       <aside>
         <div class="card">
-          <h3>Mensajes románticos</h3>
+          <h3>Mensajes del día</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <div class="card" style="text-align:center">
           <div class="heart">Corazón</div>
-          <p class="small">Puntos totales: <strong id="totalPoints">0</strong> pts</p>
-          <p class="small">¡Eres una campeona, Silje!</p>
+          <p class="small">Puntos: <strong id="totalPoints">0</strong> pts</p>
+          <p class="small">¡Nivel 2 desbloqueado!</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con cariño — juega, crea, ama el español.</span>
+      <span>Hecho con cariño — aprende, viaja, disfruta.</span>
     </footer>
   </div>
 
@@ -181,50 +186,64 @@
     // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === DATOS ===
+    // === NUEVAS PALABRAS (VIAJES + COMIDA) ===
     const words = [
-      {es:'tú', en:'you', no:'du'},
-      {es:'yo', en:'I', no:'jeg'},
-      {es:'siempre', en:'always', no:'alltid'},
-      {es:'contigo', en:'with you', no:'med deg'},
-      {es:'feliz', en:'happy', no:'lykkelig'},
-      {es:'música', en:'music', no:'musikk'},
-      {es:'amor', en:'love', no:'kjærlighet'}
+      {es:'viajar', en:'to travel', no:'å reise'},
+      {es:'comer', en:'to eat', no:'å spise'},
+      {es:'paella', en:'paella', no:'paella'},
+      {es:'playa', en:'beach', no:'strand'},
+      {es:'tren', en:'train', no:'tog'},
+      {es:'hotel', en:'hotel', no:'hotell'},
+      {es:'delicioso', en:'delicious', no:'deilig'}
     ];
 
+    // === NUEVOS VERBOS REGULARES ===
     const regulars = [
-      {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}},
-      {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
-      {inf:'escuchar', en:'to listen', no:'å lytte', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
-      {inf:'abrazar', en:'to hug', no:'å klemme', conj:{yo:'abrazo',tu:'abrazas',el:'abraza',nos:'abrazamos',vos:'abrazáis',ellos:'abrazan'}}
+      {inf:'caminar', en:'to walk', no:'å gå', conj:{yo:'camino',tu:'caminas',el:'camina',nos:'caminamos',vos:'camináis',ellos:'caminan'}},
+      {inf:'comprar', en:'to buy', no:'å kjøpe', conj:{yo:'compro',tu:'compras',el:'compra',nos:'compramos',vos:'compráis',ellos:'compran'}},
+      {inf:'visitar', en:'to visit', no:'å besøke', conj:{yo:'visito',tu:'visitas',el:'visita',nos:'visitamos',vos:'visitáis',ellos:'visitan'}},
+      {inf:'hablar', en:'to speak', no:'å snakke', conj:{yo:'hablo',tu:'hablas',el:'habla',nos:'hablamos',vos:'hablais',ellos:'hablan'}},
+      {inf:'mirar', en:'to look', no:'å se', conj:{yo:'miro',tu:'miras',el:'mira',nos:'miramos',vos:'miráis',ellos:'miran'}}
     ];
 
+    // === NUEVOS VERBOS IRREGULARES ===
     const irregulars = [
-      {inf:'estar', en:'to be', no:'å være', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
-      {inf:'poder', en:'to can', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
-      {inf:'querer', en:'to want/love', no:'å ville/elske', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}}
+      {inf:'salir', en:'to go out', no:'å gå ut', conj:{yo:'salgo',tu:'sales',el:'sale',nos:'salimos',vos:'salís',ellos:'salen'}},
+      {inf:'conocer', en:'to know (person/place)', no:'å kjenne', conj:{yo:'conozco',tu:'conoces',el:'conoce',nos:'conocemos',vos:'conocéis',ellos:'conocen'}},
+      {inf:'pedir', en:'to ask for', no:'å be om', conj:{yo:'pido',tu:'pides',el:'pide',nos:'pedimos',vos:'pedís',ellos:'piden'}},
+      {inf:'dormir', en:'to sleep', no:'å sove', conj:{yo:'duermo',tu:'duermes',el:'duerme',nos:'dormimos',vos:'dormís',ellos:'duermen'}},
+      {inf:'jugar', en:'to play', no:'å spille', conj:{yo:'juego',tu:'juegas',el:'juega',nos:'jugamos',vos:'jugáis',ellos:'juegan'}}
     ];
 
-    // === 12 FRASES PARA RELLENAR (¡MÁS!) ===
+    // === FRASES PARA CONSTRUIR ===
+    const phrases = [
+      {es:'Yo viajo a Barcelona en tren', alternatives:['En tren viajo a Barcelona yo', 'A Barcelona viajo en tren']},
+      {es:'Comemos paella en la playa', alternatives:['En la playa comemos paella', 'Paella comemos en la playa']},
+      {es:'Salimos del hotel a las ocho', alternatives:['A las ocho salimos del hotel', 'Del hotel salimos a las ocho']},
+      {es:'Conozco un restaurante delicioso', alternatives:['Un restaurante delicioso conozco', 'Delicioso conozco un restaurante']}
+    ];
+
+    // === FRASES PARA RELLENAR (COMIDA Y VIAJE) ===
     const fillPhrases = [
-      'Yo siempre bailo contigo',
-      'Tú eres mi música favorita',
-      'Estoy feliz cuando canto',
-      'Quiero abrazarte ahora',
-      'Contigo todo es amor',
-      'Puedo escuchar tu voz todo el día',
-      'Bailamos juntos en la playa',
-      'Cantas como un ángel',
-      'Eres mi felicidad diaria',
-      'Siempre pienso en ti',
-      'Amor es bailar bajo la luna',
-      'Te quiero más cada día'
+      'Mañana viajo a Madrid',
+      'Compro pan en la panadería',
+      'Salimos a caminar por la ciudad',
+      'Pido una tortilla en el bar',
+      'Duermo en un hotel cerca del mar',
+      'Visito el museo con amigos',
+      'Hablo español con los camareros',
+      'Juego al fútbol en la playa',
+      'Miro el mapa para no perderme',
+      'Como paella con mi familia',
+      'Conozco a gente muy amable',
+      'Camino por las Ramblas de Barcelona'
     ];
 
+    // === MENSAJES DEL DÍA ===
     const messages = [
-      {es:'Bailo porque tú me haces feliz.', en:'I dance because you make me happy.', no:'Jeg danser fordi du gjør meg glad.'},
-      {es:'Tu voz es mi canción favorita.', en:'Your voice is my favorite song.', no:'Stemmen din er min favorittsang.'},
-      {es:'Contigo, cada día es música.', en:'With you, every day is music.', no:'Med deg er hver dag musikk.'}
+      {es:'¡Vamos a Barcelona juntos!', en:'Let\'s go to Barcelona together!', no:'La oss dra til Barcelona sammen!'},
+      {es:'La paella de Valencia es la mejor.', en:'Valencia\'s paella is the best.', no:'Paellaen fra Valencia er best.'},
+      {es:'Cada viaje es una nueva aventura.', en:'Every trip is a new adventure.', no:'Hver reise er et nytt eventyr.'}
     ];
 
     // === RENDER ===
@@ -250,13 +269,6 @@
 
     // === JUEGO 1: CONSTRUYE FRASE ===
     let currentPhrase1 = 0;
-    const phrases = [
-      {es:'Yo siempre bailo contigo', alternatives:['Yo bailo siempre contigo', 'Contigo bailo siempre yo']},
-      {es:'Tú eres mi música favorita', alternatives:['Mi música favorita eres tú', 'Eres tú mi música favorita']},
-      {es:'Estoy feliz cuando canto', alternatives:['Canto cuando estoy feliz', 'Feliz estoy al cantar']},
-      {es:'Quiero abrazarte ahora', alternatives:['Ahora te quiero abrazar', 'Abrazarte quiero ahora']}
-    ];
-
     const pool1 = document.getElementById('wordPool1');
     const drop1 = document.getElementById('dropZone1');
     const result1 = document.getElementById('result1');
@@ -326,7 +338,7 @@
     reset1.onclick = loadPhrase1;
     voice1.onclick = () => speak(phrases[currentPhrase1].es);
 
-    // === JUEGO 2: RELLENA HUECO (¡8 FRASES + SIN BLOQUEO!) ===
+    // === JUEGO 2: RELLENA HUECO ===
     let currentFill = 0;
     const fillSent = document.getElementById('fillSentence');
     const fillOpts = document.getElementById('fillOptions');
@@ -359,7 +371,7 @@
           fillOpts.querySelectorAll('.opt-chip').forEach(c => c.classList.remove('selected'));
           chip.classList.add('selected');
           if (o === correct) {
-            result2.textContent = '¡Genial!';
+            result2.textContent = '¡Delicioso!';
             result2.style.color = 'var(--success)';
             totalPoints++; pointsEl.textContent = totalPoints;
             confettiBurst();
@@ -379,7 +391,7 @@
     voice2.onclick = () => speak(fillPhrases[currentFill]);
     nextFill.onclick = () => { currentFill = (currentFill + 1) % fillPhrases.length; loadFill(); };
 
-    // === JUEGO 3: EMPAREJA (¡DESAPARECEN!) ===
+    // === JUEGO 3: EMPAREJA ===
     const matchPairs = document.getElementById('matchPairs');
     const result3 = document.getElementById('result3');
     const resetMatch = document.getElementById('resetMatch');
@@ -427,7 +439,6 @@
           totalPoints++; pointsEl.textContent = totalPoints;
           confettiBurst();
 
-          // Desvanecer pareja
           selectedEs.classList.add('pair-correct');
           selectedEn.classList.add('pair-correct');
           setTimeout(() => {
