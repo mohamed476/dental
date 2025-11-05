@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Curso del día — ¡Nuevo Nivel!</title>
+  <title>Curso del día — ¡Nivel 3: Amor & Aventura!</title>
   <style>
     :root{
-      --bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;--energy:#ff6b9d;
+      --bg:#fff7fb;--card:#ffffff;--accent:#ff5e8e;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;--energy:#ff3b7a;
       font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
     body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(255,94,142,0.12),rgba(255,94,142,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
     .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
     .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
@@ -24,7 +24,7 @@
     .small{font-size:13px;color:var(--muted)}
     .lang{font-size:13px;color:var(--muted)}
     button{background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;transition:all .2s}
-    button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(233,93,166,0.3)}
+    button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(255,94,142,0.3)}
     .btn-sm{font-size:12px;padding:5px 8px}
     .btn-success{background:var(--success)}
     .btn-warning{background:var(--warning);color:#212529}
@@ -34,7 +34,7 @@
     .verb-card{padding:14px;border:1px solid #f0e0eb;border-radius:10px;background:#fdf8fb}
     footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted);font-size:13px}
     .heart{font-size:26px;color:var(--accent)}
-    .game-area{background:#fdf2f8;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #e95da6}
+    .game-area{background:#fdf2f8;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #ff5e8e}
     .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
     .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:all .2s}
     .word-chip:hover{transform:scale(1.05);border-color:var(--accent)}
@@ -43,11 +43,11 @@
     .drop-zone.drag-over{border-color:var(--accent);background:#fff5fb}
     .result{margin-top:12px;font-weight:600;font-size:15px}
     .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-    .voice-btn:hover{transform:scale(1.1);background:#d44a8f}
+    .voice-btn:hover{transform:scale(1.1);background:#e64a73}
     .progress{margin-top:10px;height:8px;background:#f0e0eb;border-radius:4px;overflow:hidden}
     .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-    .energy-msg{background:linear-gradient(90deg,#ff6b9d,#e95da6);color:white;padding:10px;border-radius:10px;margin:10px 0;text-align:center;font-weight:bold;animation:pop 0.5s}
+    .energy-msg{background:linear-gradient(90deg,#ff3b7a,#ff5e8e);color:white;padding:10px;border-radius:10px;margin:10px 0;text-align:center;font-weight:bold;animation:pop 0.5s}
     .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #f0e0eb;flex-wrap:wrap}
     .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f8f0f5;color:var(--muted);cursor:pointer;font-size:14px;transition:all .2s}
     .tab-btn:hover{background:#f0d8ea}
@@ -81,19 +81,19 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡Nuevo Nivel!</h1>
+      <h1>Curso del día — ¡Nivel 3: Amor & Aventura!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Hola Silje! ¡Has terminado el nivel anterior! <br>
-      <strong>Nuevo tema: Viajes y comida en España</strong> <br>
-      1. Construye frases de viaje <br>
-      2. Rellena recetas deliciosas <br>
-      3. Empareja sabores <br>
-      ¡Practica con Amine y a por Barcelona!</p>
+      <p class="motivation">¡Felicidades, Silje! Has completado 2 niveles. <br>
+      <strong>Nuevo tema: Frases románticas + aventuras en España</strong> <br>
+      1. Construye declaraciones de amor <br>
+      2. Rellena diálogos apasionados <br>
+      3. Empareja gestos de amor <br>
+      ¡Con Amine, a conquistar corazones en Barcelona!</p>
     </header>
 
     <div class="grid">
       <div>
-        <!-- NUEVAS PALABRAS -->
+        <!-- NUEVAS PALABRAS ROMÁNTICAS -->
         <div class="card">
           <h3 class="section-title">Palabras del día</h3>
           <div class="list" id="words"></div>
@@ -113,7 +113,7 @@
 
         <!-- 3 JUEGOS -->
         <div class="card">
-          <h3 class="section-title">JUEGOS DEL DÍA</h3>
+          <h3 class="section-title">JUEGOS DEL CORAZÓN</h3>
           <div class="game-tabs">
             <button class="tab-btn active" data-game="build">Construye</button>
             <button class="tab-btn" data-game="fill">Rellena</button>
@@ -123,7 +123,7 @@
           <!-- JUEGO 1: CONSTRUYE FRASE -->
           <div class="game-content active" id="game-build">
             <div class="game-area">
-              <p><strong>Arrastra o toca para formar una frase de viaje</strong></p>
+              <p><strong>Arrastra o toca para formar una frase de amor</strong></p>
               <div class="sentence-builder" id="wordPool1"></div>
               <div class="drop-zone" id="dropZone1"></div>
               <div class="result" id="result1"></div>
@@ -139,7 +139,7 @@
           <!-- JUEGO 2: RELLENA HUECO -->
           <div class="game-content" id="game-fill">
             <div class="game-area">
-              <p><strong>Escucha y elige la palabra de comida</strong></p>
+              <p><strong>Escucha y completa el diálogo romántico</strong></p>
               <div class="fill-blank" id="fillSentence"></div>
               <div class="options" id="fillOptions"></div>
               <div class="result" id="result2"></div>
@@ -153,7 +153,7 @@
           <!-- JUEGO 3: EMPAREJA -->
           <div class="game-content" id="game-match">
             <div class="game-area">
-              <p><strong>Empareja comida española con inglés</strong></p>
+              <p><strong>Empareja gestos de amor con su significado</strong></p>
               <div class="match-pair" id="matchPairs"></div>
               <div class="result" id="result3"></div>
               <button id="resetMatch" class="btn-sm btn-warning" style="margin-top:10px">Reiniciar</button>
@@ -164,19 +164,19 @@
 
       <aside>
         <div class="card">
-          <h3>Mensajes del día</h3>
+          <h3>Frases para conquistar</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <div class="card" style="text-align:center">
           <div class="heart">Corazón</div>
           <p class="small">Puntos: <strong id="totalPoints">0</strong> pts</p>
-          <p class="small">¡Nivel 2 desbloqueado!</p>
+          <p class="small">¡Nivel 3 activado!</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con cariño — aprende, viaja, disfruta.</span>
+      <span>Hecho con amor — enamórate del español.</span>
     </footer>
   </div>
 
@@ -186,64 +186,64 @@
     // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === NUEVAS PALABRAS (VIAJES + COMIDA) ===
+    // === NUEVAS PALABRAS ROMÁNTICAS ===
     const words = [
-      {es:'viajar', en:'to travel', no:'å reise'},
-      {es:'comer', en:'to eat', no:'å spise'},
-      {es:'paella', en:'paella', no:'paella'},
-      {es:'playa', en:'beach', no:'strand'},
-      {es:'tren', en:'train', no:'tog'},
-      {es:'hotel', en:'hotel', no:'hotell'},
-      {es:'delicioso', en:'delicious', no:'deilig'}
+      {es:'te amo', en:'I love you', no:'jeg elsker deg'},
+      {es:'beso', en:'kiss', no:'kyss'},
+      {es:'corazón', en:'heart', no:'hjerte'},
+      {es:'siempre', en:'always', no:'alltid'},
+      {es:'juntos', en:'together', no:'sammen'},
+      {es:'pasión', en:'passion', no:'lidenskap'},
+      {es:'eternamente', en:'forever', no:'for alltid'}
     ];
 
     // === NUEVOS VERBOS REGULARES ===
     const regulars = [
-      {inf:'caminar', en:'to walk', no:'å gå', conj:{yo:'camino',tu:'caminas',el:'camina',nos:'caminamos',vos:'camináis',ellos:'caminan'}},
-      {inf:'comprar', en:'to buy', no:'å kjøpe', conj:{yo:'compro',tu:'compras',el:'compra',nos:'compramos',vos:'compráis',ellos:'compran'}},
-      {inf:'visitar', en:'to visit', no:'å besøke', conj:{yo:'visito',tu:'visitas',el:'visita',nos:'visitamos',vos:'visitáis',ellos:'visitan'}},
-      {inf:'hablar', en:'to speak', no:'å snakke', conj:{yo:'hablo',tu:'hablas',el:'habla',nos:'hablamos',vos:'hablais',ellos:'hablan'}},
+      {inf:'abrazar', en:'to hug', no:'å klemme', conj:{yo:'abrazo',tu:'abrazas',el:'abraza',nos:'abrazamos',vos:'abrazáis',ellos:'abrazan'}},
+      {inf:'besar', en:'to kiss', no:'å kysse', conj:{yo:'beso',tu:'besas',el:'besa',nos:'besamos',vos:'besáis',ellos:'besan'}},
+      {inf:'soñar', en:'to dream', no:'å drømme', conj:{yo:'sueño',tu:'sueñas',el:'sueña',nos:'soñamos',vos:'soñáis',ellos:'sueñan'}},
+      {inf:'prometer', en:'to promise', no:'å love', conj:{yo:'prometo',tu:'prometes',el:'promete',nos:'prometemos',vos:'prometéis',ellos:'prometen'}},
       {inf:'mirar', en:'to look', no:'å se', conj:{yo:'miro',tu:'miras',el:'mira',nos:'miramos',vos:'miráis',ellos:'miran'}}
     ];
 
     // === NUEVOS VERBOS IRREGULARES ===
     const irregulars = [
-      {inf:'salir', en:'to go out', no:'å gå ut', conj:{yo:'salgo',tu:'sales',el:'sale',nos:'salimos',vos:'salís',ellos:'salen'}},
-      {inf:'conocer', en:'to know (person/place)', no:'å kjenne', conj:{yo:'conozco',tu:'conoces',el:'conoce',nos:'conocemos',vos:'conocéis',ellos:'conocen'}},
-      {inf:'pedir', en:'to ask for', no:'å be om', conj:{yo:'pido',tu:'pides',el:'pide',nos:'pedimos',vos:'pedís',ellos:'piden'}},
-      {inf:'dormir', en:'to sleep', no:'å sove', conj:{yo:'duermo',tu:'duermes',el:'duerme',nos:'dormimos',vos:'dormís',ellos:'duermen'}},
-      {inf:'jugar', en:'to play', no:'å spille', conj:{yo:'juego',tu:'juegas',el:'juega',nos:'jugamos',vos:'jugáis',ellos:'juegan'}}
+      {inf:'decir', en:'to say', no:'å si', conj:{yo:'digo',tu:'dices',el:'dice',nos:'decimos',vos:'decís',ellos:'dicen'}},
+      {inf:'sentir', en:'to feel', no:'å føle', conj:{yo:'siento',tu:'sientes',el:'siente',nos:'sentimos',vos:'sentís',ellos:'sienten'}},
+      {inf:'dar', en:'to give', no:'å gi', conj:{yo:'doy',tu:'das',el:'da',nos:'damos',vos:'dais',ellos:'dan'}},
+      {inf:'ver', en:'to see', no:'å se', conj:{yo:'veo',tu:'ves',el:'ve',nos:'vemos',vos:'veis',ellos:'ven'}},
+      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}}
     ];
 
     // === FRASES PARA CONSTRUIR ===
     const phrases = [
-      {es:'Yo viajo a Barcelona en tren', alternatives:['En tren viajo a Barcelona yo', 'A Barcelona viajo en tren']},
-      {es:'Comemos paella en la playa', alternatives:['En la playa comemos paella', 'Paella comemos en la playa']},
-      {es:'Salimos del hotel a las ocho', alternatives:['A las ocho salimos del hotel', 'Del hotel salimos a las ocho']},
-      {es:'Conozco un restaurante delicioso', alternatives:['Un restaurante delicioso conozco', 'Delicioso conozco un restaurante']}
+      {es:'Te amo con todo mi corazón', alternatives:['Con todo mi corazón te amo', 'Mi corazón te ama todo']},
+      {es:'Quiero besarte bajo las estrellas', alternatives:['Bajo las estrellas quiero besarte', 'Besarte quiero bajo las estrellas']},
+      {es:'Siempre sueño contigo', alternatives:['Contigo sueño siempre', 'Sueño siempre contigo']},
+      {es:'Prometo estar contigo eternamente', alternatives:['Eternamente prometo estar contigo', 'Contigo prometo estar eternamente']}
     ];
 
-    // === FRASES PARA RELLENAR (COMIDA Y VIAJE) ===
+    // === FRASES PARA RELLENAR (ROMÁNTICAS) ===
     const fillPhrases = [
-      'Mañana viajo a Madrid',
-      'Compro pan en la panadería',
-      'Salimos a caminar por la ciudad',
-      'Pido una tortilla en el bar',
-      'Duermo en un hotel cerca del mar',
-      'Visito el museo con amigos',
-      'Hablo español con los camareros',
-      'Juego al fútbol en la playa',
-      'Miro el mapa para no perderme',
-      'Como paella con mi familia',
-      'Conozco a gente muy amable',
-      'Camino por las Ramblas de Barcelona'
+      'Te doy mi corazón entero',
+      'Siento mariposas cuando te veo',
+      'Voy a Barcelona para verte',
+      'Digo que eres mi todo',
+      'Te beso en la frente con amor',
+      'Abrazo tu alma cada día',
+      'Soñamos con un futuro juntos',
+      'Miro tus ojos y me pierdo',
+      'Prometo amarte cada mañana',
+      'Eres mi pasión y mi paz',
+      'Decir te amo es poco',
+      'Ver tu sonrisa es mi felicidad'
     ];
 
     // === MENSAJES DEL DÍA ===
     const messages = [
-      {es:'¡Vamos a Barcelona juntos!', en:'Let\'s go to Barcelona together!', no:'La oss dra til Barcelona sammen!'},
-      {es:'La paella de Valencia es la mejor.', en:'Valencia\'s paella is the best.', no:'Paellaen fra Valencia er best.'},
-      {es:'Cada viaje es una nueva aventura.', en:'Every trip is a new adventure.', no:'Hver reise er et nytt eventyr.'}
+      {es:'Eres el amor de mi vida.', en:'You are the love of my life.', no:'Du er kjærligheten i mitt liv.'},
+      {es:'Cada latido es por ti.', en:'Every heartbeat is for you.', no:'Hvert slag er for deg.'},
+      {es:'Contigo, el mundo es perfecto.', en:'With you, the world is perfect.', no:'Med deg er verden perfekt.'}
     ];
 
     // === RENDER ===
@@ -323,7 +323,7 @@
       const isMain = p.es === built;
       const isAlt = p.alternatives.some(a => a === built);
       if (isMain || isAlt) {
-        const msg = isAlt ? '¡EXCELENTE! ¡Creatividad!' : '¡Perfecto!';
+        const msg = isAlt ? '¡PASIONAL! ¡Creatividad!' : '¡Perfecto!';
         result1.innerHTML = `${msg} <span style="color:var(--energy)">+2 pts</span>`;
         result1.style.color = 'var(--success)';
         totalPoints += 2; pointsEl.textContent = totalPoints;
@@ -371,7 +371,7 @@
           fillOpts.querySelectorAll('.opt-chip').forEach(c => c.classList.remove('selected'));
           chip.classList.add('selected');
           if (o === correct) {
-            result2.textContent = '¡Delicioso!';
+            result2.textContent = '¡Corazón!';
             result2.style.color = 'var(--success)';
             totalPoints++; pointsEl.textContent = totalPoints;
             confettiBurst();
@@ -434,7 +434,7 @@
     function checkMatch() {
       if (selectedEs && selectedEn) {
         if (selectedEs.dataset.en === selectedEn.textContent) {
-          result3.textContent = '¡Correcto!';
+          result3.textContent = '¡Amor!';
           result3.style.color = 'var(--success)';
           totalPoints++; pointsEl.textContent = totalPoints;
           confettiBurst();
