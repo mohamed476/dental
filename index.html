@@ -6,20 +6,28 @@
   <title>Curso del día — ¡Nivel 5: Género y Trucos!</title>
   <style>
     :root{
-      --bg:#f8f9fa;--card:#ffffff;--accent:#198754;--muted:#6c757d;--success:#198754;--warning:#ffc107;--danger:#dc3545;--energy:#16a34a;
+      --bg:#f8f9fa;--card:#ffffff;--accent:#dc3545;--muted:#6c757d;--success:#198754;--warning:#ffc107;--danger:#dc3545;--energy:#c82333;
       font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
     body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#212529}
     .timer-banner{
-      width:100%;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;padding:20px 0;text-align:center;font-weight:900;
-      font-size:36px;letter-spacing:2px;box-shadow:0 6px 20px rgba(25,135,84,0.3);position:relative;z-index:10;
+      width:100%;background:linear-gradient(135deg,#dc3545,#e74c3c);color:white;padding:22px 0;text-align:center;font-weight:900;
+      font-size:38px;letter-spacing:2px;box-shadow:0 8px 25px rgba(220,53,69,0.35);position:relative;z-index:10;
     }
-    .timer-banner .countdown{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:10px}
-    .timer-banner .block{background:rgba(255,255,255,0.15);padding:12px 20px;border-radius:12px;min-width:100px}
-    .timer-banner .num{font-size:48px;line-height:1}
-    .timer-banner .label{font-size:16px;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+    .timer-banner .heart{
+      font-size:48px;color:#fff;animation:beat 1.2s infinite;margin:0 10px;
+    }
+    @keyframes beat{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.15)}
+    }
+    .timer-banner .countdown{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
+    .timer-banner .block{background:rgba(255,255,255,0.18);padding:14px 22px;border-radius:14px;min-width:110px;border:1px solid rgba(255,255,255,0.25)}
+    .timer-banner .num{font-size:52px;line-height:1;font-weight:900}
+    .timer-banner .label{font-size:17px;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px}
+    .timer-banner .footer{font-size:20px;font-weight:600;margin-top:10px;opacity:0.95}
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden;margin:20px 0}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(25,135,84,0.12),rgba(25,135,84,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(220,53,69,0.12),rgba(220,53,69,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
     .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
     .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
@@ -27,59 +35,60 @@
     .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
     .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent);display:flex;align-items:center;gap:8px}
     .list{display:flex;flex-direction:column;gap:10px}
-    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #d1e7dd}
+    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f5c6cb}
     .big{font-weight:700;font-size:18px}
     .small{font-size:13px;color:var(--muted)}
     .lang{font-size:13px;color:var(--muted)}
     button{background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;transition:all .2s}
-    button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(25,135,84,0.3)}
+    button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(220,53,69,0.3)}
     .btn-sm{font-size:12px;padding:5px 8px}
     .btn-success{background:var(--success)}
-    .btn-warning{background:var(---warning);color:#212529}
+    .btn-warning{background:var(--warning);color:#212529}
     .btn-danger{background:var(--danger)}
     .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .verb-card{padding:14px;border:1px solid #badbcc;border-radius:10px;background:#f8fff9}
+    .verb-card{padding:14px;border:1px solid #f8b4b4;border-radius:10px;background:#fff5f5}
     footer{padding:14px 20px;background:#f8f9fa;text-align:center;color:var(--muted);font-size:13px}
     .lightbulb{font-size:26px;color:var(--accent)}
-    .game-area{background:#f0fdf4;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #198754}
+    .game-area{background:#ffeaea;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #dc3545}
     .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #b8e0c2;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:all .2s}
+    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f5c6cb;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:all .2s}
     .word-chip:hover{transform:scale(1.05);border-color:var(--accent)}
     .word-chip.dragging{opacity:0.5;transform:scale(0.95)}
-    .drop-zone{min-height:50px;border:2 gênero:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
-    .drop-zone.drag-over{border-color:var(--accent);background:#e6f8eb}
+    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+    .drop-zone.drag-over{border-color:var(--accent);background:#ffeaea}
     .result{margin-top:12px;font-weight:600;font-size:15px}
     .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-    .voice-btn:hover{transform:scale(1.1);background:#157a41}
-    .progress{margin-top:10px;height:8px;background:#d1e7dd;border-radius:4px;overflow:hidden}
+    .voice-btn:hover{transform:scale(1.1);background:#c82333}
+    .progress{margin-top:10px;height:8px;background:#f5c6cb;border-radius:4px;overflow:hidden}
     .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-    .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #d1e7dd;flex-wrap:wrap}
-    .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f1f8f4;color:var(--muted);cursor:pointer;font-size:14px;transition:all .2s}
-    .tab-btn:hover{background:#c6e8d1}
+    .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #f5c6cb;flex-wrap:wrap}
+    .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#fdf2f2;color:var(--muted);cursor:pointer;font-size:14px;transition:all .2s}
+    .tab-btn:hover{background:#f8caca}
     .tab-btn.active{background:var(--accent);color:white}
     .game-content{display:none;padding:8px}
     .game-content.active{display:block}
     .fill-blank{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0;font-size:16px}
     .blank{border-bottom:3px solid var(--accent);min-width:100px;padding:2px 4px;text-align:center;font-weight:bold}
     .options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .opt-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #a8d5b3;cursor:pointer;font-size:14px;transition:all .2s}
+    .opt-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f5c6cb;cursor:pointer;font-size:14px;transition:all .2s}
     .opt-chip:hover{transform:scale(1.05);border-color:var(--accent)}
     .opt-chip.selected{background:var(--accent);color:white;border-color:var(--accent)}
     .match-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
-    .pair-es,.pair-en{background:#f8fff9;padding:12px;border-radius:10px;border:1px solid #badbcc;text-align:center;cursor:pointer;transition:all .2s;font-weight:600}
+    .pair-es,.pair-en{background:#fff5f5;padding:12px;border-radius:10px;border:1px solid #f8b4b4;text-align:center;cursor:pointer;transition:all .2s;font-weight:600}
     .pair-es:hover,.pair-en:hover{transform:scale(1.03);border-color:var(--accent)}
-    .pair-es.selected,.pair-en.selected{outline:3px solid var(--accent);background:#e6f8eb}
+    .pair-es.selected,.pair-en.selected{outline:3px solid var(--accent);background:#ffeaea}
     .pair-correct{animation:fadeOut 0.8s forwards}
-    .trick-box{background:#f0fdf4;padding:14px;border-radius:10px;border-left:4px solid var(--accent);margin:12px 0;font-size:14px;line-height:1.5}
+    .trick-box{background:#ffeaea;padding:14px;border-radius:10px;border-left:4px solid var(--accent);margin:12px 0;font-size:14px;line-height:1.5}
     .trick-title{font-weight:700;color:var(--accent);margin-bottom:6px}
     @keyframes fadeOut{to{opacity:0;transform:scale(0.8)}}
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
     @keyframes pop{0%{transform:scale(0.8)}100%{transform:scale(1)}}
     @media(max-width:800px){
-      .timer-banner{font-size:24px}
-      .timer-banner .num{font-size:36px}
+      .timer-banner{font-size:26px}
+      .timer-banner .num{font-size:38px}
       .timer-banner .block{min-width:80px;padding:10px 14px}
+      .timer-banner .heart{font-size:36px}
       .grid{grid-template-columns:1fr}
       .verbs{grid-template-columns:1fr}
       .match-pair{grid-template-columns:1fr}
@@ -90,28 +99,26 @@
 </head>
 <body>
 
-  <!-- TIMER GRANDE EN LA PARTE SUPERIOR -->
+  <!-- TIMER ROMÁNTICO EN ROJO -->
   <div class="timer-banner">
-    <div>¡FALTAN PARA EL VIAJE!</div>
+    <div>FALTAN <span class="heart">Corazón</span> PARA VERTE</div>
     <div class="countdown">
       <div class="block"><div class="num" id="days">00</div><div class="label">días</div></div>
       <div class="block"><div class="num" id="hours">00</div><div class="label">horas</div></div>
       <div class="block"><div class="num" id="minutes">00</div><div class="label">minutos</div></div>
       <div class="block"><div class="num" id="seconds">00</div><div class="label">segundos</div></div>
     </div>
-    <div style="margin-top:8px;font-size:18px;font-weight:600">28/12/2025 • 10:30 AM</div>
+    <div class="footer">28/12/2025 • 10:30 AM <span class="heart">Corazón</span> Barcelona</div>
   </div>
 
   <div class="wrap">
     <header>
       <h1>Curso del día — ¡Nivel 5: Género y Trucos!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Bien hecho, Silje! Ya hablas como local. <br>
-      <strong>Hoy: Dominar el género (el/la, o/a) + 5 trucos infalibles</strong> <br>
-      1. Construye frases con género correcto <br>
-      2. Rellena con el artículo adecuado <br>
-      3. Empareja sustantivos con su género <br>
-      ¡Con Amine, en Barcelona!</p>
+      <p class="motivation">¡Silje, mi amor! <br>
+      <strong>Hoy: Dominar el género + 5 trucos</strong> <br>
+      Cada palabra es un paso más cerca de abrazarte en Barcelona. <br>
+      <span style="color:#dc3545">Corazón</span> ¡Te espero!</p>
     </header>
 
     <div class="grid">
@@ -212,19 +219,19 @@
 
       <aside>
         <div class="card">
-          <h3>Frases útiles en Barcelona</h3>
+          <h3>Frases para ti, Silje</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <div class="card" style="text-align:center">
           <div class="lightbulb">Bombilla</div>
           <p class="small">Puntos: <strong id="totalPoints">0</strong> pts</p>
-          <p class="small">¡Nivel 5: Género dominado!</p>
+          <p class="small">¡Cada punto es un beso!</p>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Hecho con trucos — ¡nunca más dudas con el/la!</span>
+      <span>Hecho con amor — ¡te veo en 48 días!</span>
     </footer>
   </div>
 
@@ -234,7 +241,7 @@
     // === FECHA ACTUAL ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === TIMER: CUENTA ATRÁS HASTA 28/12/2025 10:30 ===
+    // === TIMER ROMÁNTICO: CUENTA ATRÁS HASTA 28/12/2025 10:30 ===
     const targetDate = new Date('2025-12-28T10:30:00');
     
     function updateTimer() {
@@ -242,7 +249,11 @@
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        document.querySelector('.timer-banner').innerHTML = '<div style="font-size:32px">¡YA ES HORA DEL VIAJE!</div>';
+        document.querySelector('.timer-banner').innerHTML = `
+          <div style="font-size:36px">¡YA ESTOY AQUÍ, SILJE! <span class="heart">Corazón</span></div>
+          <div style="margin-top:10px;font-size:22px">¡Corre a mis brazos!</div>
+        `;
+        confettiExplosion();
         return;
       }
 
@@ -258,7 +269,22 @@
     }
 
     setInterval(updateTimer, 1000);
-    updateTimer(); // Primera carga
+    updateTimer();
+
+    // === CONFETTI EXPLOSIÓN AL LLEGAR ===
+    function confettiExplosion() {
+      for (let i = 0; i < 300; i++) {
+        particles.push({
+          x: innerWidth / 2 + (Math.random() - 0.5) * 500,
+          y: innerHeight / 2 + (Math.random() - 0.5) * 300,
+          vx: (Math.random() - 0.5) * 15,
+          vy: Math.random() * -15 - 8,
+          color: `hsl(${Math.random() * 60 + 330},100%,65%)`,
+          size: Math.random() * 6 + 4,
+          life: 120
+        });
+      }
+    }
 
     // === PALABRAS CON GÉNERO ===
     const words = [
@@ -309,11 +335,11 @@
     ];
     const fillAnswers = ['la', 'el', 'la', 'el', 'la', 'el', 'la'];
 
-    // === MENSAJES ÚTILES ===
+    // === MENSAJES ROMÁNTICOS ===
     const messages = [
-      {es:'¿Dónde está la estación?', en:'Where is the station?', no:'Hvor er stasjonen?'},
-      {es:'Necesito el baño.', en:'I need the bathroom.', no:'Jeg trenger toalettet.'},
-      {es:'¿Cuál es el problema?', en:'What is the problem?', no:'Hva er problemet?'}
+      {es:'Te quiero en Barcelona', en:'I love you in Barcelona', no:'Jeg elsker deg i Barcelona'},
+      {es:'Cada día es un paso más cerca', en:'Every day is one step closer', no:'Hver dag er et skritt nærmere'},
+      {es:'Tu voz en español me enamora', en:'Your voice in Spanish enchants me', no:'Din stemme på spansk fortryller meg'}
     ];
 
     // === RENDER ===
@@ -393,7 +419,7 @@
       const isMain = p.es === built;
       const isAlt = p.alternatives.some(a => a === built);
       if (isMain || isAlt) {
-        result1.innerHTML = `¡Género perfecto! <span style="color:var(--energy)">+2 pts</span>`;
+        result1.innerHTML = `¡Perfecto, mi amor! <span style="color:var(--energy)">+2 pts</span>`;
         result1.style.color = 'var(--success)';
         totalPoints += 2; pointsEl.textContent = totalPoints;
         confettiBurst();
@@ -432,7 +458,7 @@
           fillOpts.querySelectorAll('.opt-chip').forEach(c => c.classList.remove('selected'));
           chip.classList.add('selected');
           if (o === correct) {
-            result2.textContent = '¡Género correcto!';
+            result2.textContent = '¡Eres increíble!';
             result2.style.color = 'var(--success)';
             totalPoints++; pointsEl.textContent = totalPoints;
             confettiBurst();
@@ -496,7 +522,7 @@
     function checkMatch() {
       if (selectedNoun && selectedArt) {
         if (selectedNoun.dataset.art === selectedArt.textContent) {
-          result3.textContent = '¡Género correcto!';
+          result3.textContent = '¡Un punto más cerca de mí!';
           result3.style.color = 'var(--success)';
           totalPoints++; pointsEl.textContent = totalPoints;
           confettiBurst();
@@ -537,15 +563,15 @@
     let particles = [];
 
     function confettiBurst() {
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 80; i++) {
         particles.push({
-          x: innerWidth / 2 + (Math.random() - 0.5) * 300,
-          y: innerHeight / 2 + (Math.random() - 0.5) * 200,
-          vx: (Math.random() - 0.5) * 10,
-          vy: Math.random() * -12 - 5,
-          color: `hsl(${Math.random() * 360},100%,65%)`,
+          x: innerWidth / 2 + (Math.random() - 0.5) * 200,
+          y: innerHeight / 2 + (Math.random() - 0.5) * 150,
+          vx: (Math.random() - 0.5) * 8,
+          vy: Math.random() * -10 - 5,
+          color: `hsl(${Math.random() * 60 + 330},100%,65%)`,
           size: Math.random() * 5 + 3,
-          life: 80
+          life: 70
         });
       }
     }
