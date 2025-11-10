@@ -9,8 +9,16 @@
       --bg:#f8f9fa;--card:#ffffff;--accent:#198754;--muted:#6c757d;--success:#198754;--warning:#ffc107;--danger:#dc3545;--energy:#16a34a;
       font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
-    body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#212529}
-    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
+    body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#212529}
+    .timer-banner{
+      width:100%;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;padding:20px 0;text-align:center;font-weight:900;
+      font-size:36px;letter-spacing:2px;box-shadow:0 6px 20px rgba(25,135,84,0.3);position:relative;z-index:10;
+    }
+    .timer-banner .countdown{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:10px}
+    .timer-banner .block{background:rgba(255,255,255,0.15);padding:12px 20px;border-radius:12px;min-width:100px}
+    .timer-banner .num{font-size:48px;line-height:1}
+    .timer-banner .label{font-size:16px;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden;margin:20px 0}
     header{padding:22px 28px;background:linear-gradient(90deg,rgba(25,135,84,0.12),rgba(25,135,84,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
     .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
@@ -27,9 +35,8 @@
     button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(25,135,84,0.3)}
     .btn-sm{font-size:12px;padding:5px 8px}
     .btn-success{background:var(--success)}
-    .btn-warning{background:var(--warning);color:#212529}
+    .btn-warning{background:var(---warning);color:#212529}
     .btn-danger{background:var(--danger)}
-    .btn-energy{background:var(--energy);animation:pulse 1.5s infinite}
     .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     .verb-card{padding:14px;border:1px solid #badbcc;border-radius:10px;background:#f8fff9}
     footer{padding:14px 20px;background:#f8f9fa;text-align:center;color:var(--muted);font-size:13px}
@@ -39,7 +46,7 @@
     .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #b8e0c2;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:all .2s}
     .word-chip:hover{transform:scale(1.05);border-color:var(--accent)}
     .word-chip.dragging{opacity:0.5;transform:scale(0.95)}
-    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+    .drop-zone{min-height:50px;border:2 gênero:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
     .drop-zone.drag-over{border-color:var(--accent);background:#e6f8eb}
     .result{margin-top:12px;font-weight:600;font-size:15px}
     .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
@@ -47,7 +54,6 @@
     .progress{margin-top:10px;height:8px;background:#d1e7dd;border-radius:4px;overflow:hidden}
     .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
     .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-    .energy-msg{background:linear-gradient(90deg,#16a34a,#22c55e);color:white;padding:10px;border-radius:10px;margin:10px 0;text-align:center;font-weight:bold;animation:pop 0.5s}
     .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #d1e7dd;flex-wrap:wrap}
     .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f1f8f4;color:var(--muted);cursor:pointer;font-size:14px;transition:all .2s}
     .tab-btn:hover{background:#c6e8d1}
@@ -71,6 +77,9 @@
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
     @keyframes pop{0%{transform:scale(0.8)}100%{transform:scale(1)}}
     @media(max-width:800px){
+      .timer-banner{font-size:24px}
+      .timer-banner .num{font-size:36px}
+      .timer-banner .block{min-width:80px;padding:10px 14px}
       .grid{grid-template-columns:1fr}
       .verbs{grid-template-columns:1fr}
       .match-pair{grid-template-columns:1fr}
@@ -80,6 +89,19 @@
   </style>
 </head>
 <body>
+
+  <!-- TIMER GRANDE EN LA PARTE SUPERIOR -->
+  <div class="timer-banner">
+    <div>¡FALTAN PARA EL VIAJE!</div>
+    <div class="countdown">
+      <div class="block"><div class="num" id="days">00</div><div class="label">días</div></div>
+      <div class="block"><div class="num" id="hours">00</div><div class="label">horas</div></div>
+      <div class="block"><div class="num" id="minutes">00</div><div class="label">minutos</div></div>
+      <div class="block"><div class="num" id="seconds">00</div><div class="label">segundos</div></div>
+    </div>
+    <div style="margin-top:8px;font-size:18px;font-weight:600">28/12/2025 • 10:30 AM</div>
+  </div>
+
   <div class="wrap">
     <header>
       <h1>Curso del día — ¡Nivel 5: Género y Trucos!</h1>
@@ -209,8 +231,34 @@
   <canvas class="confetti" id="confetti"></canvas>
 
   <script>
-    // === FECHA ===
+    // === FECHA ACTUAL ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+    // === TIMER: CUENTA ATRÁS HASTA 28/12/2025 10:30 ===
+    const targetDate = new Date('2025-12-28T10:30:00');
+    
+    function updateTimer() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.querySelector('.timer-banner').innerHTML = '<div style="font-size:32px">¡YA ES HORA DEL VIAJE!</div>';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer(); // Primera carga
 
     // === PALABRAS CON GÉNERO ===
     const words = [
