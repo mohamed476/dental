@@ -11,20 +11,17 @@
       font-family: "Poppins", sans-serif;
     }
     body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#212529}
-    
+   
     /* TIMER ROMÁNTICO */
     .timer-banner{
       width:100%;background:linear-gradient(135deg,#dc3545,#e74c3c);color:white;padding:22px 0;text-align:center;font-weight:900;
       font-size:38px;letter-spacing:2px;box-shadow:0 8px 25px rgba(220,53,69,0.35);z-index:10;
     }
-    .timer-banner .heart{font-size:48px;color:#fff;animation:beat 1.2s infinite;margin:0 10px;}
-    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
     .timer-banner .countdown{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
     .timer-banner .block{background:rgba(255,255,255,0.18);padding:14px 22px;border-radius:14px;min-width:110px;border:1px solid rgba(255,255,255,0.25)}
     .timer-banner .num{font-size:52px;line-height:1;font-weight:900}
     .timer-banner .label{font-size:17px;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px}
     .timer-banner .footer{font-size:20px;font-weight:600;margin-top:10px;opacity:0.95}
-
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden;margin:20px 0}
     header{padding:22px 28px;background:linear-gradient(90deg,rgba(220,53,69,0.12),rgba(220,53,69,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
@@ -47,7 +44,7 @@
     .modal-content{
       background: linear-gradient(135deg, #7bdff2, #b2f7ef, #eff7f6); padding: 30px; border-radius: 20px;
       text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      animation: popIn 0.4s ease;
+      animation: popIn 0.4s ease; position: relative;
     }
     @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
     .modal h2{font-size: 2rem; margin: 0 0 10px;}
@@ -63,9 +60,28 @@
     .modal .message{margin-top: 12px; font-size: 1rem; color: #444;}
     .modal .emoji{font-size: 2.5rem; margin-top: 10px;}
 
+    /* ESTILO DEL CURSO */
+    .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px}
+    .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
+    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent);display:flex;align-items:center;gap:8px}
+    .word-list{display:flex;flex-direction:column;gap:10px}
+    .word-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f5c6cb}
+    .big{font-weight:700;font-size:18px}
+    .small{font-size:13px;color:var(--muted)}
+    .btn-sm{font-size:12px;padding:5px 8px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer}
+    .btn-sm:hover{transform:scale(1.05)}
+    .game-area{background:#ffeaea;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed var(--accent)}
+    .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f5c6cb;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
+    .word-chip:hover{transform:scale(1.05);border-color:var(--accent)}
+    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+    .drop-zone.drag-over{border-color:var(--accent);background:#ffeaea}
+    .result{margin-top:12px;font-weight:600;font-size:15px}
+
     @media(max-width:800px){
       .timer-banner{font-size:26px}
       .timer-banner .num{font-size:38px}
+      .course-grid{grid-template-columns:1fr}
       .goal-btn{right:15px;bottom:15px;font-size:1rem;padding:12px 16px;}
     }
   </style>
@@ -74,14 +90,14 @@
 
   <!-- TIMER ROMÁNTICO -->
   <div class="timer-banner">
-    <div>FALTAN <span class="heart"></span> </div>
+    <div>FALTAN PARA VERTE</div>
     <div class="countdown">
       <div class="block"><div class="num" id="days">00</div><div class="label">días</div></div>
       <div class="block"><div class="num" id="hours">00</div><div class="label">horas</div></div>
       <div class="block"><div class="num" id="minutes">00</div><div class="label">minutos</div></div>
       <div class="block"><div class="num" id="seconds">00</div><div class="label">segundos</div></div>
     </div>
-    <div class="footer">28/12/2025 • 10:30 AM <span class="heart"></span> Barcelona</div>
+    <div class="footer">28/12/2025 • 10:30 AM • Barcelona</div>
   </div>
 
   <!-- BOTÓN MY GOAL -->
@@ -100,14 +116,88 @@
     </div>
   </div>
 
-  <!-- CONTENIDO DEL CURSO (RESUMIDO) -->
+  <!-- CURSO DEL DÍA -->
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡Nivel 5!</h1>
+      <h1>Curso del día — ¡Nivel 8!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Silje, Cada palabra es un paso más cerca de abrazarte.</p>
+      <p class="motivation">¡Silje, cada palabra es un paso más cerca de abrazarte!</p>
     </header>
-    <!-- Aquí iría el resto del curso... -->
+
+    <div class="course-grid">
+      <!-- PALABRAS NUEVAS -->
+      <div>
+        <div class="card">
+          <h3 class="section-title">20 palabras nuevas</h3>
+          <div class="word-list">
+            <div class="word-item"><div class="big">playa</div><div class="small">beach</div></div>
+            <div class="word-item"><div class="big">café</div><div class="small">coffee</div></div>
+            <div class="word-item"><div class="big">metro</div><div class="small">subway</div></div>
+            <div class="word-item"><div class="big">mesa</div><div class="small">table</div></div>
+            <div class="word-item"><div class="big">repetir</div><div class="small">repeat</div></div>
+            <div class="word-item"><div class="big">caminar</div><div class="small">walk</div></div>
+            <div class="word-item"><div class="big">comprar</div><div class="small">buy</div></div>
+            <div class="word-item"><div class="big">comer</div><div class="small">eat</div></div>
+            <div class="word-item"><div class="big">dormir</div><div class="small">sleep</div></div>
+            <div class="word-item"><div class="big">hablar</div><div class="small">speak</div></div>
+            <div class="word-item"><div class="big">vivir</div><div class="small">live</div></div>
+            <div class="word-item"><div class="big">trabajar</div><div class="small">work</div></div>
+            <div class="word-item"><div class="big">estudiar</div><div class="small">study</div></div>
+            <div class="word-item"><div class="big">leer</div><div class="small">read</div></div>
+            <div class="word-item"><div class="big">escribir</div><div class="small">write</div></div>
+            <div class="word-item"><div class="big">escuchar</div><div class="small">listen</div></div>
+            <div class="word-item"><div class="big">ver</div><div class="small">see</div></div>
+            <div class="word-item"><div class="big">ir</div><div class="small">go</div></div>
+            <div class="word-item"><div class="big">venir</div><div class="small">come</div></div>
+            <div class="word-item"><div class="big">querer</div><div class="small">want</div></div>
+          </div>
+        </div>
+
+        <!-- CONSTRUYE FRASE -->
+        <div class="card">
+          <h3 class="section-title">Construye la frase</h3>
+          <div class="game-area">
+            <p><strong>Arrastra para formar: "Quiero ir a la playa"</strong></p>
+            <div class="sentence-builder" id="wordPool"></div>
+            <div class="drop-zone" id="sentenceDrop"></div>
+            <div class="result" id="sentenceResult"></div>
+            <button class="btn-sm" id="checkSentence">Comprobar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIÁLOGO RÁPIDO -->
+      <div>
+        <div class="card">
+          <h3 class="section-title">Diálogo rápido</h3>
+          <div class="game-area">
+            <p><strong>Elige la respuesta correcta</strong></p>
+            <div style="margin:10px 0">
+              <p><strong>— ¿Dónde está el metro?</strong></p>
+              <button class="btn-sm" onclick="answer(1,'A la izquierda')">A la izquierda</button>
+              <button class="btn-sm" onclick="answer(1,'No sé')">No sé</button>
+            </div>
+            <div style="margin:10px 0">
+              <p><strong>— ¿A qué hora comes?</strong></p>
+              <button class="btn-sm" onclick="answer(2,'A las 2')">A las 2</button>
+              <button class="btn-sm" onclick="answer(2,'Sí')">Sí</button>
+            </div>
+            <div class="result" id="dialogResult"></div>
+          </div>
+        </div>
+
+        <!-- VERBOS DEL DÍA -->
+        <div class="card">
+          <h3 class="section-title">Verbos del día</h3>
+          <div class="word-list">
+            <div class="word-item"><div class="big">quiero</div><div class="small">I want</div></div>
+            <div class="word-item"><div class="big">voy</div><div class="small">I go</div></div>
+            <div class="word-item"><div class="big">como</div><div class="small">I eat</div></div>
+            <div class="word-item"><div class="big">hablo</div><div class="small">I speak</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -120,7 +210,7 @@
       const now = new Date();
       const diff = targetDate - now;
       if (diff <= 0) {
-        document.querySelector('.timer-banner').innerHTML = `<div style="font-size:36px">¡YA ESTOY AQUÍ, SILJE! <span class="heart">Corazón</span></div>`;
+        document.querySelector('.timer-banner').innerHTML = `<div style="font-size:36px">¡YA ESTOY AQUÍ, SILJE!</div>`;
         return;
       }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -135,7 +225,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // === SNUS TRACKER MODAL ===
+    // === SNUS TRACKER ===
     const modal = document.getElementById('snusModal');
     const openBtn = document.getElementById('openGoal');
     const closeBtn = document.getElementById('closeModal');
@@ -143,11 +233,9 @@
     const snusMessage = document.getElementById('snusMessage');
     const snusEmoji = document.getElementById('snusEmoji');
     const useBtn = document.getElementById('useSnus');
-
     const today = new Date().toDateString();
     let snusCount = 15;
 
-    // Cargar o reiniciar
     if (localStorage.getItem("snusDate") === today) {
       snusCount = parseInt(localStorage.getItem("snusCount")) || 15;
     } else {
@@ -181,6 +269,75 @@
         snusEmoji.textContent = "Relajado";
       }
     }
+
+    // === CONSTRUYE FRASE ===
+    const words = ["Quiero", "ir", "a", "la", "playa"];
+    const correct = ["Quiero", "ir", "a", "la", "playa"];
+    const pool = document.getElementById('wordPool');
+    const drop = document.getElementById('sentenceDrop');
+    const result = document.getElementById('sentenceResult');
+    const checkBtn = document.getElementById('checkSentence');
+
+    function loadWords() {
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
+      pool.innerHTML = ''; drop.innerHTML = '';
+      shuffled.forEach(w => {
+        const chip = document.createElement('div');
+        chip.className = 'word-chip';
+        chip.textContent = w;
+        chip.draggable = true;
+        chip.ondragstart = e => e.dataTransfer.setData('text', w);
+        chip.onclick = () => moveToDrop(chip);
+        pool.appendChild(chip);
+      });
+      drop.ondragover = e => { e.preventDefault(); drop.classList.add('drag-over'); };
+      drop.ondragleave = () => drop.classList.remove('drag-over');
+      drop.ondrop = e => {
+        e.preventDefault(); drop.classList.remove('drag-over');
+        const w = e.dataTransfer.getData('text');
+        if (w) addToDrop(w);
+      };
+    }
+
+    function moveToDrop(chip) {
+      const w = chip.textContent;
+      if (!drop.querySelector(`[data-word="${w}"]`)) {
+        addToDrop(w);
+        chip.remove();
+      }
+    }
+
+    function addToDrop(w) {
+      const chip = document.createElement('div');
+      chip.className = 'word-chip';
+      chip.textContent = w;
+      chip.dataset.word = w;
+      chip.onclick = () => chip.remove();
+      drop.appendChild(chip);
+    }
+
+    checkBtn.onclick = () => {
+      const current = Array.from(drop.children).map(c => c.textContent);
+      if (JSON.stringify(current) === JSON.stringify(correct)) {
+        result.innerHTML = "¡Perfecto! +1 punto";
+        result.style.color = 'var(--success)';
+        setTimeout(loadWords, 2000);
+      } else {
+        result.innerHTML = "Inténtalo de nuevo...";
+        result.style.color = 'var(--danger)';
+      }
+    };
+
+    // === DIÁLOGO RÁPIDO ===
+    let score = 0;
+    function answer(q, ans) {
+      if (q === 1 && ans === "A la izquierda") score++;
+      if (q === 2 && ans === "A las 2") score++;
+      document.getElementById('dialogResult').innerHTML = score === 2 ? "¡Genial! +2 pts" : "Bien, puedes mejorar";
+      document.getElementById('dialogResult').style.color = score === 2 ? 'var(--success)' : 'var(--warning)';
+    }
+
+    loadWords();
   </script>
 </body>
 </html>
