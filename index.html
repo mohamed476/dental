@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nivel 7: ¡Planes del día!</title>
+  <title>Curso + My Goal</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -12,63 +12,24 @@
     }
     body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#212529}
     
-    /* TIMER EN NORUEGO */
+    /* TIMER ROMÁNTICO */
     .timer-banner{
-      width:100%;background:linear-gradient(135deg,#2c3e50,#34495e);color:white;padding:22px 0;text-align:center;font-weight:900;
-      font-size:36px;letter-spacing:1.5px;box-shadow:0 8px 25px rgba(44,62,80,0.4);z-index:10;
+      width:100%;background:linear-gradient(135deg,#dc3545,#e74c3c);color:white;padding:22px 0;text-align:center;font-weight:900;
+      font-size:38px;letter-spacing:2px;box-shadow:0 8px 25px rgba(220,53,69,0.35);z-index:10;
     }
-    .timer-banner .heart{font-size:46px;color:#e74c3c;animation:beat 1.4s infinite;margin:0 8px;}
-    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-    .timer-banner .countdown{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:12px}
-    .timer-banner .block{background:rgba(255,255,255,0.15);padding:14px 20px;border-radius:14px;min-width:105px;border:1px solid rgba(255,255,255,0.2)}
-    .timer-banner .num{font-size:50px;line-height:1;font-weight:900}
-    .timer-banner .label{font-size:16px;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px}
-    .timer-banner .footer{font-size:19px;font-weight:600;margin-top:10px;opacity:0.95}
+    .timer-banner .heart{font-size:48px;color:#fff;animation:beat 1.2s infinite;margin:0 10px;}
+    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+    .timer-banner .countdown{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
+    .timer-banner .block{background:rgba(255,255,255,0.18);padding:14px 22px;border-radius:14px;min-width:110px;border:1px solid rgba(255,255,255,0.25)}
+    .timer-banner .num{font-size:52px;line-height:1;font-weight:900}
+    .timer-banner .label{font-size:17px;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px}
+    .timer-banner .footer{font-size:20px;font-weight:600;margin-top:10px;opacity:0.95}
 
     .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden;margin:20px 0}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(44,62,80,0.12),rgba(44,62,80,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(220,53,69,0.12),rgba(220,53,69,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
-    .date{font-size:18px;color:#2c3e50;font-weight:bold;align-self:flex-end}
+    .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
     .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
-
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
-    .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
-    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:#2c3e50;display:flex;align-items:center;gap:8px}
-    .list{display:flex;flex-direction:column;gap:10px}
-    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #d5dbdb}
-    .big{font-weight:700;font-size:18px}
-    .small{font-size:13px;color:var(--muted)}
-    .lang{font-size:13px;color:var(--muted)}
-    button{background:#2c3e50;color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;transition:all .2s}
-    button:hover{transform:scale(1.05);box-shadow:0 4px 8px rgba(44,62,80,0.3)}
-    .btn-sm{font-size:12px;padding:5px 8px}
-    .btn-success{background:var(--success)}
-    .btn-warning{background:var(--warning);color:#212529}
-    .btn-danger{background:var(--danger)}
-    .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .verb-card{padding:14px;border:1px solid #bdc3c7;border-radius:10px;background:#f8f9fa}
-    footer{padding:14px 20px;background:#f8f9fa;text-align:center;color:var(--muted);font-size:13px}
-    .lightbulb{font-size:26px;color:#2c3e50}
-    .game-area{background:#f0f3f5;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #2c3e50}
-    .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #bdc3c7;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none;transition:all .2s}
-    .word-chip:hover{transform:scale(1.05);border-color:#2c3e50}
-    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
-    .drop-zone.drag-over{border-color:#2c3e50;background:#ecf0f1}
-    .result{margin-top:12px;font-weight:600;font-size:15px}
-    .voice-btn{background:#2c3e50;color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-    .voice-btn:hover{transform:scale(1.1);background:#1a252f}
-    .progress{margin-top:10px;height:8px;background:#d5dbdb;border-radius:4px;overflow:hidden}
-    .progress-bar{height:100%;background:#2c3e50;width:0%;transition:width 0.4s ease}
-    .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-    .game-tabs{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #d5dbdb;flex-wrap:wrap}
-    .tab-btn{padding:8px 16px;border-radius:8px 8px 0 0;background:#f0f3f5;color:var(--muted);cursor:pointer;font-size:14px;transition:all .2s}
-    .tab-btn:hover{background:#d5dbdb}
-    .tab-btn.active{background:#2c3e50;color:white}
-    .game-content{display:none;padding:8px}
-    .game-content.active{display:block}
-    .dialog-line{font-size:15px;padding:10px;border:1px solid #bdc3c7;border-radius:10px;margin:8px 0;background:#f8f9fa}
-    .dialog-line span{font-weight:600;color:#2c3e50}
 
     /* BOTÓN MY GOAL */
     .goal-btn{
@@ -79,41 +40,46 @@
     .goal-btn:hover{transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,107,107,0.5);}
 
     /* MODAL SNUS TRACKER */
-    .modal{display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
-      justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(8px);}
+    .modal{
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+      justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(8px);
+    }
     .modal-content{
       background: linear-gradient(135deg, #7bdff2, #b2f7ef, #eff7f6); padding: 30px; border-radius: 20px;
       text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      animation: popIn 0.4s ease; position: relative;
+      animation: popIn 0.4s ease;
     }
     @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
     .modal h2{font-size: 2rem; margin: 0 0 10px;}
     .modal .counter{font-size: 5rem; font-weight: bold; color: #ff6b6b; margin: 15px 0;}
-    .modal button{background: #ff6b6b; border: none; color: white; font-size: 1.1rem; padding: 12px 24px; border-radius: 50px;
-      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s ease;}
+    .modal button{
+      background: #ff6b6b; border: none; color: white; font-size: 1.1rem; padding: 12px 24px; border-radius: 50px;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s ease;
+    }
     .modal button:hover{transform: scale(1.05); background: #ff8787;}
-    .modal .close-btn{position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #555;}
+    .modal .close-btn{
+      position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #555;
+    }
     .modal .message{margin-top: 12px; font-size: 1rem; color: #444;}
     .modal .emoji{font-size: 2.5rem; margin-top: 10px;}
 
     @media(max-width:800px){
-      .timer-banner{font-size:24px}
-      .timer-banner .num{font-size:36px}
-      .grid{grid-template-columns:1fr}
+      .timer-banner{font-size:26px}
+      .timer-banner .num{font-size:38px}
       .goal-btn{right:15px;bottom:15px;font-size:1rem;padding:12px 16px;}
     }
   </style>
 </head>
 <body>
 
-  <!-- TIMER EN NORUEGO -->
+  <!-- TIMER ROMÁNTICO -->
   <div class="timer-banner">
-    <div>Tiden løper mot å se deg <span class="heart">Corazón</span></div>
+    <div>FALTAN <span class="heart">Corazón</span> PARA ABRAZARTE</div>
     <div class="countdown">
-      <div class="block"><div class="num" id="days">00</div><div class="label">dager</div></div>
-      <div class="block"><div class="num" id="hours">00</div><div class="label">timer</div></div>
-      <div class="block"><div class="num" id="minutes">00</div><div class="label">minutter</div></div>
-      <div class="block"><div class="num" id="seconds">00</div><div class="label">sekunder</div></div>
+      <div class="block"><div class="num" id="days">00</div><div class="label">días</div></div>
+      <div class="block"><div class="num" id="hours">00</div><div class="label">horas</div></div>
+      <div class="block"><div class="num" id="minutes">00</div><div class="label">minutos</div></div>
+      <div class="block"><div class="num" id="seconds">00</div><div class="label">segundos</div></div>
     </div>
     <div class="footer">28/12/2025 • 10:30 AM <span class="heart">Corazón</span> Barcelona</div>
   </div>
@@ -134,100 +100,27 @@
     </div>
   </div>
 
+  <!-- CONTENIDO DEL CURSO (RESUMIDO) -->
   <div class="wrap">
     <header>
-      <h1>Nivel 7: ¡Planes del día!</h1>
+      <h1>Curso del día — ¡Nivel 5!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Silje, hoy planeamos el día perfecto en Barcelona! <br>
-      <strong>Objetivo: Hacer planes reales con verbos nuevos</strong> <br>
-      1. Nuevos verbos <br>
-      2. Diálogo de planes <br>
-      3. Construye tu día <br>
-      <span style="color:#2c3e50">Corazón</span> ¡Nos vemos pronto!</p>
+      <p class="motivation">¡Silje, mi amor! Cada palabra es un paso más cerca de abrazarte.</p>
     </header>
-
-    <div class="grid">
-      <div>
-        <!-- NUEVOS VERBOS -->
-        <div class="card">
-          <h3 class="section-title">Verbos nuevos (presente)</h3>
-          <div class="verbs">
-            <div class="verb-card"><div class="big">levantarse</div><div class="lang">me levanto • te levantas • se levanta</div></div>
-            <div class="verb-card"><div class="big">desayunar</div><div class="lang">desayuno • desayunas • desayuna</div></div>
-            <div class="verb-card"><div class="big">salir</div><div class="lang">salgo • sales • sale</div></div>
-            <div class="verb-card"><div class="big">llegar</div><div class="lang">llego • llegas • llega</div></div>
-            <div class="verb-card"><div class="big">comer</div><div class="lang">como • comes • come</div></div>
-            <div class="verb-card"><div class="big">caminar</div><div class="lang">camino • caminas • camina</div></div>
-            <div class="verb-card"><div class="big">visitar</div><div class="lang">visito • visitas • visita</div></div>
-            <div class="verb-card"><div class="big">volver</div><div class="lang">vuelvo • vuelves • vuelve</div></div>
-          </div>
-        </div>
-
-        <!-- DIÁLOGO: PLANES DEL DÍA -->
-        <div class="card">
-          <h3 class="section-title">Diálogo: ¿Qué hacemos hoy?</h3>
-          <div class="game-area">
-            <div class="dialog-line">Amine: <span>¡Buenos días! ¿A qué hora te levantas?</span></div>
-            <div class="dialog-line">Tú: <span id="q1">_____</span> <button class="btn-sm" onclick="choose(1,'Me levanto a las 9')">Me levanto a las 9</button> <button class="btn-sm" onclick="choose(1,'Salgo a las 8')">Salgo a las 8</button></div>
-            <div class="dialog-line">Amine: <span>¡Perfecto! ¿Desayunamos juntos?</span></div>
-            <div class="dialog-line">Tú: <span id="q2">_____</span> <button class="btn-sm" onclick="choose(2,'Sí, voy a un café')">Sí, voy a un café</button> <button class="btn-sm" onclick="choose(2,'No, como en casa')">No, como en casa</button></div>
-            <div class="dialog-line">Amine: <span>¿Y después?</span></div>
-            <div class="dialog-line">Tú: <span id="q3">_____</span> <button class="btn-sm" onclick="choose(3,'Caminamos por la playa')">Caminamos por la playa</button> <button class="btn-sm" onclick="choose(3,'Visito la Sagrada Familia')">Visito la Sagrada Familia</button></div>
-            <div class="dialog-line">Amine: <span>¡Genial! ¿A qué hora llegamos?</span></div>
-            <div class="dialog-line">Tú: <span id="q4">_____</span> <button class="btn-sm" onclick="choose(4,'Llego a las 11')">Llego a las 11</button> <button class="btn-sm" onclick="choose(4,'Vuelvo a las 2')">Vuelvo a las 2</button></div>
-            <div class="result" id="dialogScore"></div>
-          </div>
-        </div>
-
-        <!-- CONSTRUYE TU PLAN -->
-        <div class="card">
-          <h3 class="section-title">Construye tu plan del día</h3>
-          <div class="game-area">
-            <p><strong>Arrastra para formar tu día ideal</strong></p>
-            <div class="sentence-builder" id="planPool"></div>
-            <div class="drop-zone" id="planDrop"></div>
-            <div class="result" id="planResult"></div>
-            <button id="checkPlan" class="btn-sm">Comprobar</button>
-            <button id="voicePlan" class="voice-btn">Altavoz</button>
-          </div>
-        </div>
-      </div>
-
-      <aside>
-        <div class="card">
-          <h3>Planes reales en Barcelona</h3>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div class="item"><div class="big">Mañana</div><div class="lang">Me levanto a las 8<br>Desayuno en la terraza<br>Salgo a las 9</div></div>
-            <div class="item"><div class="big">Tarde</div><div class="lang">Camino por el parque<br>Como paella a las 2<br>Visito el mercado</div></div>
-            <div class="item"><div class="big">Noche</div><div class="lang">Vuelvo a las 10<br>Ceno con amigos<br>¡Dormir!</div></div>
-          </div>
-        </div>
-        <div class="card" style="text-align:center">
-          <div class="lightbulb">Bombilla</div>
-          <p class="small">Puntos: <strong id="totalPoints">0</strong> pts</p>
-          <p class="small">¡Cada plan = 1 día más cerca!</p>
-        </div>
-      </aside>
-    </div>
-
-    <footer>
-      <span>Hecho con amor — ¡pronto haremos planes juntos!</span>
-    </footer>
+    <!-- Aquí iría el resto del curso... -->
   </div>
-
-  <canvas class="confetti" id="confetti"></canvas>
 
   <script>
     // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
 
-    // === TIMER EN NORUEGO ===
+    // === TIMER ROMÁNTICO ===
     const targetDate = new Date('2025-12-28T10:30:00');
     function updateTimer() {
       const now = new Date();
       const diff = targetDate - now;
       if (diff <= 0) {
-        document.querySelector('.timer-banner').innerHTML = `<div style="font-size:34px">¡NÅ ER JEG HER, SILJE! <span class="heart">Corazón</span></div>`;
+        document.querySelector('.timer-banner').innerHTML = `<div style="font-size:36px">¡YA ESTOY AQUÍ, SILJE! <span class="heart">Corazón</span></div>`;
         return;
       }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -242,7 +135,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // === SNUS TRACKER ===
+    // === SNUS TRACKER MODAL ===
     const modal = document.getElementById('snusModal');
     const openBtn = document.getElementById('openGoal');
     const closeBtn = document.getElementById('closeModal');
@@ -250,9 +143,11 @@
     const snusMessage = document.getElementById('snusMessage');
     const snusEmoji = document.getElementById('snusEmoji');
     const useBtn = document.getElementById('useSnus');
-    let snusCount = 15;
-    const today = new Date().toDateString();
 
+    const today = new Date().toDateString();
+    let snusCount = 15;
+
+    // Cargar o reiniciar
     if (localStorage.getItem("snusDate") === today) {
       snusCount = parseInt(localStorage.getItem("snusCount")) || 15;
     } else {
@@ -286,150 +181,6 @@
         snusEmoji.textContent = "Relajado";
       }
     }
-
-    // === DIÁLOGO PLANES ===
-    let answers = {};
-    function choose(q, text) {
-      document.getElementById(`q${q}`).textContent = text;
-      answers[q] = text;
-      if (answers[1] && answers[2] && answers[3] && answers[4]) {
-        const score = (answers[1].includes('levanto') ? 1 : 0) + 
-                      (answers[2].includes('café') ? 1 : 0) + 
-                      (answers[3].includes('playa') || answers[3].includes('Sagrada') ? 1 : 0) + 
-                      (answers[4].includes('Llego') ? 1 : 0);
-        const msg = score === 4 ? "¡Plan perfecto! +4 pts" : score >= 2 ? `Bien hecho (+${score} pts)` : "Intenta otra vez";
-        document.getElementById('dialogScore').innerHTML = msg;
-        document.getElementById('dialogScore').style.color = score === 4 ? 'var(--success)' : score >= 2 ? 'var(--warning)' : 'var(--danger)';
-        if (score === 4) { totalPoints += 4; pointsEl.textContent = totalPoints; confettiBurst(); }
-      }
-    }
-
-    // === CONSTRUYE TU PLAN ===
-    const planLines = [
-      "Me levanto a las 8",
-      "Desayuno en la terraza",
-      "Salgo a las 9",
-      "Camino por la playa",
-      "Como paella a las 2",
-      "Visito la Sagrada Familia",
-      "Vuelvo a las 10"
-    ];
-    let currentPlan = [];
-
-    const planPool = document.getElementById('planPool');
-    const planDrop = document.getElementById('planDrop');
-    const planResult = document.getElementById('planResult');
-    const checkPlanBtn = document.getElementById('checkPlan');
-    const voicePlanBtn = document.get هفت('voicePlan');
-
-    function loadPlan() {
-      const shuffled = [...planLines].sort(() => Math.random() - 0.5);
-      planPool.innerHTML = ''; planDrop.innerHTML = ''; planResult.textContent = '';
-      currentPlan = [];
-
-      shuffled.forEach(line => {
-        const chip = document.createElement('div');
-        chip.className = 'word-chip';
-        chip.textContent = line;
-        chip.draggable = true;
-        chip.ondragstart = e => e.dataTransfer.setData('text', line);
-        chip.onclick = () => moveToPlan(chip);
-        planPool.appendChild(chip);
-      });
-
-      planDrop.ondragover = e => { e.preventDefault(); planDrop.classList.add('drag-over'); };
-      planDrop.ondragleave = () => planDrop.classList.remove('drag-over');
-      planDrop.ondrop = e => {
-        e.preventDefault(); planDrop.classList.remove('drag-over');
-        const line = e.dataTransfer.getData('text');
-        if (line) addToPlan(line);
-      };
-    }
-
-    function moveToPlan(chip) {
-      const line = chip.textContent;
-      if (!planDrop.querySelector(`[data-line="${line}"]`)) {
-        addToPlan(line);
-        chip.remove();
-      }
-    }
-
-    function addToPlan(line) {
-      const chip = document.createElement('div');
-      chip.className = 'word-chip';
-      chip.textContent = line;
-      chip.dataset.line = line;
-      chip.onclick = () => chip.remove();
-      planDrop.appendChild(chip);
-      currentPlan = Array.from(planDrop.children).map(c => c.textContent);
-    }
-
-    checkPlanBtn.onclick = () => {
-      if (currentPlan.length < 4) {
-        planResult.textContent = "Añade más actividades...";
-        planResult.style.color = 'var(--danger)';
-        return;
-      }
-      planResult.innerHTML = `¡Tu día está listo! +3 pts`;
-      planResult.style.color = 'var(--success)';
-      totalPoints += 3;
-      pointsEl.textContent = totalPoints;
-      confettiBurst();
-      setTimeout(loadPlan, 2000);
-    };
-
-    voicePlanBtn.onclick = () => speak(currentPlan.join('. '));
-
-    // === PUNTOS ===
-    let totalPoints = 0;
-    const pointsEl = document.getElementById('totalPoints');
-
-    // === VOZ ===
-    function speak(text) {
-      if ('speechSynthesis' in window && text) {
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'es-ES';
-        utter.rate = 0.9;
-        speechSynthesis.speak(utter);
-      }
-    }
-
-    // === CONFETTI ===
-    const canvas = document.getElementById('confetti');
-    const ctx = canvas.getContext('2d');
-    canvas.width = innerWidth; canvas.height = innerHeight;
-    let particles = [];
-
-    function confettiBurst() {
-      for (let i = 0; i < 120; i++) {
-        particles.push({
-          x: innerWidth / 2 + (Math.random() - 0.5) * 350,
-          y: innerHeight / 2 + (Math.random() - 0.5) * 250,
-          vx: (Math.random() - 0.5) * 11,
-          vy: Math.random() * -13 - 5,
-          color: `hsl(${Math.random() * 360},100%,65%)`,
-          size: Math.random() * 5 + 3,
-          life: 85
-        });
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life--;
-        if (p.life <= 0) particles.splice(i, 1);
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    // === INICIO ===
-    loadPlan();
   </script>
 </body>
 </html>
