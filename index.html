@@ -11,7 +11,7 @@
       font-family: "Poppins", sans-serif;
     }
     body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#212529}
-   
+  
     /* TIMER ROMÁNTICO */
     .timer-banner{
       width:100%;background:linear-gradient(135deg,#dc3545,#e74c3c);color:white;padding:22px 0;text-align:center;font-weight:900;
@@ -28,6 +28,25 @@
     .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
     .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
 
+    .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px}
+    .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
+    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent)}
+    .word-list{display:flex;flex-direction:column;gap:10px}
+    .word-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f5c6cb}
+    .big{font-weight:700;font-size:18px}
+    .small{font-size:13px;color:var(--muted)}
+    .verb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .verb-card{background:#fff5f5;padding:12px;border-radius:10px;border:1px solid #f5c6cb;text-align:center}
+    .btn-sm{font-size:12px;padding:6px 10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;margin:4px}
+    .btn-sm:hover{transform:scale(1.05)}
+    .game-area{background:#ffeaea;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed var(--accent)}
+    .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+    .word-chip{background:#fff;padding:8px 14px;border-radius:20px;border:1px solid #f5c6cb;font-size:15px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
+    .word-chip:hover{transform:scale(1.07);border-color:var(--accent)}
+    .drop-zone{min-height:60px;border:2px dashed #ccc;border-radius:12px;padding:12px;display:flex;flex-wrap:wrap;gap:8px;background:#fff}
+    .drop-zone.drag-over{border-color:var(--accent);background:#ffeaea}
+    .result{margin-top:14px;font-weight:700;font-size:16px}
+
     /* BOTÓN MY GOAL */
     .goal-btn{
       position: fixed; bottom: 20px; right: 20px; background: #ff6b6b; color: white; border: none;
@@ -37,10 +56,8 @@
     .goal-btn:hover{transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,107,107,0.5);}
 
     /* MODAL SNUS TRACKER */
-    .modal{
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
-      justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(8px);
-    }
+    .modal{display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+      justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(8px);}
     .modal-content{
       background: linear-gradient(135deg, #7bdff2, #b2f7ef, #eff7f6); padding: 30px; border-radius: 20px;
       text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
@@ -49,40 +66,18 @@
     @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
     .modal h2{font-size: 2rem; margin: 0 0 10px;}
     .modal .counter{font-size: 5rem; font-weight: bold; color: #ff6b6b; margin: 15px 0;}
-    .modal button{
-      background: #ff6b6b; border: none; color: white; font-size: 1.1rem; padding: 12px 24px; border-radius: 50px;
-      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s ease;
-    }
+    .modal button{background: #ff6b6b; border: none; color: white; font-size: 1.1rem; padding: 12px 24px; border-radius: 50px;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s ease;}
     .modal button:hover{transform: scale(1.05); background: #ff8787;}
-    .modal .close-btn{
-      position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #555;
-    }
+    .modal .close-btn{position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #555;}
     .modal .message{margin-top: 12px; font-size: 1rem; color: #444;}
     .modal .emoji{font-size: 2.5rem; margin-top: 10px;}
-
-    /* ESTILO DEL CURSO */
-    .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px}
-    .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
-    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent);display:flex;align-items:center;gap:8px}
-    .word-list{display:flex;flex-direction:column;gap:10px}
-    .word-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f5c6cb}
-    .big{font-weight:700;font-size:18px}
-    .small{font-size:13px;color:var(--muted)}
-    .btn-sm{font-size:12px;padding:5px 8px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer}
-    .btn-sm:hover{transform:scale(1.05)}
-    .game-area{background:#ffeaea;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed var(--accent)}
-    .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f5c6cb;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
-    .word-chip:hover{transform:scale(1.05);border-color:var(--accent)}
-    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
-    .drop-zone.drag-over{border-color:var(--accent);background:#ffeaea}
-    .result{margin-top:12px;font-weight:600;font-size:15px}
 
     @media(max-width:800px){
       .timer-banner{font-size:26px}
       .timer-banner .num{font-size:38px}
       .course-grid{grid-template-columns:1fr}
-      .goal-btn{right:15px;bottom:15px;font-size:1rem;padding:12px 16px;}
+      .verb-grid{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
@@ -100,64 +95,54 @@
     <div class="footer">28/12/2025 • 10:30 AM • Barcelona</div>
   </div>
 
-  <!-- BOTÓN MY GOAL -->
   <button class="goal-btn" id="openGoal">My Goal</button>
 
-  <!-- MODAL SNUS TRACKER -->
   <div class="modal" id="snusModal">
     <div class="modal-content">
       <span class="close-btn" id="closeModal">×</span>
       <h2>Daily Snus Tracker</h2>
-      <p>Goal: max 15 snus</p>
-      <div class="counter" id="snusCounter">15</div>
+      <p>Goal: máximo 14 snus</p>
+      <div class="counter" id="snusCounter">14</div>
       <button id="useSnus">Used one</button>
       <div class="message" id="snusMessage"></div>
       <div class="emoji" id="snusEmoji">Relajado</div>
     </div>
   </div>
 
-  <!-- CURSO DEL DÍA -->
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡Nivel 8!</h1>
+      <h1>Curso del día — ¡Nivel 9: Verbos Poderosos!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Silje, cada palabra es un paso más cerca de abrazarte!</p>
+      <p class="motivation">¡Silje, hoy dominas los verbos más usados en Barcelona!</p>
     </header>
 
     <div class="course-grid">
-      <!-- PALABRAS NUEVAS -->
+
+      <!-- 12 VERBOS IMPORTANTES -->
       <div>
         <div class="card">
-          <h3 class="section-title">20 palabras nuevas</h3>
-          <div class="word-list">
-            <div class="word-item"><div class="big">playa</div><div class="small">beach</div></div>
-            <div class="word-item"><div class="big">café</div><div class="small">coffee</div></div>
-            <div class="word-item"><div class="big">metro</div><div class="small">subway</div></div>
-            <div class="word-item"><div class="big">mesa</div><div class="small">table</div></div>
-            <div class="word-item"><div class="big">repetir</div><div class="small">repeat</div></div>
-            <div class="word-item"><div class="big">caminar</div><div class="small">walk</div></div>
-            <div class="word-item"><div class="big">comprar</div><div class="small">buy</div></div>
-            <div class="word-item"><div class="big">comer</div><div class="small">eat</div></div>
-            <div class="word-item"><div class="big">dormir</div><div class="small">sleep</div></div>
-            <div class="word-item"><div class="big">hablar</div><div class="small">speak</div></div>
-            <div class="word-item"><div class="big">vivir</div><div class="small">live</div></div>
-            <div class="word-item"><div class="big">trabajar</div><div class="small">work</div></div>
-            <div class="word-item"><div class="big">estudiar</div><div class="small">study</div></div>
-            <div class="word-item"><div class="big">leer</div><div class="small">read</div></div>
-            <div class="word-item"><div class="big">escribir</div><div class="small">write</div></div>
-            <div class="word-item"><div class="big">escuchar</div><div class="small">listen</div></div>
-            <div class="word-item"><div class="big">ver</div><div class="small">see</div></div>
-            <div class="word-item"><div class="big">ir</div><div class="small">go</div></div>
-            <div class="word-item"><div class="big">venir</div><div class="small">come</div></div>
-            <div class="word-item"><div class="big">querer</div><div class="small">want</div></div>
+          <h3 class="section-title">12 verbos que necesitas YA</h3>
+          <div class="verb-grid">
+            <div class="verb-card"><div class="big">poder</div><div class="small">puedo • puedes • puede</div></div>
+            <div class="verb-card"><div class="big">tener</div><div class="small">tengo • tienes • tiene</div></div>
+            <div class="verb-card"><div class="big">hacer</div><div class="small">hago • haces • hace</div></div>
+            <div class="verb-card"><div class="big">decir</div><div class="small">digo • dices • dice</div></div>
+            <div class="verb-card"><div class="big">saber</div><div class="small">sé • sabes • sabe</div></div>
+            <div class="verb-card"><div class="big">poner</div><div class="small">pongo • pones • pone</div></div>
+            <div class="verb-card"><div class="big">salir</div><div class="small">salgo • sales • sale</div></div>
+            <div class="verb-card"><div class="big">traer</div><div class="small">traigo • traes • trae</div></div>
+            <div class="verb-card"><div class="big">ver</div><div class="small">veo • ves • ve</div></div>
+            <div class="verb-card"><div class="big">dar</div><div class="small">doy • das • da</div></div>
+            <div class="verb-card"><div class="big">conocer</div><div class="small">conozco • conoces • conoce</div></div>
+            <div class="verb-card"><div class="big">vivir</div><div class="small">vivo • vives • vive</div></div>
           </div>
         </div>
 
-        <!-- CONSTRUYE FRASE -->
+        <!-- JUEGO: CONSTRUYE FRASES CON VERBOS -->
         <div class="card">
           <h3 class="section-title">Construye la frase</h3>
           <div class="game-area">
-            <p><strong>Arrastra para formar: "Quiero ir a la playa"</strong></p>
+            <p><strong>Arrastra las palabras → "No puedo vivir sin ti"</strong></p>
             <div class="sentence-builder" id="wordPool"></div>
             <div class="drop-zone" id="sentenceDrop"></div>
             <div class="result" id="sentenceResult"></div>
@@ -166,45 +151,45 @@
         </div>
       </div>
 
-      <!-- DIÁLOGO RÁPIDO -->
+      <!-- VOCABULARIO + DIÁLOGO -->
       <div>
         <div class="card">
-          <h3 class="section-title">Diálogo rápido</h3>
-          <div class="game-area">
-            <p><strong>Elige la respuesta correcta</strong></p>
-            <div style="margin:10px 0">
-              <p><strong>— ¿Dónde está el metro?</strong></p>
-              <button class="btn-sm" onclick="answer(1,'A la izquierda')">A la izquierda</button>
-              <button class="btn-sm" onclick="answer(1,'No sé')">No sé</button>
-            </div>
-            <div style="margin:10px 0">
-              <p><strong>— ¿A qué hora comes?</strong></p>
-              <button class="btn-sm" onclick="answer(2,'A las 2')">A las 2</button>
-              <button class="btn-sm" onclick="answer(2,'Sí')">Sí</button>
-            </div>
-            <div class="result" id="dialogResult"></div>
+          <h3 class="section-title">Vocabulario útil del día</h3>
+          <div class="word-list">
+            <div class="word-item"><div class="big">sol</div><div class="small">sun</div></div>
+            <div class="word-item"><div class="big">calle</div><div class="small">street</div></div>
+            <div class="word-item"><div class="big">tiempo</div><div class="small">time / weather</div></div>
+            <div class="word-item"><div class="big">dinero</div><div class="small">money</div></div>
+            <div class="word-item"><div class="big">casa</div><div class="small">house / home</div></div>
+            <div class="word-item"><div class="big">amigo/amiga</div><div class="small">friend</div></div>
           </div>
         </div>
 
-        <!-- VERBOS DEL DÍA -->
         <div class="card">
-          <h3 class="section-title">Verbos del día</h3>
-          <div class="word-list">
-            <div class="word-item"><div class="big">quiero</div><div class="small">I want</div></div>
-            <div class="word-item"><div class="big">voy</div><div class="small">I go</div></div>
-            <div class="word-item"><div class="big">como</div><div class="small">I eat</div></div>
-            <div class="word-item"><div class="big">hablo</div><div class="small">I speak</div></div>
+          <h3 class="section-title">Diálogo del día</h3>
+          <div class="game-area">
+            <p><strong>Completa con la opción correcta</strong></p>
+            <p><strong>— ¿_____ hablar español?</strong></p>
+            <button class="btn-sm" onclick="res(1,'Puedes')">Puedes</button>
+            <button class="btn-sm" onclick="res(1,'Tienes')">Tienes</button>
+
+            <p style="margin-top:16px"><strong>— Sí, pero no _____ mucho.</strong></p>
+            <button class="btn-sm" onclick="res(2,'sé')">sé')">sé</button>
+            <button class="btn-sm" onclick="res(2,'puedo')">puedo</button>
+
+            <div class="result" id="dialogResult"></div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
   <script>
-    // === FECHA ===
+    // FECHA
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
 
-    // === TIMER ROMÁNTICO ===
+    // TIMER
     const targetDate = new Date('2025-12-28T10:30:00');
     function updateTimer() {
       const now = new Date();
@@ -225,7 +210,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // === SNUS TRACKER ===
+    // SNUS TRACKER → MÁXIMO 14
     const modal = document.getElementById('snusModal');
     const openBtn = document.getElementById('openGoal');
     const closeBtn = document.getElementById('closeModal');
@@ -233,19 +218,19 @@
     const snusMessage = document.getElementById('snusMessage');
     const snusEmoji = document.getElementById('snusEmoji');
     const useBtn = document.getElementById('useSnus');
+    let snusCount = 14;
     const today = new Date().toDateString();
-    let snusCount = 15;
 
     if (localStorage.getItem("snusDate") === today) {
-      snusCount = parseInt(localStorage.getItem("snusCount")) || 15;
+      snusCount = parseInt(localStorage.getItem("snusCount")) || 14;
     } else {
       localStorage.setItem("snusDate", today);
-      localStorage.setItem("snusCount", 15);
+      localStorage.setItem("snusCount", 14);
     }
     snusCounter.textContent = snusCount;
 
     openBtn.onclick = () => { modal.style.display = "flex"; updateSnusUI(); };
-    closeBtn.onclick = () => { modal.style.display = "none"; };
+    closeBtn.onclick = () => modal.style.display = "none";
     window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
     useBtn.onclick = () => {
@@ -259,85 +244,84 @@
 
     function updateSnusUI() {
       if (snusCount === 0) {
-        snusMessage.textContent = "You did it! No snus left";
+        snusMessage.textContent = "¡Perfecta! 0 snus hoy";
         snusEmoji.textContent = "Fuego";
-      } else if (snusCount <= 5) {
-        snusMessage.textContent = "Careful... almost out";
+      } else if (snusCount <= 4) {
+        snusMessage.textContent = "Casi... ¡tú puedes!";
         snusEmoji.textContent = "Mirando";
       } else {
-        snusMessage.textContent = "Keep it up";
+        snusMessage.textContent = "Vas súper bien";
         snusEmoji.textContent = "Relajado";
       }
     }
 
-    // === CONSTRUYE FRASE ===
-    const words = ["Quiero", "ir", "a", "la", "playa"];
-    const correct = ["Quiero", "ir", "a", "la", "playa"];
+    // JUEGO FRASE
+    const words = ["No", "puedo", "vivir", "sin", "ti"];
+    const correctOrder = ["No", "puedo", "vivir", "sin", "ti"];
     const pool = document.getElementById('wordPool');
     const drop = document.getElementById('sentenceDrop');
     const result = document.getElementById('sentenceResult');
     const checkBtn = document.getElementById('checkSentence');
 
-    function loadWords() {
-      const shuffled = [...words].sort(() => Math.random() - 0.5);
+    function loadGame() {
       pool.innerHTML = ''; drop.innerHTML = '';
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
       shuffled.forEach(w => {
         const chip = document.createElement('div');
         chip.className = 'word-chip';
         chip.textContent = w;
         chip.draggable = true;
         chip.ondragstart = e => e.dataTransfer.setData('text', w);
-        chip.onclick = () => moveToDrop(chip);
+        chip.onclick = () => { if (!drop.contains(chip)) { drop.appendChild(chip); } };
         pool.appendChild(chip);
       });
+      setupDropZone();
+    }
+
+    function setupDropZone() {
       drop.ondragover = e => { e.preventDefault(); drop.classList.add('drag-over'); };
       drop.ondragleave = () => drop.classList.remove('drag-over');
       drop.ondrop = e => {
         e.preventDefault(); drop.classList.remove('drag-over');
-        const w = e.dataTransfer.getData('text');
-        if (w) addToDrop(w);
+        const word = e.dataTransfer.getData('text');
+        if (word) {
+          const chip = document.createElement('div');
+          chip.className = 'word-chip';
+          chip.textContent = word;
+          chip.onclick = () => chip.remove();
+          drop.appendChild(chip);
+        }
       };
-    }
-
-    function moveToDrop(chip) {
-      const w = chip.textContent;
-      if (!drop.querySelector(`[data-word="${w}"]`)) {
-        addToDrop(w);
-        chip.remove();
-      }
-    }
-
-    function addToDrop(w) {
-      const chip = document.createElement('div');
-      chip.className = 'word-chip';
-      chip.textContent = w;
-      chip.dataset.word = w;
-      chip.onclick = () => chip.remove();
-      drop.appendChild(chip);
     }
 
     checkBtn.onclick = () => {
       const current = Array.from(drop.children).map(c => c.textContent);
-      if (JSON.stringify(current) === JSON.stringify(correct)) {
-        result.innerHTML = "¡Perfecto! +1 punto";
-        result.style.color = 'var(--success)';
-        setTimeout(loadWords, 2000);
-      } else {
-        result.innerHTML = "Inténtalo de nuevo...";
+      if (current.length !== correctOrder.length) {
+        result.textContent = "Falta alguna palabra...";
         result.style.color = 'var(--danger)';
+        return;
+      }
+      if (JSON.stringify(current) === JSON.stringify(correctOrder)) {
+        result.innerHTML = "¡Perfecto! Te echo de menos...";
+        result.style.color = 'var(--success)';
+      } else {
+        result.textContent = "Casi... vuelve a intentarlo";
+        result.style.color = 'var(--warning)';
       }
     };
 
-    // === DIÁLOGO RÁPIDO ===
-    let score = 0;
-    function answer(q, ans) {
-      if (q === 1 && ans === "A la izquierda") score++;
-      if (q === 2 && ans === "A las 2") score++;
-      document.getElementById('dialogResult').innerHTML = score === 2 ? "¡Genial! +2 pts" : "Bien, puedes mejorar";
-      document.getElementById('dialogResult').style.color = score === 2 ? 'var(--success)' : 'var(--warning)';
+    // DIÁLOGO
+    let correctas = 0;
+    function res(q, texto) {
+      if (q===1 && texto==="Puedes") correctas++;
+      if (q===2 && texto==="sé") correctas++;
+      if (correctas === 2) {
+        document.getElementById('dialogResult').innerHTML = "¡Increíble! +3 puntos";
+        document.getElementById('dialogResult').style.color = 'var(--success)';
+      }
     }
 
-    loadWords();
+    loadGame();
   </script>
 </body>
 </html>
