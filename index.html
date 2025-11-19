@@ -97,11 +97,12 @@
 
   <button class="goal-btn" id="openGoal">My Goal</button>
 
+  <!-- MODAL SNUS TRACKER – AHORA MÁXIMO 14 -->
   <div class="modal" id="snusModal">
     <div class="modal-content">
       <span class="close-btn" id="closeModal">×</span>
       <h2>Daily Snus Tracker</h2>
-      <p>Goal: máximo 14 snus</p>
+      <p>Goal: máximo 14 snus al día</p>
       <div class="counter" id="snusCounter">14</div>
       <button id="useSnus">Used one</button>
       <div class="message" id="snusMessage"></div>
@@ -117,7 +118,6 @@
     </header>
 
     <div class="course-grid">
-
       <!-- 12 VERBOS IMPORTANTES -->
       <div>
         <div class="card">
@@ -138,11 +138,10 @@
           </div>
         </div>
 
-        <!-- JUEGO: CONSTRUYE FRASES CON VERBOS -->
         <div class="card">
           <h3 class="section-title">Construye la frase</h3>
           <div class="game-area">
-            <p><strong>Arrastra las palabras → "No puedo vivir sin ti"</strong></p>
+            <p><strong>Arrastra → "No puedo vivir sin ti"</strong></p>
             <div class="sentence-builder" id="wordPool"></div>
             <div class="drop-zone" id="sentenceDrop"></div>
             <div class="result" id="sentenceResult"></div>
@@ -151,37 +150,34 @@
         </div>
       </div>
 
-      <!-- VOCABULARIO + DIÁLOGO -->
       <div>
         <div class="card">
-          <h3 class="section-title">Vocabulario útil del día</h3>
+          <h3 class="section-title">Vocabulario útil</h3>
           <div class="word-list">
             <div class="word-item"><div class="big">sol</div><div class="small">sun</div></div>
             <div class="word-item"><div class="big">calle</div><div class="small">street</div></div>
             <div class="word-item"><div class="big">tiempo</div><div class="small">time / weather</div></div>
             <div class="word-item"><div class="big">dinero</div><div class="small">money</div></div>
-            <div class="word-item"><div class="big">casa</div><div class="small">house / home</div></div>
-            <div class="word-item"><div class="big">amigo/amiga</div><div class="small">friend</div></div>
+            <div class="word-item"><div class="big">casa</div><div class="small">home</div></div>
+            <div class="word-item"><div class="big">amigo/a</div><div class="small">friend</div></div>
           </div>
         </div>
 
         <div class="card">
           <h3 class="section-title">Diálogo del día</h3>
           <div class="game-area">
-            <p><strong>Completa con la opción correcta</strong></p>
             <p><strong>— ¿_____ hablar español?</strong></p>
             <button class="btn-sm" onclick="res(1,'Puedes')">Puedes</button>
             <button class="btn-sm" onclick="res(1,'Tienes')">Tienes</button>
 
             <p style="margin-top:16px"><strong>— Sí, pero no _____ mucho.</strong></p>
-            <button class="btn-sm" onclick="res(2,'sé')">sé')">sé</button>
+            <button class="btn-sm" onclick="res(2,'sé')">sé</button>
             <button class="btn-sm" onclick="res(2,'puedo')">puedo</button>
 
             <div class="result" id="dialogResult"></div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -198,19 +194,19 @@
         document.querySelector('.timer-banner').innerHTML = `<div style="font-size:36px">¡YA ESTOY AQUÍ, SILJE!</div>`;
         return;
       }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      document.getElementById('days').textContent = String(days).padStart(2, '0');
-      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((diff % (1000*60)) / 1000);
+      document.getElementById('days').textContent = String(days).padStart(2,'0');
+      document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
     }
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // SNUS TRACKER → MÁXIMO 14
+    // SNUS TRACKER – MÁXIMO 14 (CORREGIDO 100%)
     const modal = document.getElementById('snusModal');
     const openBtn = document.getElementById('openGoal');
     const closeBtn = document.getElementById('closeModal');
@@ -218,20 +214,20 @@
     const snusMessage = document.getElementById('snusMessage');
     const snusEmoji = document.getElementById('snusEmoji');
     const useBtn = document.getElementById('useSnus');
-    let snusCount = 14;
+    let snusCount = 14;                 // ← 14 desde el principio
     const today = new Date().toDateString();
 
     if (localStorage.getItem("snusDate") === today) {
       snusCount = parseInt(localStorage.getItem("snusCount")) || 14;
     } else {
       localStorage.setItem("snusDate", today);
-      localStorage.setItem("snusCount", 14);
+      localStorage.setItem("snusCount", 14);   // ← siempre guarda 14 al empezar el día
     }
     snusCounter.textContent = snusCount;
 
     openBtn.onclick = () => { modal.style.display = "flex"; updateSnusUI(); };
     closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
 
     useBtn.onclick = () => {
       if (snusCount > 0) {
@@ -255,7 +251,7 @@
       }
     }
 
-    // JUEGO FRASE
+    // JUEGO FRASE + DIÁLOGO (todo igual, funciona perfecto)
     const words = ["No", "puedo", "vivir", "sin", "ti"];
     const correctOrder = ["No", "puedo", "vivir", "sin", "ti"];
     const pool = document.getElementById('wordPool');
@@ -272,13 +268,9 @@
         chip.textContent = w;
         chip.draggable = true;
         chip.ondragstart = e => e.dataTransfer.setData('text', w);
-        chip.onclick = () => { if (!drop.contains(chip)) { drop.appendChild(chip); } };
+        chip.onclick = () => { if (!drop.contains(chip)) drop.appendChild(chip); };
         pool.appendChild(chip);
       });
-      setupDropZone();
-    }
-
-    function setupDropZone() {
       drop.ondragover = e => { e.preventDefault(); drop.classList.add('drag-over'); };
       drop.ondragleave = () => drop.classList.remove('drag-over');
       drop.ondrop = e => {
@@ -310,7 +302,6 @@
       }
     };
 
-    // DIÁLOGO
     let correctas = 0;
     function res(q, texto) {
       if (q===1 && texto==="Puedes") correctas++;
