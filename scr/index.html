@@ -48,17 +48,17 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡Construye y Gana!</h1>
+      <h1>Curso del día — Nivel intermedio</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Hola Silje! Hoy vas a <strong>construir frases</strong> con voz, jugar y aprender de forma ordenada y divertida.<br>
-      <em>Hi Silje! Today you’ll <strong>build sentences</strong> with voice, play and learn in a fun, organized way.</em><br>
-      <em>Hei Silje! I dag skal du <strong>bygge setninger</strong> med stemme, leke og lære på en morsom og ryddig måte.</em></p>
+      <p class="motivation">Hoy practicamos construcción de frases, verbos y vocabulario de nivel intermedio. Arrastra, escucha y mejora paso a paso.<br>
+      <em>Today we practice sentence building, verbs and intermediate vocabulary. Drag, listen and improve step by step.</em><br>
+      <em>I dag øver vi på setningsbygging, verb og ordforråd på mellomnivå. Dra, lytt og forbedre deg steg for steg.</em></p>
     </header>
     <div class="grid">
       <div>
         <!-- PALABRAS -->
         <div class="card">
-          <h3 class="section-title">Palabras del día</h3>
+          <h3 class="section-title">Vocabulario del día</h3>
           <div class="list" id="words"></div>
         </div>
         <!-- VERBOS REGULARES -->
@@ -75,7 +75,7 @@
         <div class="card">
           <h3 class="section-title">Juego: ¡Forma la frase!</h3>
           <div class="game-area">
-            <p><strong>Arrastra las palabras en orden para formar la frase correcta.</strong></p>
+            <p><strong>Arrastra las palabras en el orden correcto para formar la frase.</strong></p>
             <div class="sentence-builder" id="wordPool"></div>
             <div class="drop-zone" id="dropZone"></div>
             <div class="result" id="result"></div>
@@ -90,18 +90,18 @@
       </div>
       <aside>
         <div class="card">
-          <h3>Frases útiles del día</h3>
+          <h3>Frases del día</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
           <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
         <div class="card" style="text-align:center">
           <div class="heart">⭐</div>
-          <p class="small">¡Cada frase bien hecha = 1 punto! <span id="points">0</span> pts</p>
+          <p class="small">Cada frase correcta = 1 punto · <span id="points">0</span> pts</p>
         </div>
       </aside>
     </div>
     <footer>
-      <span>Hecho con cariño — aprende jugando, paso a paso.</span>
+      <span>Aprende jugando — nivel intermedio</span>
     </footer>
   </div>
   <canvas class="confetti" id="confetti"></canvas>
@@ -109,36 +109,36 @@
     // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === DATOS DEL DÍA (temática neutra: vida diaria y viaje) ===
+    // === DATOS DEL DÍA (nivel intermedio) ===
     const words = [
-      {es:'hoy', en:'today', no:'i dag'},
-      {es:'mañana', en:'tomorrow', no:'i morgen'},
-      {es:'casa', en:'house / home', no:'hus / hjem'},
-      {es:'ciudad', en:'city', no:'by'},
-      {es:'trabajo', en:'work / job', no:'jobb / arbeid'}
+      {es:'aunque', en:'although / even though', no:'selv om'},
+      {es:'mientras', en:'while / as long as', no:'mens'},
+      {es:'sin embargo', en:'however / nevertheless', no:'likevel'},
+      {es:'además', en:'besides / in addition', no:'i tillegg'},
+      {es:'por lo tanto', en:'therefore', no:'derfor'}
     ];
 
     const regulars = [
-      {inf:'hablar', en:'to speak', no:'å snakke', conj:{yo:'hablo',tu:'hablas',el:'habla',nos:'hablamos',vos:'habláis',ellos:'hablan'}},
-      {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come',nos:'comemos',vos:'coméis',ellos:'comen'}},
-      {inf:'vivir', en:'to live', no:'å bo / leve', conj:{yo:'vivo',tu:'vives',el:'vive',nos:'vivimos',vos:'vivís',ellos:'viven'}},
-      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
-      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}}
+      {inf:'decidir', en:'to decide', no:'å bestemme', conj:{yo:'decido',tu:'decides',el:'decide',nos:'decidimos',vos:'decidís',ellos:'deciden'}},
+      {inf:'necesitar', en:'to need', no:'å trenge', conj:{yo:'necesito',tu:'necesitas',el:'necesita',nos:'necesitamos',vos:'necesitáis',ellos:'necesitan'}},
+      {inf:'permitir', en:'to allow / permit', no:'å tillate', conj:{yo:'permito',tu:'permites',el:'permite',nos:'permitimos',vos:'permitís',ellos:'permiten'}},
+      {inf:'resolver', en:'to solve / resolve', no:'å løse', conj:{yo:'resuelvo',tu:'resuelves',el:'resuelve',nos:'resolvemos',vos:'resolvéis',ellos:'resuelven'}},
+      {inf:'considerar', en:'to consider', no:'å vurdere', conj:{yo:'considero',tu:'consideras',el:'considera',nos:'consideramos',vos:'consideráis',ellos:'consideran'}}
     ];
 
     const irregulars = [
-      {inf:'estar', en:'to be (state/location)', no:'å være (tilstand/sted)', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
-      {inf:'poder', en:'to be able / can', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
-      {inf:'saber', en:'to know (facts)', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
-      {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
-      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}}
+      {inf:'preferir', en:'to prefer', no:'å foretrekke', conj:{yo:'prefiero',tu:'prefieres',el:'prefiere',nos:'preferimos',vos:'preferís',ellos:'prefieren'}},
+      {inf:'conseguir', en:'to get / achieve', no:'å oppnå / få', conj:{yo:'consigo',tu:'consigues',el:'consigue',nos:'conseguimos',vos:'conseguís',ellos:'consiguen'}},
+      {inf:'seguir', en:'to continue / follow', no:'å fortsette / følge', conj:{yo:'sigo',tu:'sigues',el:'sigue',nos:'seguimos',vos:'seguís',ellos:'siguen'}},
+      {inf:'mantener', en:'to keep / maintain', no:'å opprettholde', conj:{yo:'mantengo',tu:'mantienes',el:'mantiene',nos:'mantenemos',vos:'mantenéis',ellos:'mantienen'}},
+      {inf:'proponer', en:'to propose / suggest', no:'å foreslå', conj:{yo:'propongo',tu:'propones',el:'propone',nos:'proponemos',vos:'proponéis',ellos:'proponen'}}
     ];
 
     const messages = [
-      {es:'Hoy voy a la ciudad.', en:'Today I go to the city.', no:'I dag går jeg til byen.'},
-      {es:'Yo estudio español todos los días.', en:'I study Spanish every day.', no:'Jeg studerer spansk hver dag.'},
-      {es:'Podemos comer en casa mañana.', en:'We can eat at home tomorrow.', no:'Vi kan spise hjemme i morgen.'},
-      {es:'Ella trabaja en Barcelona.', en:'She works in Barcelona.', no:'Hun jobber i Barcelona.'}
+      {es:'Aunque llueva, seguimos con el plan original.', en:'Even if it rains, we stick to the original plan.', no:'Selv om det regner, holder vi oss til den opprinnelige planen.'},
+      {es:'Necesito más tiempo para resolver este problema.', en:'I need more time to solve this problem.', no:'Jeg trenger mer tid for å løse dette problemet.'},
+      {es:'Preferimos trabajar desde casa mientras sea posible.', en:'We prefer to work from home as long as it is possible.', no:'Vi foretrekker å jobbe hjemmefra så lenge det er mulig.'},
+      {es:'Por lo tanto, hemos decidido posponer la reunión.', en:'Therefore, we have decided to postpone the meeting.', no:'Derfor har vi bestemt oss for å utsette møtet.'}
     ];
 
     // === RENDER ===
@@ -181,7 +181,7 @@
     renderVerbs('irregulars', irregulars);
     renderMessages();
 
-    // === JUEGO: CONSTRUCCIÓN DE FRASE ===
+    // === JUEGO ===
     let currentPhrase = null;
     let score = 0;
     let totalPhrases = messages.length;
@@ -236,7 +236,7 @@
       const built = Array.from(dropZone.children).map(c => c.textContent).join(' ').trim();
       const correct = currentPhrase.es;
       if (built === correct) {
-        result.textContent = '¡Perfecto!';
+        result.textContent = '¡Correcto!';
         result.style.color = 'var(--success)';
         score++;
         completed++;
@@ -244,7 +244,7 @@
         confettiBurst();
         setTimeout(loadNewPhrase, 1500);
       } else {
-        result.textContent = 'Inténtalo de nuevo...';
+        result.textContent = 'Inténtalo otra vez...';
         result.style.color = 'var(--danger)';
       }
     };
