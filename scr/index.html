@@ -50,11 +50,10 @@
     <header>
       <h1>Curso del día — ¡Construye y Gana!</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Hola Silje! Hoy vas a <strong>construir frases</strong> con voz, jugar y aprender de forma ordenada y divertida. ¡Practica con Amine y a por Barcelona! <br>
-      <em>Hi Silje! Today you’ll <strong>build sentences</strong> with voice, play and learn in a fun, organized way. Practice with Amine and off to Barcelona!</em><br>
-      <em>Hei Silje! I dag skal du <strong>bygge setninger</strong> med stemme, leke og lære på en morsom og ryddig måte. Øv med Amine og dra til Barcelona!</em></p>
+      <p class="motivation">¡Hola Silje! Hoy vas a <strong>construir frases</strong> con voz, jugar y aprender de forma ordenada y divertida.<br>
+      <em>Hi Silje! Today you’ll <strong>build sentences</strong> with voice, play and learn in a fun, organized way.</em><br>
+      <em>Hei Silje! I dag skal du <strong>bygge setninger</strong> med stemme, leke og lære på en morsom og ryddig måte.</em></p>
     </header>
-
     <div class="grid">
       <div>
         <!-- PALABRAS -->
@@ -62,19 +61,16 @@
           <h3 class="section-title">Palabras del día</h3>
           <div class="list" id="words"></div>
         </div>
-
         <!-- VERBOS REGULARES -->
         <div class="card">
           <h3 class="section-title">Verbos regulares (presente)</h3>
           <div class="verbs" id="regulars"></div>
         </div>
-
-        <!-- VERBOS IRREGULARES (sin 'ser') -->
+        <!-- VERBOS IRREGULARES -->
         <div class="card">
           <h3 class="section-title">Verbos irregulares (presente)</h3>
           <div class="verbs" id="irregulars"></div>
         </div>
-
         <!-- JUEGO: CONSTRUYE LA FRASE -->
         <div class="card">
           <h3 class="section-title">Juego: ¡Forma la frase!</h3>
@@ -86,74 +82,99 @@
             <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
               <button id="checkBtn" class="btn-sm">Comprobar</button>
               <button id="resetBtn" class="btn-sm btn-warning">Reiniciar</button>
-              <button id="voiceBtn" class="voice-btn"></button>
+              <button id="voiceBtn" class="voice-btn">🔊</button>
             </div>
             <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
           </div>
         </div>
       </div>
-
       <aside>
         <div class="card">
-          <h3>Mensajes románticos</h3>
+          <h3>Frases útiles del día</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
           <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
-
         <div class="card" style="text-align:center">
-          <div class="heart"></div>
+          <div class="heart">⭐</div>
           <p class="small">¡Cada frase bien hecha = 1 punto! <span id="points">0</span> pts</p>
         </div>
       </aside>
     </div>
-
     <footer>
-      <span>Hecho con cariño — aprende jugando, paso a paso. </span>
+      <span>Hecho con cariño — aprende jugando, paso a paso.</span>
     </footer>
   </div>
-
   <canvas class="confetti" id="confetti"></canvas>
-
   <script>
     // === FECHA ===
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === DATOS DEL DÍA (temática: amor, música, baile) ===
+    // === DATOS DEL DÍA (temática neutra: vida diaria y viaje) ===
     const words = [
-      {es:'tú', en:'you', no:'du'},
-      {es:'yo', en:'I', no:'jeg'},
-      {es:'siempre', en:'always', no:'alltid'},
-      {es:'contigo', en:'with you', no:'med deg'},
-      {es:'feliz', en:'happy', no:'lykkelig'}
+      {es:'hoy', en:'today', no:'i dag'},
+      {es:'mañana', en:'tomorrow', no:'i morgen'},
+      {es:'casa', en:'house / home', no:'hus / hjem'},
+      {es:'ciudad', en:'city', no:'by'},
+      {es:'trabajo', en:'work / job', no:'jobb / arbeid'}
     ];
 
     const regulars = [
-      {inf:'bailar', en:'to dance', no:'å danse', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}},
-      {inf:'cantar', en:'to sing', no:'å synge', conj:{yo:'canto',tu:'cantas',el:'canta',nos:'cantamos',vos:'cantáis',ellos:'cantan'}},
-      {inf:'querer', en:'to want/love', no:'å ville/elske', conj:{yo:'quiero',tu:'quieres',el:'quiere',nos:'queremos',vos:'queréis',ellos:'quieren'}},
-      {inf:'escuchar', en:'to listen', no:'å lytte', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
-      {inf:'abrazar', en:'to hug', no:'å klemme', conj:{yo:'abrazo',tu:'abrazas',el:'abraza',nos:'abrazamos',vos:'abrazáis',ellos:'abrazan'}}
+      {inf:'hablar', en:'to speak', no:'å snakke', conj:{yo:'hablo',tu:'hablas',el:'habla',nos:'hablamos',vos:'habláis',ellos:'hablan'}},
+      {inf:'comer', en:'to eat', no:'å spise', conj:{yo:'como',tu:'comes',el:'come',nos:'comemos',vos:'coméis',ellos:'comen'}},
+      {inf:'vivir', en:'to live', no:'å bo / leve', conj:{yo:'vivo',tu:'vives',el:'vive',nos:'vivimos',vos:'vivís',ellos:'viven'}},
+      {inf:'estudiar', en:'to study', no:'å studere', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
+      {inf:'trabajar', en:'to work', no:'å jobbe', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}}
     ];
 
     const irregulars = [
-      {inf:'estar', en:'to be (state)', no:'å være (tilstand)', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
-      {inf:'poder', en:'to be able', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
-      {inf:'saber', en:'to know', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
+      {inf:'estar', en:'to be (state/location)', no:'å være (tilstand/sted)', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
+      {inf:'poder', en:'to be able / can', no:'å kunne', conj:{yo:'puedo',tu:'puedes',el:'puede',nos:'podemos',vos:'podéis',ellos:'pueden'}},
+      {inf:'saber', en:'to know (facts)', no:'å vite', conj:{yo:'sé',tu:'sabes',el:'sabe',nos:'sabemos',vos:'sabéis',ellos:'saben'}},
       {inf:'tener', en:'to have', no:'å ha', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
-      {inf:'venir', en:'to come', no:'å komme', conj:{yo:'vengo',tu:'vienes',el:'viene',nos:'venimos',vos:'venís',ellos:'vienen'}}
+      {inf:'ir', en:'to go', no:'å gå', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}}
     ];
 
     const messages = [
-      {es:'Yo siempre quiero bailar contigo.', en:'I always want to dance with you.', no:'Jeg vil alltid danse med deg.'},
-      {es:'Tú eres mi canción favorita.', en:'You are my favorite song.', no:'Du er min favorittsang.'},
-      {es:'Contigo estoy muy feliz.', en:'With you I am very happy.', no:'Med deg er jeg veldig lykkelig.'},
-      {es:'Puedo cantar toda la noche si estás aquí.', en:'I can sing all night if you are here.', no:'Jeg kan synge hele natten hvis du er her.'}
+      {es:'Hoy voy a la ciudad.', en:'Today I go to the city.', no:'I dag går jeg til byen.'},
+      {es:'Yo estudio español todos los días.', en:'I study Spanish every day.', no:'Jeg studerer spansk hver dag.'},
+      {es:'Podemos comer en casa mañana.', en:'We can eat at home tomorrow.', no:'Vi kan spise hjemme i morgen.'},
+      {es:'Ella trabaja en Barcelona.', en:'She works in Barcelona.', no:'Hun jobber i Barcelona.'}
     ];
 
     // === RENDER ===
-    function renderWords(){/* mismo que antes */ const c = document.getElementById('words'); c.innerHTML=''; words.forEach(w=>{const d=document.createElement('div');d.className='item';d.innerHTML=`<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;c.appendChild(d);});}
-    function renderVerbs(containerId, verbs){const c=document.getElementById(containerId);c.innerHTML='';verbs.forEach(v=>{const d=document.createElement('div');d.className='verb-card';d.innerHTML=`<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div><div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;c.appendChild(d);});}
-    function renderMessages(){const b=document.getElementById('romance');b.innerHTML='';messages.forEach(m=>{const e=document.createElement('div');e.className='item';e.innerHTML=`<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;b.appendChild(e);});}
+    function renderWords(){
+      const c = document.getElementById('words');
+      c.innerHTML = '';
+      words.forEach(w => {
+        const d = document.createElement('div');
+        d.className = 'item';
+        d.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;
+        c.appendChild(d);
+      });
+    }
+
+    function renderVerbs(containerId, verbs){
+      const c = document.getElementById(containerId);
+      c.innerHTML = '';
+      verbs.forEach(v => {
+        const d = document.createElement('div');
+        d.className = 'verb-card';
+        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
+        c.appendChild(d);
+      });
+    }
+
+    function renderMessages(){
+      const b = document.getElementById('romance');
+      b.innerHTML = '';
+      messages.forEach(m => {
+        const e = document.createElement('div');
+        e.className = 'item';
+        e.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;
+        b.appendChild(e);
+      });
+    }
 
     renderWords();
     renderVerbs('regulars', regulars);
@@ -178,14 +199,13 @@
     function loadNewPhrase(){
       currentPhrase = messages[completed % totalPhrases];
       const words = currentPhrase.es.split(' ');
-      const shuffled = [...words].sort(()=>Math.random()-0.5);
-
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
       wordPool.innerHTML = '';
       dropZone.innerHTML = '';
       result.textContent = '';
       result.className = 'result';
 
-      shuffled.forEach(word=>{
+      shuffled.forEach(word => {
         const chip = document.createElement('div');
         chip.className = 'word-chip';
         chip.textContent = word;
@@ -194,14 +214,13 @@
         wordPool.appendChild(chip);
       });
 
-      // Drag & Drop
       dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('drag-over'); };
       dropZone.ondragleave = () => dropZone.classList.remove('drag-over');
       dropZone.ondrop = e => {
         e.preventDefault();
         dropZone.classList.remove('drag-over');
         const word = e.dataTransfer.getData('text');
-        if(word && !dropZone.querySelector(`[data-word="${word}"]`)){
+        if (word && !dropZone.querySelector(`[data-word="${word}"]`)) {
           const chip = document.createElement('div');
           chip.className = 'word-chip';
           chip.textContent = word;
@@ -210,15 +229,14 @@
           dropZone.appendChild(chip);
         }
       };
-
       updateProgress();
     }
 
     checkBtn.onclick = () => {
-      const built = Array.from(dropZone.children).map(c=>c.textContent).join(' ').trim();
+      const built = Array.from(dropZone.children).map(c => c.textContent).join(' ').trim();
       const correct = currentPhrase.es;
-      if(built === correct){
-        result.textContent = '¡Perfecto! ';
+      if (built === correct) {
+        result.textContent = '¡Perfecto!';
         result.style.color = 'var(--success)';
         score++;
         completed++;
@@ -234,7 +252,7 @@
     resetBtn.onclick = loadNewPhrase;
 
     voiceBtn.onclick = () => {
-      if('speechSynthesis' in window){
+      if ('speechSynthesis' in window) {
         const utter = new SpeechSynthesisUtterance(currentPhrase.es);
         utter.lang = 'es-ES';
         utter.rate = 0.9;
@@ -250,31 +268,35 @@
     // === CONFETTI ===
     const canvas = document.getElementById('confetti');
     const ctx = canvas.getContext('2d');
-    canvas.width = innerWidth; canvas.height = innerHeight;
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
     let particles = [];
 
     function confettiBurst(){
-      for(let i=0;i<80;i++){
+      for (let i = 0; i < 80; i++) {
         particles.push({
-          x: innerWidth/2 + (Math.random()-0.5)*200,
-          y: innerHeight/2 + (Math.random()-0.5)*100,
-          vx: (Math.random()-0.5)*8,
-          vy: Math.random()* -10 - 5,
-          color: `hsl(${Math.random()*360},100%,65%)`,
-          size: Math.random()*4+3,
+          x: innerWidth / 2 + (Math.random() - 0.5) * 200,
+          y: innerHeight / 2 + (Math.random() - 0.5) * 100,
+          vx: (Math.random() - 0.5) * 8,
+          vy: Math.random() * -10 - 5,
+          color: `hsl(${Math.random() * 360},100%,65%)`,
+          size: Math.random() * 4 + 3,
           life: 70
         });
       }
     }
 
     function animate(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach((p,i)=>{
-        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life--;
-        if(p.life<=0) particles.splice(i,1);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.3;
+        p.life--;
+        if (p.life <= 0) particles.splice(i, 1);
         ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
       });
       requestAnimationFrame(animate);
@@ -283,7 +305,6 @@
 
     // === INICIO ===
     loadNewPhrase();
-    voiceBtn.innerHTML = ''; // Icono de altavoz
   </script>
 </body>
 </html>
