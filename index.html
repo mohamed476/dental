@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="fr">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Cours du jour — <span id='todayDate'></span></title>
+  <title>Curso del día — <span id='todayDate'></span></title>
   <style>
     :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;
           font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
@@ -48,39 +48,39 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>Cours du jour — Pronoms personnels</h1>
+      <h1>Curso del día — Pronombres personales</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">Aujourd’hui nous apprenons les pronoms personnels (je, tu, il, elle…) et comment les utiliser avec les verbes.<br>
+      <p class="motivation">Hoy aprendemos los pronombres personales (yo, tú, él, ella…) y cómo usarlos con los verbos.<br>
       <em>اليوم نتعلم الضمائر الشخصية (أنا، أنت، هو، هي…) وكيفية استخدامها مع الأفعال.</em></p>
     </header>
     <div class="grid">
       <div>
-        <!-- PRONOMS -->
+        <!-- PRONOMBRES -->
         <div class="card">
-          <h3 class="section-title">Les pronoms personnels</h3>
+          <h3 class="section-title">Los pronombres personales</h3>
           <div class="list" id="words"></div>
         </div>
-        <!-- VERBES RÉGULIERS -->
+        <!-- VERBOS REGULARES -->
         <div class="card">
-          <h3 class="section-title">Verbes réguliers (-er)</h3>
+          <h3 class="section-title">Verbos regulares (-ar)</h3>
           <div class="verbs" id="regulars"></div>
         </div>
-        <!-- VERBES IRRÉGULIERS -->
+        <!-- VERBOS IRREGULARES -->
         <div class="card">
-          <h3 class="section-title">Verbes irréguliers fréquents</h3>
+          <h3 class="section-title">Verbos irregulares frecuentes</h3>
           <div class="verbs" id="irregulars"></div>
         </div>
-        <!-- JEU -->
+        <!-- JUEGO -->
         <div class="card">
-          <h3 class="section-title">Jeu : Forme la phrase !</h3>
+          <h3 class="section-title">Juego: ¡Forma la frase!</h3>
           <div class="game-area">
-            <p><strong>Glisse les mots dans le bon ordre pour former la phrase correcte.</strong></p>
+            <p><strong>Arrastra las palabras en el orden correcto para formar la frase.</strong></p>
             <div class="sentence-builder" id="wordPool"></div>
             <div class="drop-zone" id="dropZone"></div>
             <div class="result" id="result"></div>
             <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-              <button id="checkBtn" class="btn-sm">Vérifier</button>
-              <button id="resetBtn" class="btn-sm btn-warning">Recommencer</button>
+              <button id="checkBtn" class="btn-sm">Comprobar</button>
+              <button id="resetBtn" class="btn-sm btn-warning">Reiniciar</button>
               <button id="voiceBtn" class="voice-btn">🔊</button>
             </div>
             <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
@@ -89,63 +89,63 @@
       </div>
       <aside>
         <div class="card">
-          <h3>Phrases du jour</h3>
+          <h3>Frases del día</h3>
           <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
-          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traduction : Français — العربية</div>
+          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Español — العربية</div>
         </div>
         <div class="card" style="text-align:center">
           <div class="heart">⭐</div>
-          <p class="small">Chaque phrase correcte = 1 point · <span id="points">0</span> pts</p>
+          <p class="small">Cada frase correcta = 1 punto · <span id="points">0</span> pts</p>
         </div>
       </aside>
     </div>
     <footer>
-      <span>Apprendre en jouant — Français / العربية</span>
+      <span>Aprende jugando — Español / العربية</span>
     </footer>
   </div>
   <canvas class="confetti" id="confetti"></canvas>
   <script>
-    // === DATE ===
-    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    // === FECHA ===
+    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // === DONNÉES DU JOUR ===
-    // Pronoms personnels
+    // === DATOS DEL DÍA ===
+    // Pronombres personales
     const words = [
-      {fr:'je', ar:'أنا'},
-      {fr:'tu', ar:'أنتَ / أنتِ'},
-      {fr:'il', ar:'هو'},
-      {fr:'elle', ar:'هي'},
-      {fr:'nous', ar:'نحن'},
-      {fr:'vous', ar:'أنتم / أنتنّ'},
-      {fr:'ils', ar:'هم'},
-      {fr:'elles', ar:'هنّ'}
+      {es:'yo', ar:'أنا'},
+      {es:'tú', ar:'أنتَ / أنتِ'},
+      {es:'él', ar:'هو'},
+      {es:'ella', ar:'هي'},
+      {es:'nosotros', ar:'نحن'},
+      {es:'vosotros', ar:'أنتم / أنتنّ'},
+      {es:'ellos', ar:'هم'},
+      {es:'ellas', ar:'هنّ'}
     ];
 
-    // Verbes réguliers en -er
+    // Verbos regulares en -ar
     const regulars = [
-      {inf:'parler', ar:'يتكلم', conj:{je:'parle',tu:'parles',il:'parle',nous:'parlons',vous:'parlez',ils:'parlent'}},
-      {inf:'aimer', ar:'يحب', conj:{je:'aime',tu:'aimes',il:'aime',nous:'aimons',vous:'aimez',ils:'aiment'}},
-      {inf:'travailler', ar:'يعمل', conj:{je:'travaille',tu:'travailles',il:'travaille',nous:'travaillons',vous:'travaillez',ils:'travaillent'}},
-      {inf:'habiter', ar:'يسكن', conj:{je:'habite',tu:'habites',il:'habite',nous:'habitons',vous:'habitez',ils:'habitent'}},
-      {inf:'étudier', ar:'يدرس', conj:{je:'étudie',tu:'étudies',il:'étudie',nous:'étudions',vous:'étudiez',ils:'étudient'}}
+      {inf:'hablar', ar:'يتكلم', conj:{yo:'hablo',tu:'hablas',el:'habla',nos:'hablamos',vos:'habláis',ellos:'hablan'}},
+      {inf:'estudiar', ar:'يدرس', conj:{yo:'estudio',tu:'estudias',el:'estudia',nos:'estudiamos',vos:'estudiáis',ellos:'estudian'}},
+      {inf:'trabajar', ar:'يعمل', conj:{yo:'trabajo',tu:'trabajas',el:'trabaja',nos:'trabajamos',vos:'trabajáis',ellos:'trabajan'}},
+      {inf:'escuchar', ar:'يستمع', conj:{yo:'escucho',tu:'escuchas',el:'escucha',nos:'escuchamos',vos:'escucháis',ellos:'escuchan'}},
+      {inf:'bailar', ar:'يرقص', conj:{yo:'bailo',tu:'bailas',el:'baila',nos:'bailamos',vos:'bailáis',ellos:'bailan'}}
     ];
 
-    // Verbes irréguliers importants
+    // Verbos irregulares importantes
     const irregulars = [
-      {inf:'être', ar:'يكون', conj:{je:'suis',tu:'es',il:'est',nous:'sommes',vous:'êtes',ils:'sont'}},
-      {inf:'avoir', ar:'يملك / عنده', conj:{je:'ai',tu:'as',il:'a',nous:'avons',vous:'avez',ils:'ont'}},
-      {inf:'aller', ar:'يذهب', conj:{je:'vais',tu:'vas',il:'va',nous:'allons',vous:'allez',ils:'vont'}},
-      {inf:'faire', ar:'يفعل', conj:{je:'fais',tu:'fais',il:'fait',nous:'faisons',vous:'faites',ils:'font'}},
-      {inf:'pouvoir', ar:'يستطيع', conj:{je:'peux',tu:'peux',il:'peut',nous:'pouvons',vous:'pouvez',ils:'peuvent'}}
+      {inf:'ser', ar:'يكون (دائم)', conj:{yo:'soy',tu:'eres',el:'es',nos:'somos',vos:'sois',ellos:'son'}},
+      {inf:'estar', ar:'يكون (مؤقت)', conj:{yo:'estoy',tu:'estás',el:'está',nos:'estamos',vos:'estáis',ellos:'están'}},
+      {inf:'tener', ar:'يملك / عنده', conj:{yo:'tengo',tu:'tienes',el:'tiene',nos:'tenemos',vos:'tenéis',ellos:'tienen'}},
+      {inf:'ir', ar:'يذهب', conj:{yo:'voy',tu:'vas',el:'va',nos:'vamos',vos:'vais',ellos:'van'}},
+      {inf:'hacer', ar:'يفعل', conj:{yo:'hago',tu:'haces',el:'hace',nos:'hacemos',vos:'hacéis',ellos:'hacen'}}
     ];
 
-    // Phrases pour le jeu
+    // Frases para el juego
     const messages = [
-      {fr:'Je parle français tous les jours.', ar:'أتكلم الفرنسية كل يوم.'},
-      {fr:'Tu habites à Paris maintenant.', ar:'أنت تسكن في باريس الآن.'},
-      {fr:'Elle aime travailler le matin.', ar:'هي تحب العمل في الصباح.'},
-      {fr:'Nous allons au marché ensemble.', ar:'نحن نذهب إلى السوق معًا.'},
-      {fr:'Ils font leurs devoirs maintenant.', ar:'هم يقومون بواجباتهم الآن.'}
+      {es:'Yo hablo español todos los días.', ar:'أنا أتكلم الإسبانية كل يوم.'},
+      {es:'Tú estudias en la universidad.', ar:'أنت تدرس في الجامعة.'},
+      {es:'Ella trabaja por la mañana.', ar:'هي تعمل في الصباح.'},
+      {es:'Nosotros vamos al mercado juntos.', ar:'نحن نذهب إلى السوق معًا.'},
+      {es:'Ellos hacen los deberes ahora.', ar:'هم يقومون بالواجبات الآن.'}
     ];
 
     // === RENDER ===
@@ -155,7 +155,7 @@
       words.forEach(w => {
         const d = document.createElement('div');
         d.className = 'item';
-        d.innerHTML = `<div><div class="big">${w.fr}</div><div class="lang">${w.ar}</div></div>`;
+        d.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.ar}</div></div>`;
         c.appendChild(d);
       });
     }
@@ -167,7 +167,7 @@
         const d = document.createElement('div');
         d.className = 'verb-card';
         d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.ar})</span></div>
-                       <div class="lang">je ${v.conj.je} • tu ${v.conj.tu} • il/elle ${v.conj.il} • nous ${v.conj.nous} • vous ${v.conj.vous} • ils/elles ${v.conj.ils}</div>`;
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él/ella ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos/ellas ${v.conj.ellos}</div>`;
         c.appendChild(d);
       });
     }
@@ -178,7 +178,7 @@
       messages.forEach(m => {
         const e = document.createElement('div');
         e.className = 'item';
-        e.innerHTML = `<div><div class="big">${m.fr}</div><div class="lang">${m.ar}</div></div>`;
+        e.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.ar}</div></div>`;
         b.appendChild(e);
       });
     }
@@ -188,7 +188,7 @@
     renderVerbs('irregulars', irregulars);
     renderMessages();
 
-    // === JEU ===
+    // === JUEGO ===
     let currentPhrase = null;
     let score = 0;
     let totalPhrases = messages.length;
@@ -205,7 +205,7 @@
 
     function loadNewPhrase(){
       currentPhrase = messages[completed % totalPhrases];
-      const words = currentPhrase.fr.split(' ');
+      const words = currentPhrase.es.split(' ');
       const shuffled = [...words].sort(() => Math.random() - 0.5);
       wordPool.innerHTML = '';
       dropZone.innerHTML = '';
@@ -241,9 +241,9 @@
 
     checkBtn.onclick = () => {
       const built = Array.from(dropZone.children).map(c => c.textContent).join(' ').trim();
-      const correct = currentPhrase.fr;
+      const correct = currentPhrase.es;
       if (built === correct) {
-        result.textContent = 'Correct !';
+        result.textContent = '¡Correcto!';
         result.style.color = 'var(--success)';
         score++;
         completed++;
@@ -251,7 +251,7 @@
         confettiBurst();
         setTimeout(loadNewPhrase, 1500);
       } else {
-        result.textContent = 'Essaie encore...';
+        result.textContent = 'Inténtalo de nuevo...';
         result.style.color = 'var(--danger)';
       }
     };
@@ -260,8 +260,8 @@
 
     voiceBtn.onclick = () => {
       if ('speechSynthesis' in window) {
-        const utter = new SpeechSynthesisUtterance(currentPhrase.fr);
-        utter.lang = 'fr-FR';
+        const utter = new SpeechSynthesisUtterance(currentPhrase.es);
+        utter.lang = 'es-ES';
         utter.rate = 0.9;
         speechSynthesis.speak(utter);
       }
@@ -310,7 +310,7 @@
     }
     animate();
 
-    // === DÉMARRAGE ===
+    // === INICIO ===
     loadNewPhrase();
   </script>
 </body>
