@@ -1,318 +1,310 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Curso + My Goal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Curso del día — <span id='todayDate'></span></title>
   <style>
-    :root{
-      --bg:#f8f9fa;--card:#ffffff;--accent:#dc3545;--muted:#6c757d;--success:#198754;--warning:#ffc107;--danger:#dc3545;--energy:#c82333;
-      font-family: "Poppins", sans-serif;
-    }
-    body{margin:0;background:linear-gradient(180deg,#f8f9fa, #fff);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#212529}
-  
-    /* TIMER ROMÁNTICO */
-    .timer-banner{
-      width:100%;background:linear-gradient(135deg,#dc3545,#e74c3c);color:white;padding:22px 0;text-align:center;font-weight:900;
-      font-size:38px;letter-spacing:2px;box-shadow:0 8px 25px rgba(220,53,69,0.35);z-index:10;
-    }
-    .timer-banner .countdown{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
-    .timer-banner .block{background:rgba(255,255,255,0.18);padding:14px 22px;border-radius:14px;min-width:110px;border:1px solid rgba(255,255,255,0.25)}
-    .timer-banner .num{font-size:52px;line-height:1;font-weight:900}
-    .timer-banner .label{font-size:17px;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px}
-    .timer-banner .footer{font-size:20px;font-weight:600;margin-top:10px;opacity:0.95}
-    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden;margin:20px 0}
-    header{padding:22px 28px;background:linear-gradient(90deg,rgba(220,53,69,0.12),rgba(220,53,69,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    :root{--bg:#fff7fb;--card:#ffffff;--accent:#e95da6;--muted:#6b6b6b;--success:#28a745;--warning:#ffc107;--danger:#dc3545;
+          font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    body{margin:0;background:linear-gradient(180deg,#fff7fb, #fff);display:flex;align-items:center;justify-content:center;min-height:100vh;color:#222}
+    .wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);overflow:hidden}
+    header{padding:22px 28px;background:linear-gradient(90deg,rgba(233,93,166,0.12),rgba(233,93,166,0.04));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
     header h1{margin:0;font-size:22px;color:#111}
+    header p{margin:0;color:var(--muted)}
     .date{font-size:18px;color:var(--accent);font-weight:bold;align-self:flex-end}
     .motivation{font-size:15px;color:#444;margin-top:6px;line-height:1.4}
-
-    .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px}
     .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:14px}
-    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent)}
-    .word-list{display:flex;flex-direction:column;gap:10px}
-    .word-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f5c6cb}
+    .section-title{font-size:17px;font-weight:700;margin:0 0 12px;color:var(--accent);display:flex;align-items:center;gap:8px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f2e6ef}
     .big{font-weight:700;font-size:18px}
     .small{font-size:13px;color:var(--muted)}
-    .verb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .verb-card{background:#fff5f5;padding:12px;border-radius:10px;border:1px solid #f5c6cb;text-align:center}
-    .btn-sm{font-size:12px;padding:6px 10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;margin:4px}
-    .btn-sm:hover{transform:scale(1.05)}
-    .game-area{background:#ffeaea;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed var(--accent)}
+    .lang{font-size:13px;color:var(--muted)}
+    button{background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+    .btn-sm{font-size:12px;padding:5px 8px}
+    .btn-success{background:var(--success)}
+    .btn-warning{background:var(--warning);color:#212529}
+    .btn-danger{background:var(--danger)}
+    .verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .verb-card{padding:14px;border:1px solid #f0e0eb;border-radius:10px;background:#fdf8fb}
+    footer{padding:14px 20px;background:#fff7fb;text-align:center;color:var(--muted);font-size:13px}
+    .heart{font-size:26px;color:var(--accent)}
+    .game-area{background:#fdf2f8;padding:16px;border-radius:12px;margin-top:12px;border:1px dashed #e95da6}
     .sentence-builder{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-    .word-chip{background:#fff;padding:8px 14px;border-radius:20px;border:1px solid #f5c6cb;font-size:15px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
-    .word-chip:hover{transform:scale(1.07);border-color:var(--accent)}
-    .drop-zone{min-height:60px;border:2px dashed #ccc;border-radius:12px;padding:12px;display:flex;flex-wrap:wrap;gap:8px;background:#fff}
-    .drop-zone.drag-over{border-color:var(--accent);background:#ffeaea}
-    .result{margin-top:14px;font-weight:700;font-size:16px}
-
-    /* BOTÓN MY GOAL */
-    .goal-btn{
-      position: fixed; bottom: 20px; right: 20px; background: #ff6b6b; color: white; border: none;
-      font-size: 1.1rem; padding: 14px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 6px 15px rgba(255,107,107,0.4);
-      z-index: 100; transition: all 0.3s ease; font-weight: 600;
-    }
-    .goal-btn:hover{transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,107,107,0.5);}
-
-    /* MODAL SNUS TRACKER */
-    .modal{display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
-      justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(8px);}
-    .modal-content{
-      background: linear-gradient(135deg, #7bdff2, #b2f7ef, #eff7f6); padding: 30px; border-radius: 20px;
-      text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      animation: popIn 0.4s ease; position: relative;
-    }
-    @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-    .modal h2{font-size: 2rem; margin: 0 0 10px;}
-    .modal .counter{font-size: 5rem; font-weight: bold; color: #ff6b6b; margin: 15px 0;}
-    .modal button{background: #ff6b6b; border: none; color: white; font-size: 1.1rem; padding: 12px 24px; border-radius: 50px;
-      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s ease;}
-    .modal button:hover{transform: scale(1.05); background: #ff8787;}
-    .modal .close-btn{position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #555;}
-    .modal .message{margin-top: 12px; font-size: 1rem; color: #444;}
-    .modal .emoji{font-size: 2.5rem; margin-top: 10px;}
-
-    @media(max-width:800px){
-      .timer-banner{font-size:26px}
-      .timer-banner .num{font-size:38px}
-      .course-grid{grid-template-columns:1fr}
-      .verb-grid{grid-template-columns:1fr 1fr}
-    }
+    .word-chip{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid #f0d0e0;font-size:14px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,0.1);user-select:none}
+    .word-chip.dragging{opacity:0.5;transform:scale(0.95)}
+    .drop-zone{min-height:50px;border:2px dashed #ccc;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+    .drop-zone.drag-over{border-color:var(--accent);background:#fff5fb}
+    .result{margin-top:12px;font-weight:600}
+    .voice-btn{background:var(--accent);color:white;padding:6px 10px;border-radius:50%;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .progress{margin-top:10px;height:8px;background:#f0e0eb;border-radius:4px;overflow:hidden}
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width 0.4s ease}
+    .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}.verbs{grid-template-columns:1fr}.sentence-builder{justify-content:center}}
   </style>
 </head>
 <body>
-
-  <!-- TIMER ROMÁNTICO -->
-  <div class="timer-banner">
-    <div>FALTAN PARA VERTE</div>
-    <div class="countdown">
-      <div class="block"><div class="num" id="days">00</div><div class="label">días</div></div>
-      <div class="block"><div class="num" id="hours">00</div><div class="label">horas</div></div>
-      <div class="block"><div class="num" id="minutes">00</div><div class="label">minutos</div></div>
-      <div class="block"><div class="num" id="seconds">00</div><div class="label">segundos</div></div>
-    </div>
-    <div class="footer">28/12/2025 • 10:30 AM • Barcelona</div>
-  </div>
-
-  <button class="goal-btn" id="openGoal">My Goal</button>
-
-  <!-- MODAL SNUS TRACKER – AHORA MÁXIMO 14 -->
-  <div class="modal" id="snusModal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeModal">×</span>
-      <h2>Daily Snus Tracker</h2>
-      <p>Goal: máximo 14 snus al día</p>
-      <div class="counter" id="snusCounter">14</div>
-      <button id="useSnus">Used one</button>
-      <div class="message" id="snusMessage"></div>
-      <div class="emoji" id="snusEmoji">Relajado</div>
-    </div>
-  </div>
-
   <div class="wrap">
     <header>
-      <h1>Curso del día — ¡Nivel 9: Verbos Poderosos!</h1>
+      <h1>Curso del día — Nivel intermedio</h1>
       <div class="date" id="todayDate"></div>
-      <p class="motivation">¡Silje, hoy dominas los verbos más usados en Barcelona!</p>
+      <p class="motivation">Hoy practicamos construcción de frases, verbos y vocabulario de nivel intermedio. Arrastra, escucha y mejora paso a paso.<br>
+      <em>Today we practice sentence building, verbs and intermediate vocabulary. Drag, listen and improve step by step.</em><br>
+      <em>I dag øver vi på setningsbygging, verb og ordforråd på mellomnivå. Dra, lytt og forbedre deg steg for steg.</em></p>
     </header>
-
-    <div class="course-grid">
-      <!-- 12 VERBOS IMPORTANTES -->
+    <div class="grid">
       <div>
+        <!-- PALABRAS -->
         <div class="card">
-          <h3 class="section-title">12 verbos que necesitas YA</h3>
-          <div class="verb-grid">
-            <div class="verb-card"><div class="big">poder</div><div class="small">puedo • puedes • puede</div></div>
-            <div class="verb-card"><div class="big">tener</div><div class="small">tengo • tienes • tiene</div></div>
-            <div class="verb-card"><div class="big">hacer</div><div class="small">hago • haces • hace</div></div>
-            <div class="verb-card"><div class="big">decir</div><div class="small">digo • dices • dice</div></div>
-            <div class="verb-card"><div class="big">saber</div><div class="small">sé • sabes • sabe</div></div>
-            <div class="verb-card"><div class="big">poner</div><div class="small">pongo • pones • pone</div></div>
-            <div class="verb-card"><div class="big">salir</div><div class="small">salgo • sales • sale</div></div>
-            <div class="verb-card"><div class="big">traer</div><div class="small">traigo • traes • trae</div></div>
-            <div class="verb-card"><div class="big">ver</div><div class="small">veo • ves • ve</div></div>
-            <div class="verb-card"><div class="big">dar</div><div class="small">doy • das • da</div></div>
-            <div class="verb-card"><div class="big">conocer</div><div class="small">conozco • conoces • conoce</div></div>
-            <div class="verb-card"><div class="big">vivir</div><div class="small">vivo • vives • vive</div></div>
-          </div>
+          <h3 class="section-title">Vocabulario del día</h3>
+          <div class="list" id="words"></div>
         </div>
-
+        <!-- VERBOS REGULARES -->
         <div class="card">
-          <h3 class="section-title">Construye la frase</h3>
+          <h3 class="section-title">Verbos regulares (presente)</h3>
+          <div class="verbs" id="regulars"></div>
+        </div>
+        <!-- VERBOS IRREGULARES -->
+        <div class="card">
+          <h3 class="section-title">Verbos irregulares (presente)</h3>
+          <div class="verbs" id="irregulars"></div>
+        </div>
+        <!-- JUEGO: CONSTRUYE LA FRASE -->
+        <div class="card">
+          <h3 class="section-title">Juego: ¡Forma la frase!</h3>
           <div class="game-area">
-            <p><strong>Arrastra → "No puedo vivir sin ti"</strong></p>
+            <p><strong>Arrastra las palabras en el orden correcto para formar la frase.</strong></p>
             <div class="sentence-builder" id="wordPool"></div>
-            <div class="drop-zone" id="sentenceDrop"></div>
-            <div class="result" id="sentenceResult"></div>
-            <button class="btn-sm" id="checkSentence">Comprobar</button>
+            <div class="drop-zone" id="dropZone"></div>
+            <div class="result" id="result"></div>
+            <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+              <button id="checkBtn" class="btn-sm">Comprobar</button>
+              <button id="resetBtn" class="btn-sm btn-warning">Reiniciar</button>
+              <button id="voiceBtn" class="voice-btn">🔊</button>
+            </div>
+            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
           </div>
         </div>
       </div>
-
-      <div>
+      <aside>
         <div class="card">
-          <h3 class="section-title">Vocabulario útil</h3>
-          <div class="word-list">
-            <div class="word-item"><div class="big">sol</div><div class="small">sun</div></div>
-            <div class="word-item"><div class="big">calle</div><div class="small">street</div></div>
-            <div class="word-item"><div class="big">tiempo</div><div class="small">time / weather</div></div>
-            <div class="word-item"><div class="big">dinero</div><div class="small">money</div></div>
-            <div class="word-item"><div class="big">casa</div><div class="small">home</div></div>
-            <div class="word-item"><div class="big">amigo/a</div><div class="small">friend</div></div>
-          </div>
+          <h3>Frases del día</h3>
+          <div id="romance" style="display:flex;flex-direction:column;gap:12px"></div>
+          <div style="margin-top:10px;text-align:center;font-size:13px;color:var(--muted)">Traducción: Inglés — Noruego</div>
         </div>
-
-        <div class="card">
-          <h3 class="section-title">Diálogo del día</h3>
-          <div class="game-area">
-            <p><strong>— ¿_____ hablar español?</strong></p>
-            <button class="btn-sm" onclick="res(1,'Puedes')">Puedes</button>
-            <button class="btn-sm" onclick="res(1,'Tienes')">Tienes</button>
-
-            <p style="margin-top:16px"><strong>— Sí, pero no _____ mucho.</strong></p>
-            <button class="btn-sm" onclick="res(2,'sé')">sé</button>
-            <button class="btn-sm" onclick="res(2,'puedo')">puedo</button>
-
-            <div class="result" id="dialogResult"></div>
-          </div>
+        <div class="card" style="text-align:center">
+          <div class="heart">⭐</div>
+          <p class="small">Cada frase correcta = 1 punto · <span id="points">0</span> pts</p>
         </div>
-      </div>
+      </aside>
     </div>
+    <footer>
+      <span>Aprende jugando — nivel intermedio</span>
+    </footer>
   </div>
-
+  <canvas class="confetti" id="confetti"></canvas>
   <script>
-    // FECHA
-    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
+    // === FECHA ===
+    document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // TIMER
-    const targetDate = new Date('2025-12-28T10:30:00');
-    function updateTimer() {
-      const now = new Date();
-      const diff = targetDate - now;
-      if (diff <= 0) {
-        document.querySelector('.timer-banner').innerHTML = `<div style="font-size:36px">¡YA ESTOY AQUÍ, SILJE!</div>`;
-        return;
-      }
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
-      const seconds = Math.floor((diff % (1000*60)) / 1000);
-      document.getElementById('days').textContent = String(days).padStart(2,'0');
-      document.getElementById('hours').textContent = String(hours).padStart(2,'0');
-      document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
-      document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
-    }
-    setInterval(updateTimer, 1000);
-    updateTimer();
+    // === DATOS DEL DÍA (nivel intermedio) ===
+    const words = [
+      {es:'aunque', en:'although / even though', no:'selv om'},
+      {es:'mientras', en:'while / as long as', no:'mens'},
+      {es:'sin embargo', en:'however / nevertheless', no:'likevel'},
+      {es:'además', en:'besides / in addition', no:'i tillegg'},
+      {es:'por lo tanto', en:'therefore', no:'derfor'}
+    ];
 
-    // SNUS TRACKER – MÁXIMO 14 (CORREGIDO 100%)
-    const modal = document.getElementById('snusModal');
-    const openBtn = document.getElementById('openGoal');
-    const closeBtn = document.getElementById('closeModal');
-    const snusCounter = document.getElementById('snusCounter');
-    const snusMessage = document.getElementById('snusMessage');
-    const snusEmoji = document.getElementById('snusEmoji');
-    const useBtn = document.getElementById('useSnus');
-    let snusCount = 14;                 // ← 14 desde el principio
-    const today = new Date().toDateString();
+    const regulars = [
+      {inf:'decidir', en:'to decide', no:'å bestemme', conj:{yo:'decido',tu:'decides',el:'decide',nos:'decidimos',vos:'decidís',ellos:'deciden'}},
+      {inf:'necesitar', en:'to need', no:'å trenge', conj:{yo:'necesito',tu:'necesitas',el:'necesita',nos:'necesitamos',vos:'necesitáis',ellos:'necesitan'}},
+      {inf:'permitir', en:'to allow / permit', no:'å tillate', conj:{yo:'permito',tu:'permites',el:'permite',nos:'permitimos',vos:'permitís',ellos:'permiten'}},
+      {inf:'resolver', en:'to solve / resolve', no:'å løse', conj:{yo:'resuelvo',tu:'resuelves',el:'resuelve',nos:'resolvemos',vos:'resolvéis',ellos:'resuelven'}},
+      {inf:'considerar', en:'to consider', no:'å vurdere', conj:{yo:'considero',tu:'consideras',el:'considera',nos:'consideramos',vos:'consideráis',ellos:'consideran'}}
+    ];
 
-    if (localStorage.getItem("snusDate") === today) {
-      snusCount = parseInt(localStorage.getItem("snusCount")) || 14;
-    } else {
-      localStorage.setItem("snusDate", today);
-      localStorage.setItem("snusCount", 14);   // ← siempre guarda 14 al empezar el día
-    }
-    snusCounter.textContent = snusCount;
+    const irregulars = [
+      {inf:'preferir', en:'to prefer', no:'å foretrekke', conj:{yo:'prefiero',tu:'prefieres',el:'prefiere',nos:'preferimos',vos:'preferís',ellos:'prefieren'}},
+      {inf:'conseguir', en:'to get / achieve', no:'å oppnå / få', conj:{yo:'consigo',tu:'consigues',el:'consigue',nos:'conseguimos',vos:'conseguís',ellos:'consiguen'}},
+      {inf:'seguir', en:'to continue / follow', no:'å fortsette / følge', conj:{yo:'sigo',tu:'sigues',el:'sigue',nos:'seguimos',vos:'seguís',ellos:'siguen'}},
+      {inf:'mantener', en:'to keep / maintain', no:'å opprettholde', conj:{yo:'mantengo',tu:'mantienes',el:'mantiene',nos:'mantenemos',vos:'mantenéis',ellos:'mantienen'}},
+      {inf:'proponer', en:'to propose / suggest', no:'å foreslå', conj:{yo:'propongo',tu:'propones',el:'propone',nos:'proponemos',vos:'proponéis',ellos:'proponen'}}
+    ];
 
-    openBtn.onclick = () => { modal.style.display = "flex"; updateSnusUI(); };
-    closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+    const messages = [
+      {es:'Aunque llueva, seguimos con el plan original.', en:'Even if it rains, we stick to the original plan.', no:'Selv om det regner, holder vi oss til den opprinnelige planen.'},
+      {es:'Necesito más tiempo para resolver este problema.', en:'I need more time to solve this problem.', no:'Jeg trenger mer tid for å løse dette problemet.'},
+      {es:'Preferimos trabajar desde casa mientras sea posible.', en:'We prefer to work from home as long as it is possible.', no:'Vi foretrekker å jobbe hjemmefra så lenge det er mulig.'},
+      {es:'Por lo tanto, hemos decidido posponer la reunión.', en:'Therefore, we have decided to postpone the meeting.', no:'Derfor har vi bestemt oss for å utsette møtet.'}
+    ];
 
-    useBtn.onclick = () => {
-      if (snusCount > 0) {
-        snusCount--;
-        snusCounter.textContent = snusCount;
-        localStorage.setItem("snusCount", snusCount);
-        updateSnusUI();
-      }
-    };
-
-    function updateSnusUI() {
-      if (snusCount === 0) {
-        snusMessage.textContent = "¡Perfecta! 0 snus hoy";
-        snusEmoji.textContent = "Fuego";
-      } else if (snusCount <= 4) {
-        snusMessage.textContent = "Casi... ¡tú puedes!";
-        snusEmoji.textContent = "Mirando";
-      } else {
-        snusMessage.textContent = "Vas súper bien";
-        snusEmoji.textContent = "Relajado";
-      }
+    // === RENDER ===
+    function renderWords(){
+      const c = document.getElementById('words');
+      c.innerHTML = '';
+      words.forEach(w => {
+        const d = document.createElement('div');
+        d.className = 'item';
+        d.innerHTML = `<div><div class="big">${w.es}</div><div class="lang">${w.en} — ${w.no}</div></div>`;
+        c.appendChild(d);
+      });
     }
 
-    // JUEGO FRASE + DIÁLOGO (todo igual, funciona perfecto)
-    const words = ["No", "puedo", "vivir", "sin", "ti"];
-    const correctOrder = ["No", "puedo", "vivir", "sin", "ti"];
-    const pool = document.getElementById('wordPool');
-    const drop = document.getElementById('sentenceDrop');
-    const result = document.getElementById('sentenceResult');
-    const checkBtn = document.getElementById('checkSentence');
+    function renderVerbs(containerId, verbs){
+      const c = document.getElementById(containerId);
+      c.innerHTML = '';
+      verbs.forEach(v => {
+        const d = document.createElement('div');
+        d.className = 'verb-card';
+        d.innerHTML = `<div class="big">${v.inf} <span class="small">(${v.en} — ${v.no})</span></div>
+                       <div class="lang">yo ${v.conj.yo} • tú ${v.conj.tu} • él ${v.conj.el} • nos ${v.conj.nos} • vos ${v.conj.vos} • ellos ${v.conj.ellos}</div>`;
+        c.appendChild(d);
+      });
+    }
 
-    function loadGame() {
-      pool.innerHTML = ''; drop.innerHTML = '';
+    function renderMessages(){
+      const b = document.getElementById('romance');
+      b.innerHTML = '';
+      messages.forEach(m => {
+        const e = document.createElement('div');
+        e.className = 'item';
+        e.innerHTML = `<div><div class="big">${m.es}</div><div class="lang">${m.en} — ${m.no}</div></div>`;
+        b.appendChild(e);
+      });
+    }
+
+    renderWords();
+    renderVerbs('regulars', regulars);
+    renderVerbs('irregulars', irregulars);
+    renderMessages();
+
+    // === JUEGO ===
+    let currentPhrase = null;
+    let score = 0;
+    let totalPhrases = messages.length;
+    let completed = 0;
+
+    const wordPool = document.getElementById('wordPool');
+    const dropZone = document.getElementById('dropZone');
+    const result = document.getElementById('result');
+    const checkBtn = document.getElementById('checkBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const pointsEl = document.getElementById('points');
+    const progressBar = document.getElementById('progressBar');
+
+    function loadNewPhrase(){
+      currentPhrase = messages[completed % totalPhrases];
+      const words = currentPhrase.es.split(' ');
       const shuffled = [...words].sort(() => Math.random() - 0.5);
-      shuffled.forEach(w => {
+      wordPool.innerHTML = '';
+      dropZone.innerHTML = '';
+      result.textContent = '';
+      result.className = 'result';
+
+      shuffled.forEach(word => {
         const chip = document.createElement('div');
         chip.className = 'word-chip';
-        chip.textContent = w;
+        chip.textContent = word;
         chip.draggable = true;
-        chip.ondragstart = e => e.dataTransfer.setData('text', w);
-        chip.onclick = () => { if (!drop.contains(chip)) drop.appendChild(chip); };
-        pool.appendChild(chip);
+        chip.ondragstart = e => e.dataTransfer.setData('text', word);
+        wordPool.appendChild(chip);
       });
-      drop.ondragover = e => { e.preventDefault(); drop.classList.add('drag-over'); };
-      drop.ondragleave = () => drop.classList.remove('drag-over');
-      drop.ondrop = e => {
-        e.preventDefault(); drop.classList.remove('drag-over');
+
+      dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('drag-over'); };
+      dropZone.ondragleave = () => dropZone.classList.remove('drag-over');
+      dropZone.ondrop = e => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
         const word = e.dataTransfer.getData('text');
-        if (word) {
+        if (word && !dropZone.querySelector(`[data-word="${word}"]`)) {
           const chip = document.createElement('div');
           chip.className = 'word-chip';
           chip.textContent = word;
+          chip.dataset.word = word;
           chip.onclick = () => chip.remove();
-          drop.appendChild(chip);
+          dropZone.appendChild(chip);
         }
       };
+      updateProgress();
     }
 
     checkBtn.onclick = () => {
-      const current = Array.from(drop.children).map(c => c.textContent);
-      if (current.length !== correctOrder.length) {
-        result.textContent = "Falta alguna palabra...";
-        result.style.color = 'var(--danger)';
-        return;
-      }
-      if (JSON.stringify(current) === JSON.stringify(correctOrder)) {
-        result.innerHTML = "¡Perfecto! Te echo de menos...";
+      const built = Array.from(dropZone.children).map(c => c.textContent).join(' ').trim();
+      const correct = currentPhrase.es;
+      if (built === correct) {
+        result.textContent = '¡Correcto!';
         result.style.color = 'var(--success)';
+        score++;
+        completed++;
+        pointsEl.textContent = score;
+        confettiBurst();
+        setTimeout(loadNewPhrase, 1500);
       } else {
-        result.textContent = "Casi... vuelve a intentarlo";
-        result.style.color = 'var(--warning)';
+        result.textContent = 'Inténtalo otra vez...';
+        result.style.color = 'var(--danger)';
       }
     };
 
-    let correctas = 0;
-    function res(q, texto) {
-      if (q===1 && texto==="Puedes") correctas++;
-      if (q===2 && texto==="sé") correctas++;
-      if (correctas === 2) {
-        document.getElementById('dialogResult').innerHTML = "¡Increíble! +3 puntos";
-        document.getElementById('dialogResult').style.color = 'var(--success)';
+    resetBtn.onclick = loadNewPhrase;
+
+    voiceBtn.onclick = () => {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(currentPhrase.es);
+        utter.lang = 'es-ES';
+        utter.rate = 0.9;
+        speechSynthesis.speak(utter);
+      }
+    };
+
+    function updateProgress(){
+      const percent = (completed / totalPhrases) * 100;
+      progressBar.style.width = percent + '%';
+    }
+
+    // === CONFETTI ===
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    let particles = [];
+
+    function confettiBurst(){
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: innerWidth / 2 + (Math.random() - 0.5) * 200,
+          y: innerHeight / 2 + (Math.random() - 0.5) * 100,
+          vx: (Math.random() - 0.5) * 8,
+          vy: Math.random() * -10 - 5,
+          color: `hsl(${Math.random() * 360},100%,65%)`,
+          size: Math.random() * 4 + 3,
+          life: 70
+        });
       }
     }
 
-    loadGame();
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.3;
+        p.life--;
+        if (p.life <= 0) particles.splice(i, 1);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // === INICIO ===
+    loadNewPhrase();
   </script>
 </body>
 </html>
